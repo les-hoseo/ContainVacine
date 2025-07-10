@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972344d369537324e8df728c026dd4e3, type: 3}
+  m_Name: Malcolm Walker Data
+  m_EditorClassIdentifier: 
+  appearanceDay: 3
+  subjectName: Malcolm Walker
+  initialMentality: 100
+  pose:
+  - {fileID: -5743258043538279434, guid: 2d7a7a5eca1af6f4ba5992b8cee758cc, type: 3}
+  relatedLogs:
+  - {fileID: 11400000, guid: 6e8bb19ad4924c945a846adb9a9186c0, type: 2}
+  - {fileID: 11400000, guid: 27c751ffe35410848b2c53d308b6311d, type: 2}
+  - {fileID: 11400000, guid: 2e03efe0fe8c1bd458a7832b383af795, type: 2}
+  askRewards: []
+  sabotageType: 0
