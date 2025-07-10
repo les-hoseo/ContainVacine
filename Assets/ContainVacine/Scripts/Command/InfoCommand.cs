@@ -14,18 +14,20 @@ public class InfoCommand : ICommand
         var lines = new List<string>();
 
         // SystemStatusManager의 상태 값 가져오기
-        int crtHp = SystemStatusManager.Instance.CRT_HP;
-        string scanStage = SystemStatusManager.Instance.CRT_LINK_1 ? "특수 검진 단계" : "검진 단계";
+        //int crtHp = SystemStatusManager.Instance.CRT_HP;
+        //string scanStage = SystemStatusManager.Instance.CRT_LINK_1 ? "특수 검진 단계" : "검진 단계";
 
         // 상태 컬러 결정
-        string systemStatus = crtHp >= 60
-            ? commandManager.ColorText("GREEN", "STABLE")
-            : commandManager.ColorText("RED", "UNSTABLE");
+        /* string systemStatus = crtHp >= 60
+             ? commandManager.ColorText("GREEN", "STABLE")
+             : commandManager.ColorText("RED", "UNSTABLE");
 
-        string syncStatus = scanStage == "검진 단계"
-            ? commandManager.ColorText("GREEN", "STABLE")
-            : commandManager.ColorText("RED", "UNSTABLE");
-
+         string syncStatus = scanStage == "검진 단계"
+             ? commandManager.ColorText("GREEN", "STABLE")
+             : commandManager.ColorText("RED", "UNSTABLE");*/
+        //임시 색
+        string systemStatus = commandManager.ColorText("GREEN", "STABLE");
+        string syncStatus = commandManager.ColorText("GREEN", "STABLE");
         // User ID 예시
         string userId = ConvertToBase12("현이");
 

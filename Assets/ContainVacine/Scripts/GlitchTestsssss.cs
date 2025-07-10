@@ -1,7 +1,7 @@
 /*using UnityEngine;
 using TMPro;
 
-public class GlitchTests : MonoBehaviour
+public class GlitchTestsssss : MonoBehaviour
 {
     public TMP_Text targetText;
     public PartialGlitchEffects glitchEffect;
