@@ -524,6 +524,8 @@ MonoBehaviour:
   asciiText: {fileID: 376369384}
   folderPath: Assets/ContainVacine/ASCIIFrames
   frameDelay: 0.05
+  frames: []
+  currentFrame: 0
 --- !u!114 &376369384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2094,6 +2096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da200dca211126348bb494f096f183fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrambleChars: ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*
 --- !u!114 &1609092995
 MonoBehaviour:
   m_ObjectHideFlags: 0

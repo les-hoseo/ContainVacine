@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
         {
             ownedLogs.Add(newLog);
             // TODO: UI에 로그 획득 알림 표시
-            TerminalSystem.Instance.PrintResult($"새로운 로그 파일 획득: [{newLog.logTitle}]");
+            //TerminalSystem.Instance.PrintResult($"새로운 로그 파일 획득: [{newLog.logTitle}]");
         }
     }
 
