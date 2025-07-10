@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/ContainVacine/Scripts.meta
 guid: 7be67849c7856734289f5acb2be0566a
+========
+guid: ad6141dd34339d647904e28239a483cd
+>>>>>>>> origin/feature-H:Assets/Scripts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

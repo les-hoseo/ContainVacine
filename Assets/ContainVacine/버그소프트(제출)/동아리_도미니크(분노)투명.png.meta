@@ -1,10 +1,19 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/ContainVacine/버그소프트(제출)/동아리_도미니크(분노)투명.png.meta
 guid: af143e1ab4e3e094699fee271be117aa
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: 1796014139830416205
     second: "\uB3D9\uC544\uB9AC_\uB3C4\uBBF8\uB2C8\uD06C(\uBD84\uB178)\uD22C\uBA85_0"
+========
+guid: 9fd253478b34dbe489cd09fccf5bec3e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8396354339058415079
+    second: SAVE_MANUAL_0
+>>>>>>>> origin/feature-H:Assets/New Folder/SAVE_MANUAL.png.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,49 +105,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+<<<<<<<< HEAD:Assets/ContainVacine/버그소프트(제출)/동아리_도미니크(분노)투명.png.meta
       name: "\uB3D9\uC544\uB9AC_\uB3C4\uBBF8\uB2C8\uD06C(\uBD84\uB178)\uD22C\uBA85_0"
       rect:
         serializedVersion: 2
@@ -146,6 +117,15 @@ TextureImporter:
         y: 144
         width: 1979
         height: 4359
+========
+      name: SAVE_MANUAL_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 75
+        height: 75
+>>>>>>>> origin/feature-H:Assets/New Folder/SAVE_MANUAL.png.meta
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +134,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Assets/ContainVacine/버그소프트(제출)/동아리_도미니크(분노)투명.png.meta
       spriteID: d43bb203859bce810800000000000000
       internalID: 1796014139830416205
+========
+      spriteID: 7e5f2eb19c7d58470800000000000000
+      internalID: 8396354339058415079
+>>>>>>>> origin/feature-H:Assets/New Folder/SAVE_MANUAL.png.meta
       vertices: []
       indices: 
       edges: []
@@ -174,7 +159,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+<<<<<<<< HEAD:Assets/ContainVacine/버그소프트(제출)/동아리_도미니크(분노)투명.png.meta
       "\uB3D9\uC544\uB9AC_\uB3C4\uBBF8\uB2C8\uD06C(\uBD84\uB178)\uD22C\uBA85_0": 1796014139830416205
+========
+      SAVE_MANUAL_0: 8396354339058415079
+>>>>>>>> origin/feature-H:Assets/New Folder/SAVE_MANUAL.png.meta
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
