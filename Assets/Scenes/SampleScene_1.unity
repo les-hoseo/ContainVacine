@@ -1617,8 +1617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba54399f38ad85429be1bad2d15c775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetText: {fileID: 0}
-  glitchEffect: {fileID: 0}
 --- !u!114 &1609092996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1816,17 +1814,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terminalManager: {fileID: 1794894488}
-  RachelRibraryLog: {fileID: 0}
-  RachelProfileLog: {fileID: 0}
-  RachelDepartureLog: {fileID: 0}
-  RachelLocalmythLog: {fileID: 0}
-  RachelMemoryLog: {fileID: 0}
-  RachelFrIendsLog: {fileID: 0}
-  MissingMemoryLog: {fileID: 0}
-  BookclubLog: {fileID: 0}
-  EverlightLog: {fileID: 0}
-  BellarunLog: {fileID: 0}
-  MirelinLog: {fileID: 0}
+  RachelRibraryLog: {fileID: 11400000, guid: 93ea12b3f0f4ce14d8b3a16c2dcd4223, type: 2}
+  RachelProfileLog: {fileID: 11400000, guid: f3bd1d04e1873ea429c5eb0d01db68a3, type: 2}
+  RachelDepartureLog: {fileID: 11400000, guid: 02bece6b68915824891cdf0a01e223dd, type: 2}
+  RachelLocalmythLog: {fileID: 11400000, guid: b8a7dee0dd44966489d9ae64ed2fc932, type: 2}
+  RachelMemoryLog: {fileID: 11400000, guid: 1b193c21d5b16e54a82f00698930e5d1, type: 2}
+  RachelFrIendsLog: {fileID: 11400000, guid: db8eff23e6fb874459f4656479ebf063, type: 2}
+  MissingMemoryLog: {fileID: 11400000, guid: c198aad6393c72d46a206c7a36bb8c52, type: 2}
+  BookclubLog: {fileID: 11400000, guid: 7855952bf10063b4d9b080a0e8ce3a4c, type: 2}
+  EverlightLog: {fileID: 11400000, guid: 388d5b0537145d246832c535a23b6d0b, type: 2}
+  BellarunLog: {fileID: 11400000, guid: bf4a445ca3e063041ba86388e53bd690, type: 2}
+  MirelinLog: {fileID: 11400000, guid: c2bf6014cbe2ad449975e010fc9e2c0e, type: 2}
 --- !u!1 &1989583113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,13 +1941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a944bd95a9d5845a144bea4fe6efb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CRT_HP: 100
-  CRT_TEMP: 36.5
-  CRT_LINK_1: 0
-  CRT_LINK_2: 0
-  CRT_LINK_3: 0
-  CRT_CAM: 100
-  SUB_MENTAL: 100
 --- !u!4 &2029052480
 Transform:
   m_ObjectHideFlags: 0

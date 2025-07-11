@@ -22,7 +22,7 @@ public class RachelCheckUpCommand : ICommand
     public List<string> Execute(string[] args)
     {
         RACHEL = commandManager.ColorText("PURPLE", "RACHEL") + " > ";
-        AdLog = commandManager.ColorText("GRAY", "End of Dialog.NEW LOG FILE SAVED: RachelProfileLog");
+        AdLog = commandManager.ColorText("GRAY", "End of Dialog.NEW LOG FILE SAVED: RACHEL_PROFILE.LOG");
         var lines = new List<string>();
 
 
