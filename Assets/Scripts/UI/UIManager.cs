@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     // UI 열기
     public void ShowSettingUI()
     {
+        Debug.Log("세팅창 켜볼게");
         settingPanel.SetActive(true);
     }
     // UI 닫기
