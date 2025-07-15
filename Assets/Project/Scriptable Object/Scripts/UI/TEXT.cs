@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using static FlowManager;
 
 public class TEXT : MonoBehaviour
 {
@@ -100,6 +101,7 @@ public class TEXT : MonoBehaviour
             // 모든 대사가 끝난 경우 텍스트 초기화 및 로그
             textBox.text = "";
             Debug.Log("모든 대사를 출력했습니다.");
+            FlowManager.instance.SetState(GameState.Gameplay);
         }
     }
 

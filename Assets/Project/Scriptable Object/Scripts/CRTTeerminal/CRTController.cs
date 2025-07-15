@@ -198,7 +198,7 @@ public class CRTController : MonoBehaviour
     {
         if (history.Count == 0) return;
 
-        historyIndex = Mathf.Clamp(historyIndex + direction, 0, history.Count - 1);
+        historyIndex = Mathf.Clamp(historyIndex + direction, 0, history.Count + 1);
         currentInput.Clear().Append(history[historyIndex]);
     }
 

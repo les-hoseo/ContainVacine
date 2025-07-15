@@ -12,7 +12,6 @@ public class StoryManager : MonoBehaviour
         foreach (var text in textComponent)
         {
             text.Init(storyData);
-            //Debug.Log();
         }
         
     }
