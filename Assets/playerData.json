@@ -1,0 +1,70 @@
+{
+    "SCRIPTS": [
+        {
+            "SCENE_ID": 1,
+            "Script": "내놔",
+            "Name": "아기",
+            "IMG_name": "아기.png",
+            "Answers_list": [
+                {
+                    "Answer_scrtips": "예",
+                    "Secen_id": 2
+                },
+                {
+                    "Answer_scrtips": "아니요",
+                    "Secen_id": 3
+                }
+            ]
+        },
+        {
+            "SCENE_ID": 2,
+            "Script": "내놔",
+            "Name": "아기",
+            "IMG_name": "아기.png",
+            "Answers_list": [
+                {
+                    "Answer_scrtips": "예",
+                    "Secen_id": 2
+                },
+                {
+                    "Answer_scrtips": "아니요",
+                    "Secen_id": 3
+                }
+            ]
+        },
+        {
+            "SCENE_ID": 3,
+            "Script": "내놔",
+            "Name": "아기",
+            "IMG_name": "아기.png",
+            "Answers_list": [
+                {
+                    "Answer_scrtips": "예",
+                    "Secen_id": 2
+                },
+                {
+                    "Answer_scrtips": "아니요",
+                    "Secen_id": 3
+                }
+            ]
+        },
+        {
+            "SCENE_ID": 4,
+            "Script": "내놔",
+            "Name": "아기",
+            "IMG_name": "아기.png",
+            "Answers_list": [
+                {
+                    "Answer_scrtips": "내와",
+                    "Secen_id": 10
+                },
+                {
+                    "Answer_scrtips": "아니요",
+                    "Secen_id": 3
+                }
+            ]
+        }
+
+
+    ]
+}

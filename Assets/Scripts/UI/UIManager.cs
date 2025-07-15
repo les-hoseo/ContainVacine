@@ -8,7 +8,10 @@ public class UIManager : MonoBehaviour
     [Header("게임 스타트")]
     public GameObject GameStart;
 
-// 세팅 UI
+    [Header("인터페이스")]
+    public GameObject Interface; 
+
+    // 세팅 UI
     // UI 열기
     public void ShowSettingUI()
     {
@@ -21,7 +24,7 @@ public class UIManager : MonoBehaviour
         settingPanel.SetActive(false);
     }
 
-//임시 UI
+//Game Start Button UI
     //UI 열기
     public void ShowGameStartbutton()
     {
@@ -31,5 +34,17 @@ public class UIManager : MonoBehaviour
     public void HideGameStartbutton()
     {
         GameStart.SetActive(false);
+    }
+
+    //인터페이스 UI
+    //UI 열기
+    public void ShowINTERFACE()
+    {
+        Interface.SetActive(true);
+    }
+    //UI 닫기
+    public void HideINTERFACE()
+    {
+        Interface.SetActive(false);
     }
 }
