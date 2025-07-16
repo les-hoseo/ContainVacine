@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8c1e8ce5c97f94baa068faa727862f, type: 3}
+  m_Name: HEARTBEAT
+  m_EditorClassIdentifier: 
+  logTitle: HEARTBEAT.LOG
+  engContent: "Loading LOG FILE 100%\r\n\r\nOpening LOG FILE : HEARTBEAT.LOG\r\n\r\nHASH
+    [<color=#8C3A3A>\u2591\u2591\u2591\u2591-4152-5642-\u2591\u2591\u2591\u2591<color>]\r\nINTERGRITY
+    CHECK : <color=#904ba6>CORRUPTED<color>\r\n\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n<color=#A05F2C>ROMEO<color>
+    > ...<color=#8C3A3A>\uBC15\uB3D9 \uC18C\uB9AC\uC694<color>?\r\n<color=#A05F2C>ROMEO<color>
+    > \uC544. \uC544... \uB9DE\uC544\uC694. \uADF8 <color=#8C3A3A>\u2591\u2591\u2591\u2591<color>\uC5D0
+    <color=#8C3A3A>\u2591\u2591\u2591<color>\uC9C0\uB358 \uC18C\uB9AC...\r\n<color=#A05F2C>ROMEO<color>
+    > \uC544\uC9C1\uB3C4 \uB4E4\uB824\uC640, <color=#8C3A3A>\u2591\u2591<color>\uB4E4\uC758
+    \uB9C8\uC9C0\uB9C9 <color=#8C3A3A>\u2591\u2591<color>\uC774...\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n\r\nKEYWORD
+    : <color=#8C3A3A>UNKNOWN<color> <color=#8C3A3A>UNKNOWN<color>\r\nPASSWORD : [\u2018HEX\u2019,
+    \u2018SEA\u2019]\r"
+  korContent: "Loading LOG FILE 100%\r\n\r\nOpening LOG FILE : HEARTBEAT.LOG\r\n\r\nHASH
+    [<color=#8C3A3A>\u2591\u2591\u2591\u2591-4152-5642-\u2591\u2591\u2591\u2591<color>]\r\nINTERGRITY
+    CHECK : <color=#904ba6>CORRUPTED<color>\r\n\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n<color=#A05F2C>ROMEO<color>
+    > ...<color=#8C3A3A>\uBC15\uB3D9 \uC18C\uB9AC\uC694<color>?\r\n<color=#A05F2C>ROMEO<color>
+    > \uC544. \uC544... \uB9DE\uC544\uC694. \uADF8 <color=#8C3A3A>\u2591\u2591\u2591\u2591<color>\uC5D0
+    <color=#8C3A3A>\u2591\u2591\u2591<color>\uC9C0\uB358 \uC18C\uB9AC...\r\n<color=#A05F2C>ROMEO<color>
+    > \uC544\uC9C1\uB3C4 \uB4E4\uB824\uC640, <color=#8C3A3A>\u2591\u2591<color>\uB4E4\uC758
+    \uB9C8\uC9C0\uB9C9 <color=#8C3A3A>\u2591\u2591<color>\uC774...\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n\r\nKEYWORD
+    : <color=#8C3A3A>UNKNOWN<color> <color=#8C3A3A>UNKNOWN<color>\r\nPASSWORD : [\u2018HEX\u2019,
+    \u2018SEA\u2019]\r"
+  fixEngContent: "Loading LOG FILE 100%\r\n\r\nOpening LOG FILE : HEARTBEAT.LOG\r\n\r\nHASH
+    [<color=#4D684E>4845<color>-4152-5642-<color=#4D684E>4541<color>]\r\nINTERGRITY
+    CHECK : <color=#4D684E>VERIFIED<color>\r\n\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n<color=#A05F2C>ROMEO<color>
+    > ...<color=#8C3A3A>\uBC15\uB3D9 \uC18C\uB9AC\uC694<color>?\r\n<color=#A05F2C>ROMEO<color>
+    > \uC544. \uC544... \uB9DE\uC544\uC694. \uADF8 <color=#8C3A3A>\uC1E0\uD30C\uC774\uD504<color>\uC5D0
+    <color=#8C3A3A>\uC9D6\uC774\uACA8<color>\uC9C0\uB358 \uC18C\uB9AC...\r\n<color=#A05F2C>ROMEO<color>
+    > \uC544\uC9C1\uB3C4 \uB4E4\uB824\uC640, <color=#8C3A3A>\uC0AC\uB78C<color>\uB4E4\uC758
+    \uB9C8\uC9C0\uB9C9 <color=#8C3A3A>\uC6B8\uC74C<color>\uC774...\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n\r\nKEYWORD
+    : TERROR\r\nPASSWORD : [\u2018HEX\u2019, \u2018SEA\u2019]\r"
+  fixKorContent: 
+  hash:
+  - 4845
+  - 4152
+  - 5642
+  - 4541
+  keyword:
+  - TERROR
+  canAsk: []
+  isCorrupted: 0
+  password:
+  - HEX
+  - SEA
+  match: []

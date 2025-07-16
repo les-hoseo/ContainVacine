@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Project/Scriptable Object/StoryData.meta
 guid: 0c4681f06f0251c40a76c8cf038598a5
+========
+guid: df3ae43e94f330e4ebcd66ff3e6c45c3
+>>>>>>>> feature-J:Assets/Project/Scriptable Object/LogData/RachelLog.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

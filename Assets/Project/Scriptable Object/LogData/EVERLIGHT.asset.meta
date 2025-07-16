@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Project/Scriptable Object/LogData/EVERLIGHT.asset.meta
 guid: 911928e339517f64f99be7ef12bfec81
+========
+guid: f21733de64d494b4caf8e53e0f654705
+>>>>>>>> feature-J:Assets/Project/Scriptable Object/LogData/BELLARUN.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
