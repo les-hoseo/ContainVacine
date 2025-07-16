@@ -5,9 +5,14 @@ public class LogData : ScriptableObject
 {
     public string logTitle;
     [TextArea(5, 15)]
-    public string Engcontent;
+    public string engContent;
     [TextArea(5, 15)]
-    public string Korcontent;
+    public string korContent;
+    [TextArea(5, 15)]
+    public string fixEngContent;
+    [TextArea(5, 15)]
+    public string fixKorContent;
+    
     public string[] hash;
     public string[] keyword;
     public SubjectData[] canAsk;
