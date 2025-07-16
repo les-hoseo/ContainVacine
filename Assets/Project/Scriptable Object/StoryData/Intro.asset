@@ -9,16 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4c122a243057884fa60230569432ce2, type: 3}
+  m_Script: {fileID: 11500000, guid: 0621859bbe482dc4195d9f9e196e4610, type: 3}
   m_Name: Intro
   m_EditorClassIdentifier: 
   Story:
-  - Name: "\uB808\uC774\uCCBC \uB3C4\uBBF8\uB2C8\uD06C"
-    Content: "\uC774\uAC74 \uD14C\uC2A4\uD2B8 \uC785\uB2C8\uB2E4."
-    Sprite: {fileID: -6964340433041597978, guid: dc662e56d7159db4a960628479e4bbb2, type: 3}
-  - Name: "\uB808\uC774\uCCBC \uB3C4\uBBF8\uB2C8\uD06C"
-    Content: "\uC774\uAC74 \uD14C\uC2A4\uD2B8\uC57C\uC544\uC544\uC544\uC545!"
+  - Name: "\uB808\uC774\uCCBC"
+    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
     Sprite: {fileID: -7807039364846549133, guid: 32d3a70b37980ff4abc5e76e2a64080c, type: 3}
-  - Name: "\uB808\uC774\uCCBC \uB3C4\uBBF8\uB2C8\uD06C"
-    Content: "\uC774\uAC70 \uD14C\uC2A4\uD2B8\uC784????"
+  - Name: "\uB808\uC774\uCCBC"
+    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
+    Sprite: {fileID: -6964340433041597978, guid: dc662e56d7159db4a960628479e4bbb2, type: 3}
+  - Name: "\uB808\uC774\uCCBC"
+    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
+    Sprite: {fileID: -490914541500067938, guid: 385f8df6e9bfeab4093b55fff7e9673e, type: 3}
+  - Name: "\uB808\uC774\uCCBC"
+    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
     Sprite: {fileID: -7450329836573684982, guid: b99791ca5bf9a834f9bcd25d38c31094, type: 3}
