@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8c1e8ce5c97f94baa068faa727862f, type: 3}
+  m_Name: Mirelin_Myth.Log
+  m_EditorClassIdentifier: 
+  logID: MIRELIN_MYTH.LOG
+  logTitle: MIRELIN_MYTH
+  hash:
+  - 424F
+  - 4F4B
+  - 434C
+  - 5542
+  canAsk:
+  - RACHEL
+  - MALCOM
+  match: []
+  content: 
+  tag:
+  - LORE
+  passward: []
+  isCorrupted: 0
+  passwordTag: []
+  corruptedHash: 
+  recoveredHash: 
+  isDecrypted: 0

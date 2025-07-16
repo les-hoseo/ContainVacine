@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: bace487cf20a4a048ade63d2f5edec80
+<<<<<<<< HEAD:Assets/ContainVacine/버그소프트(제출).meta
+guid: e725f31f72e9c564899a2fc73154344c
+========
+guid: f28b4583249ed2243a3cc06697e8e07f
+>>>>>>>> origin/feature-H:Assets/New Folder.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
