@@ -263,7 +263,14 @@ class Clear
 class Logs
 {
     // 터미널 로그 목록을 출력합니다.
+    public List<string> Result(string[] args)
+    {
+        var response = new List<string>
+        {
 
+        };
+        return response;
+    }
     // 아래는 이전 코드
     /*private TermianlManager terminalManager;
 
