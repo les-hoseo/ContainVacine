@@ -33,8 +33,7 @@ public class speech : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) && !INTERFACE_BACKBROUND.activeSelf)
         {
-            Debug.Log(Input.mousePosition.x);
-            Debug.Log(Input.mousePosition.y);
+            
             if (Input.mousePosition.x > 0 && Input.mousePosition.x < 1920 && Input.mousePosition.y > 0 && Input.mousePosition.y < 350)
             {
                 if (Running)
