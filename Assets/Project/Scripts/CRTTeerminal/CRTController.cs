@@ -63,7 +63,7 @@ public class CRTController : MonoBehaviour
             HandleMouseScroll();
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                TermianlManager.instance.ToggleTab();
+                TerminalManager.instance.ToggleTab();
             }
         }
 

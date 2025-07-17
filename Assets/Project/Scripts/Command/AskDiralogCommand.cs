@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AskDialogCommand : ICommand
 {
-    private TermianlManager terminalManager;
+    private TerminalManager terminalManager;
 
     public List<string> Execute(string[] args)
     {
@@ -96,7 +96,7 @@ public class AskDialogCommand : ICommand
         //}
 
 
-       
+
 
         return result;
     }

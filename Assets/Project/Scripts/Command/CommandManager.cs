@@ -13,21 +13,57 @@ public class CommandManager : MonoBehaviour
 
     public static CommandManager instance;
 
-    [SerializeField] private TermianlManager terminalManager;
+    [SerializeField] private TerminalManager terminalManager;
     [Header("로그들")]
-    [SerializeField] private LogData RachelRibraryLog;
+    [SerializeField] private LogData RachelLibraryLog;
     [SerializeField] private LogData RachelProfileLog;
-    [SerializeField] private LogData RachelDepartureLog;
-    [SerializeField] private LogData RachelLocalmythLog;
-    [SerializeField] private LogData RachelMemoryLog;
-    [SerializeField] private LogData RachelFrIendsLog;
+    [SerializeField] private LogData RachelDepartureLog;    
+    [SerializeField] private LogData RachelLocalmythLog;    
+    [SerializeField] private LogData RachelMemoryLog;    
+    [SerializeField] private LogData RachelFrIendsLog;   
+    [SerializeField] private LogData RachelCurseLog;  
+    [SerializeField] private LogData RachelSirenLog;
+    
+
+    [SerializeField] private LogData RomeoProfileLog;
+    [SerializeField] private LogData HeartBeatLog;
+    
+
+
 
     [SerializeField] private LogData MissingMemoryLog;
-    [SerializeField] private LogData BookclubLog;
-
+    [SerializeField] private LogData BellarunBookclubLog;
+    [SerializeField] private LogData MirelinMythLog;
+    
     [SerializeField] private LogData EverlightLog;
-    [SerializeField] private LogData BellarunLog;
+    [SerializeField] private LogData BellarunLog;    
     [SerializeField] private LogData MirelinLog;
+
+
+    public LogData rachelLibraryLog => RachelLibraryLog;
+    public LogData rachelProfileLog => RachelProfileLog;
+    public LogData rachelDepartureLog => RachelDepartureLog;
+    public LogData rachelLocalmythLog => RachelLocalmythLog;
+    public LogData rachelMemoryLog => RachelMemoryLog;
+
+    public LogData rachelFrIendsLog => RachelFrIendsLog;
+    public LogData rachelCurseLog => RachelCurseLog;
+    public LogData rachelSirenLog => RachelSirenLog;
+    public LogData romeoProfileLog => RomeoProfileLog;
+    public LogData heartBeatLog => HeartBeatLog;
+    public LogData missingMemoryLog => MissingMemoryLog;
+    public LogData bellarunBookclubLog => BellarunBookclubLog;
+    public LogData mirelinMythLog => MirelinMythLog;
+    public LogData everlightLog => EverlightLog;
+
+    public LogData bellarunLog => BellarunLog;
+    public LogData mirelinLog => MirelinLog;
+
+
+    [Header("subject")]
+    [SerializeField] private SubjectData Romeo;
+    [SerializeField] private SubjectData Rachel;
+    [SerializeField] private SubjectData malcom;
 
 
 
@@ -43,7 +79,7 @@ public class CommandManager : MonoBehaviour
     public int crtHp = 450;
 
 
-    public string Temp_SubjectName = "RHACHEL";
+    public string Temp_SubjectName = "RACHEL";
     public enum TabState
     {
         ROOT,
@@ -64,9 +100,11 @@ public class CommandManager : MonoBehaviour
         { "PURPLE", "#904ba6" }
     };
 
+
     private void Start()
     {
         instance.state = CommandManager.TabState.ROOT;
+
     }
 
     public string InputCommands(string fullInput)
@@ -190,6 +228,9 @@ public class CommandManager : MonoBehaviour
             if (parts.Length == 0) return "";
 
             string cmd = parts[0].ToUpper();
+            CRTController.instance.command = cmd;
+            Debug.Log("InputCommands received: " + fullInput);
+            Debug.Log("Command parsed: " + cmd);
             switch (CRTController.instance.command)
             {
                 case "ASK":
@@ -411,9 +452,9 @@ public class CommandManager : MonoBehaviour
 }*/
 class Logs : ICommand
 {
-    private TermianlManager terminalManager;
+    private TerminalManager terminalManager;
 
-    public Logs(TermianlManager terminalMgr)
+    public Logs(TerminalManager terminalMgr)
     {
         terminalManager = terminalMgr;
     }
@@ -495,9 +536,9 @@ class Logs : ICommand
 
 class Read : ICommand
 {
-    private TermianlManager terminalManager;
+    private TerminalManager terminalManager;
 
-    public Read(TermianlManager terminalMgr)
+    public Read(TerminalManager terminalMgr)
     {
         terminalManager = terminalMgr;
     }
@@ -747,8 +788,8 @@ class DeepMind_Match
 
 class Vacine_Verify : ICommand
 {
-    private TermianlManager terminalManager;
-    public Vacine_Verify(TermianlManager terminalMgr)
+    private TerminalManager terminalManager;
+    public Vacine_Verify(TerminalManager terminalMgr)
     {
         terminalManager = terminalMgr;
     }
@@ -982,15 +1023,16 @@ class Crt_Link
 
 class Ask : ICommand
 {
-    private TermianlManager terminalManager;
+    private TerminalManager terminalManager;
 
-    public Ask(TermianlManager terminalMgr)
+    public Ask(TerminalManager terminalMgr)
     {
         terminalManager = terminalMgr;
     }
 
     public List<string> Execute(string[] args)
     {
+        var m = CommandManager.instance;
         var lines = new List<string>();
 
         if (args.Length < 2)
@@ -1002,31 +1044,180 @@ class Ask : ICommand
 
         string logTitle = args[1];
         string subjectName = CommandManager.instance.Temp_SubjectName;
-
+        
         // 1. 보유한 로그에서 대상 로그 찾기
         var targetLog = terminalManager.OwnedLogs.Find(log => log.logTitle == logTitle);
-        Debug.Log(targetLog);
         if (targetLog == null)
         {
             lines.Add("보유한 로그파일이 없습니다.");
             return lines;
         }
-
-        // 2. 관련성 확인 (canAsk 안에 현재 SubjectName이 있는지 확인)
+        foreach (var subject in targetLog.canAsk)
+        {
+            if (subject != null)
+                Debug.Log("canAsk subject: " + subject.subjectName);
+        }
+        // 2. 관련성 확인: subjectName이 canAsk 리스트 안에 존재하는지
         bool isRelated = false;
 
         foreach (var subject in targetLog.canAsk)
         {
-            if (subject != null && subject.subjectName == subjectName)
+            if (subject != null && subject.subjectName == "RACHEL")//""RACHEL은 임시 
             {
                 isRelated = true;
-                break;
+                break; // 하나라도 찾으면 멈춤
             }
         }
 
         if (isRelated)
         {
-            lines.Add("관련있음");
+            Debug.Log("관련있음");
+            switch (logTitle)
+            {
+                case "BELLARUN.LOG" :
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelLibraryLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+                            
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelLibraryLog);
+                            Debug.Log("RACHEL_LIBRARY.LOG 로그 추가됨!");
+                            lines.Add(m.rachelLibraryLog.engContent);
+                            lines.Add("RACHEL_LIBRARY.LOG 로그 추가됨!");
+                            break;
+                        }
+                        
+                    }
+                case "EVERLIGHT.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelDepartureLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelDepartureLog);
+                            Debug.Log("RACHEL_DEPARTURE.LOG 로그 추가됨!");
+                            lines.Add(m.rachelDepartureLog.engContent);
+                            lines.Add("RACHEL_DEPARTURE.LOG 로그 추가됨!");
+                            break;
+                        }
+
+                    }
+                case "RACHEL_DEPARTURE.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.missingMemoryLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.missingMemoryLog);
+                            Debug.Log("MISSING_MAMORY.LOG 로그 추가됨!");
+                            lines.Add(m.missingMemoryLog.engContent);
+                            lines.Add("MISSING_MEMORY.LOG 로그 추가됨!");
+                            break;
+                        }
+                    }
+                case "MIRELIN.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelLocalmythLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelLocalmythLog);
+                            Debug.Log("RACHEL_LOCALMYTH.LOG 로그 추가됨!");
+                            lines.Add(m.rachelLocalmythLog.engContent);
+                            lines.Add("RACHEL_LOCALMYTH.LOG 로그 추가됨!");
+                            break;
+                        }
+                    }
+                case "MISSING_MEMORY.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelMemoryLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelMemoryLog);
+                            Debug.Log("RACHEL_MEMORY.LOG 로그 추가됨!");
+                            lines.Add(m.rachelMemoryLog.engContent);
+                            lines.Add("RACHEL_MEMORY.LOG 로그 추가됨!");
+                            break;
+                        }
+                    }
+                case "BOOKCLUB.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelFrIendsLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelFrIendsLog);
+                            Debug.Log("RACHEL_FRIENDS.LOG 로그 추가됨!");
+                            lines.Add(m.rachelFrIendsLog.engContent);
+                            lines.Add("RACHEL_FRIENDS.LOG 로그 추가됨!");
+                            break;
+                        }
+                    }
+                case "MIRELIN_MYTH.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelCurseLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelCurseLog);
+                            Debug.Log("RACHEL_CURSE.LOG 로그 추가됨!");
+                            lines.Add(m.rachelCurseLog.engContent);
+                            lines.Add("RACHEL_CURSE.LOG 로그 추가됨!");
+                            break;
+                        }
+                    }
+                case "MIRELIN_CURSE.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelSirenLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelSirenLog);
+                            Debug.Log("RACHEL_SIREN.LOG 로그 추가됨!");
+                            lines.Add(m.rachelSirenLog.engContent);
+                            lines.Add("RACHEL_SIREN.LOG 로그 추가됨!");
+                            break;
+                        }
+                    }
+                default:
+                    lines.Add("그거에 관해선 할 얘기가 없네요.");
+                    break;
+
+            }
+
         }
         else
         {
@@ -1035,5 +1226,6 @@ class Ask : ICommand
 
         return lines;
     }
+
 }
 
