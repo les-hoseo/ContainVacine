@@ -8,8 +8,31 @@ using static LogData;
 using static Unity.Burst.Intrinsics.X86.Avx;
 using System.Linq;
 
+
+public static class ModuleManager
+{
+    public static string ConnectedModule { get; private set; } = null;
+    public static void BootModule(string moduleName) => ConnectedModule = moduleName;
+    public static void ExitModule() => ConnectedModule = null;
+}
 public class CommandManager : MonoBehaviour
 {
+    [Header("모듈 상태")]
+    public LogData VacineConnectedLog { get; private set; } // VACINE 모듈에 연결된 로그
+    /// <summary>
+    /// VACINE 모듈에 특정 로그를 연결합니다.
+    /// </summary>
+    public void ConnectLogToVacine(LogData log)
+    {
+        VacineConnectedLog = log;
+    }
+    /// <summary>
+    /// VACINE 모듈에서 로그 연결을 해제합니다.
+    /// </summary>
+    public void DisconnectLogFromVacine()
+    {
+        VacineConnectedLog = null;
+    }
 
     public static CommandManager instance;
 
@@ -80,6 +103,9 @@ public class CommandManager : MonoBehaviour
 
 
     public string Temp_SubjectName = "RACHEL";
+
+    
+
     public enum TabState
     {
         ROOT,
@@ -107,6 +133,64 @@ public class CommandManager : MonoBehaviour
 
     }
 
+    private void InitializeCommands()
+    {
+        commands = new Dictionary<string, ICommand>
+{
+{ "INFO", new InfoCommand() },
+{ "HELP", new HelpCommand() },
+{ "COMMANDS", new CommmandsCommand() }, // CommandsCommand는 Help와 유사하게구현
+//{ "CLS", new ClsCommand() }, // ClsCommand는 InfoCommand를 호출하여 화면을 정리
+{ "LOGS", new LogsCommand(terminalManager) },
+{ "READ", new ReadCommand(terminalManager) },
+{ "DEEPMIND_MATCH", new DeepmindMatchCommand(terminalManager, this) },
+        { "VACINE_VERIFY", new VacineVerifyCommand(terminalManager, this) },
+        { "VACINE_CONNECT", new VacineConnectCommand(terminalManager, this) }, // <-- 추가
+        { "V_CON", new VacineConnectCommand(terminalManager, this) },          // <-- 단축 명령어 추가
+// ... (기획서의 모든 명령어 등록) ...
+// { "CRT_CONDITION", new CrtConditionCommand(this) },
+// { "ASK", new AskCommand(terminalManager) }
+};
+    }
+
+
+    public string ProcessInput(string fullInput)
+    {
+        string[] parts = fullInput.Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 0) return "";
+        string commandName = parts[0].ToUpper();
+        // 탭 상태에 따라 명령어 처리 분기
+        if (state == TabState.ROOT)
+        {
+            if (commands.TryGetValue(commandName, out ICommand command))
+            {
+                // TODO: 명령어 실행에 필요한 인자(parts)를 전달
+                List<string> resultLines = command.Execute(parts);
+                return string.Join("\n", resultLines);
+            }
+        }
+        else if (state == TabState.DIALOG)
+        {
+            if (commandName == "ASK")
+            {
+                // ASK 명령어 처리 로직
+                // ICommand askCommand = commands["ASK"];
+                // List<string> resultLines = askCommand.Execute(parts);
+                // return string.Join("\n", resultLines);
+            }
+        }
+        // 알 수 없는 명령어 처리
+        return $"Unknown command: {commandName}";
+    }
+    public string ColorText(string color, string text)
+    {
+        // 색상 코드 테이블을 사용하여 구현
+        return text; // 임시
+    }
+
+    //..
+
+
     public string InputCommands(string fullInput)
     {
 
@@ -123,7 +207,7 @@ public class CommandManager : MonoBehaviour
             {
                 case "INFO":
                     // 1) Info 클래스 인스턴스 생성
-                    var info = new Info();
+                    var info = new InfoCommand();
 
                     // 2) Execute 호출 (필요 시 실제 args 전달)
                     List<string> lines = info.Execute(parts);
@@ -131,21 +215,20 @@ public class CommandManager : MonoBehaviour
                     // 3) List<string>을 개행(\n)으로 합쳐서 반환
                     return string.Join("\n", lines);
                 case "HELP":
-                    var help = new Help();
+                    var help = new HelpCommand();
                     List<string> line = help.Execute(new string[0]);
                     return string.Join("\n", line);
 
                 case "COMMANDS":
-                    var commands = new Commands();
+                    var commands = new CommmandsCommand();
                     List<string> cmdlines = commands.Execute(new string[0]);
                     return string.Join("\n", cmdlines);
 
                 case "CLS":
                     {
                         // Info 내용 가져오기
-                        var clsinfo = new Info();
+                        var clsinfo = new InfoCommand();
                         List<string> clslines = clsinfo.Execute(new string[0]);
-
                         // 합쳐서 반환
                         return string.Join("\n", clslines);
                     }
@@ -154,7 +237,7 @@ public class CommandManager : MonoBehaviour
                     List<string> logsline = logs.Execute(parts);
                     return string.Join("\n", logsline);
                 case "READ":
-                    var read = new Read(terminalManager);
+                    var read = new ReadCommand(terminalManager);
                     return string.Join("\n", read.Execute(parts));
 
                 case "QUERY":
@@ -170,13 +253,13 @@ public class CommandManager : MonoBehaviour
                     return string.Join("\n", exit.Execute(parts));
 
                 case "DEEPMIND_MATCH":
-                    var match = new DeepmindMatch();
+                    var match = new DeepmindMatchCommand(terminalManager, this);
                     return string.Join("\n", match.Execute(parts));
 
                 case "VACINE_CONNECT":
                     return "";
                 case "VACINE_VERIFY":
-                    var verify = new Vacine_Verify(terminalManager);
+                    var verify = new VacineVerifyCommand(terminalManager, this);
                     return string.Join("\n", verify.Execute(parts));
                 case "CRT_CONDITION":
                     var crtcon = new Crt_Condition();
@@ -247,6 +330,7 @@ public class CommandManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        InitializeCommands();
         /*commands["HELP"] = new HelpCommand();
         commands["INFO"] = new InfoCommand(this);
         commands["CLS"] = new ClsCommand(this);
@@ -267,7 +351,7 @@ public class CommandManager : MonoBehaviour
         commands["READ"] = new ReadCommand(ownedLogs);
 
     }*/
-    public string ColorText(string colorName, string text)
+    /*public string ColorText(string colorName, string text)
     {
         if (colorTable.TryGetValue(colorName, out var hex))
         {
@@ -277,7 +361,7 @@ public class CommandManager : MonoBehaviour
         {
             return text;
         }
-    }
+    }*/
 
     public List<string> Process(string input)
     {
@@ -315,69 +399,32 @@ public class CommandManager : MonoBehaviour
     }
         
 }
-    class Info
+public class InfoCommand : ICommand
+{
+    public List<string> Execute(string[] args)
     {
-
-        // 터미널 정보를 출력합니다.
-        public List<string> Execute(string[] args)
-        {
-            var result = new List<string>
-        {
-            "----------------------------------------\n" +
-            "C.R.T. OS\n" +
-            "----------------------------------------\n" +
-            $"System Status : <color=#4D684E>STABLE</color>\n" +
-            $"USER ID [000000278B025670]\n" +
-            $"Neural Sync Status : <color=#4D684E>STABLE</color>\n" +
-            "----------------------------------------\n" +
-            "type \"HELP\" to get help using terminal"
-    };
-            return result;
-        }
+        // GameManager에서 현재 상태 값을 가져와 출력에 반영합니다.
+        var gm = GameManager.instance;
+        string systemStatus = gm.PlayerHP >= 60?"STABLE" : "UNSTABLE"; 
+string syncStatus = "STABLE";// 특수 검진 시 UNSTABLE로 변경 필요 [cite: 231]
+        return new List<string>
+{ "C.R.T. OS",
+"————————————————————————————————————————————————",
+$"System Status : {systemStatus}",
+"USER ID [GAGAJ74625E40B5B]", 
+$"Neural Sync Status : {syncStatus}",
+"type “HELP” to get help using terminal"
+};
     }
-
-    class Help
+}
+public class CommmandsCommand : ICommand
+{
+    public List<string> Execute(string[] args)
     {
-        // 터미널 사용 설명을 출력합니다.
-        public List<string> Execute(string[] args)
-        {
-            var result = new List<string>
-        {
-          "———————————————————————————————————\n" +
-          "type with keyboard on the machine\n" +
-          "enter to submit\n" +
-          "tab to change between DIALOG and ROOT\n" +
-          "\n" +
-          "type “HELP” to show this lines\n" +
-          "type “INFO” to get information of the terminal\n" +
-          "\n" +
-          "type “COMMANDS” to get list of terminal commands\n" +
-          "———————————————————————————————————\n"
-        };
-            return result;
-        }
-        // 아래는 이전 코드
-        /*public List<string> Execute(string[] args)
-        {
-            var response = new List<string>
-            {
-                "Available commands:",
-                "HELP - Show command list.",
-                "INFO - Show system info.",
-                "CLS - Clear screen.",
-                // ...
-            };
-            return response;
-        }*/
-    }
-
-    class Commands
-    {
-        public List<string> Execute(string[] args)
-        {
-            var response = new List<string>
-        {
-            "———————————————————————————————————\n" +
+       
+        return new List<string>
+{
+            "————————————————————————————————————————————————\n" +
             "HELP                    터미널 사용법을 출력합니다.\n" +
             "INFO                    터미널 정보를 출력합니다.\n" +
             "\n" +
@@ -395,14 +442,101 @@ public class CommandManager : MonoBehaviour
             "CRT_LINK                CRT의 전력 연결 상태를 조절합니다.\n" +
             "CRT_TEMPERATURE         현재 CRT 내부 온도 상태를 조절합니다.\n" +
             "CRT_FLASH               연결된 카메라의 플래시를 격발합니다.\n" +
-            "———————————————————————————————————\n"
-        };
-            return response;
-        }
-        // 명령어 리스트를 출력합니다.
+            "————————————————————————————————————————————————\n"
+};
     }
+}
 
-    class Clear
+
+public class HelpCommand : ICommand
+{
+    public List<string> Execute(string[] args)
+    {
+        return new List<string>
+{
+"————————————————————————————————————————————————",
+"type with keyboard on the machine",
+"enter to submit",
+"tab to change between DIALOG and ROOT",
+"",
+"type “HELP” to show this lines",
+"type “INFO” to get information of the terminal",
+"type “COMMANDS” to get list of terminal commands",
+"————————————————————————————————————————————————"
+};
+    }
+}
+
+// 아래는 이전 코드
+/*public List<string> Execute(string[] args)
+{
+    var response = new List<string>
+    {
+        "Available commands:",
+        "HELP - Show command list.",
+        "INFO - Show system info.",
+        "CLS - Clear screen.",
+        // ...
+    };
+    return response;
+}*/
+
+public class LogsCommand : ICommand
+{
+    private TerminalManager terminalManager;
+    public LogsCommand(TerminalManager manager)
+    {
+        this.terminalManager = manager;
+    }
+    public List<string> Execute(string[] args)
+    {
+        var lines = new List<string>();
+        string prex = (args.Length > 1) ? args[1].ToUpper() : "NONE";
+        lines.Add($"LOG PREFIX : {prex}");
+        lines.Add("————————————————————————————————————————————————");
+    if (terminalManager.OwnedLogs.Count == 0)
+        {
+            lines.Add("No logs acquired.");
+            return lines;
+        }
+        List<LogData> lteredLogs;
+        if (prex == "NONE")
+        {
+            // 접두사 없으면 캐릭터 특정 로그 제외하고 출력
+            lteredLogs = terminalManager.OwnedLogs.Where(log =>
+            !log.logTitle.StartsWith("RACHEL_") &&
+            !log.logTitle.StartsWith("ROMEO_") &&
+            !log.logTitle.StartsWith("MALCOM_")).ToList();
+        }
+        else if (prex == "RACHEL" || prex == "ROMEO" || prex == "MALCOM")
+        {
+            // 접두사에 맞는 로그만 출력
+            lteredLogs = terminalManager.OwnedLogs.Where(log => log.logTitle.StartsWith(prex
+            + "_")).ToList();
+        }
+        else
+        {
+            lines.Add("SYSTEM > PREFIX NOT FOUND : " + prex);
+return lines;
+        }
+        if (lteredLogs.Count == 0)
+        {
+            lines.Add("No logs matched.");
+        }
+        else
+        {
+            foreach (var log in lteredLogs)
+            {
+                lines.Add(log.logTitle);
+            }
+        }
+        lines.Add("————————————————————————————————————————————————");
+    return lines;
+    }
+}
+
+
+class Clear
     {
         public List<string> Result(string[] args)
         {
@@ -536,64 +670,69 @@ class Logs : ICommand
 }
 
 
-class Read : ICommand
+public class ReadCommand : ICommand
 {
     private TerminalManager terminalManager;
-
-    public Read(TerminalManager terminalMgr)
+    public ReadCommand(TerminalManager manager)
     {
-        terminalManager = terminalMgr;
+        this.terminalManager = manager;
     }
-
     public List<string> Execute(string[] args)
     {
         var lines = new List<string>();
-
         if (args.Length < 2)
         {
-            lines.Add("Usage: READ <Logtitle>");
-            return lines;
+            lines.Add("SYSTEM > No target LOG FILE specied.");
+return lines;
         }
-
-        string requestedLogID = args[1];
-        var targetLog = terminalManager.OwnedLogs.Find(log => log.logTitle == requestedLogID);
-
-        if (targetLog == null)
+        string logTitleToRead = args[1];
+        LogData log = terminalManager.OwnedLogs.Find(l => l.logTitle.Equals(logTitleToRead,
+        System.StringComparison.OrdinalIgnoreCase));
+        if (log == null)
         {
-            lines.Add($"Log '{requestedLogID}' not found.");
-            return lines;
+            lines.Add($"SYSTEM > LOG FILE NOT FOUND : {logTitleToRead}");
+return lines;
         }
-
-        /* if (targetLog.isCorrupted && !targetLog.isDecrypted)
-         {
-             lines.Add($"Log '{requestedLogID}' is corrupted. Please decrypt it first.");
-             return lines;
-         }*/
-
-        lines.Add($"--- {targetLog.logTitle} ---");
-        if (targetLog.isCorrupted != Corrupted.False)
+        lines.Add("Loading LOG FILE 100%");
+        lines.Add($"Opening LOG FILE : {log.logTitle}");
+        // 해시 및 손상 상태 처리
+        string hashDisplay = string.Join("-", log.hash);
+        string integrity = "VERIFIED";
+        if (log.isCorrupted == LogData.Corrupted.True)
         {
-            if (targetLog.isCorrupted == Corrupted.Fixed)
-            {
-                // 고쳐진 로그 출력
-                lines.Add(targetLog.fixEngContent);
-            }
-            else
-            {
-                // 손상된 로그 출력
-                lines.Add(targetLog.engContent);
-            }
+            integrity = "CORRUPTED";
+// 손상된 해시 표현 (예: 일부만 보이거나, ░ 문자로 대체)
+hashDisplay = "░░░░-4152-5642-░░░░";// 기획서 예시 [cite: 500]
+}
+        lines.Add($"HASH [{hashDisplay}]");
+        lines.Add($"INTERGRITY CHECK : {integrity}");
+        lines.Add("————————————————————————————————————————————————");
+    // 내용 출력 (손상 여부에 따라 분기)
+if (log.isCorrupted == LogData.Corrupted.True)
+        {
+            lines.Add(log.engContent); // 손상된 내용
+        }
+        else if (log.isCorrupted == LogData.Corrupted.Fixed)
+        {
+            lines.Add(log.fixEngContent); // 수정된 내용
         }
         else
         {
-            // 정상 로그 출력
-            lines.Add(targetLog.engContent);
+            lines.Add(log.engContent); // 정상 내용
         }
+        lines.Add("————————————————————————————————————————————————");
+        lines.Add($"KEYWORD : {string.Join(", ", log.keyword)}");
+        if (log.isCorrupted == LogData.Corrupted.True)
+        {
+            lines.Add($"PASSWORD : [{string.Join(", ", log.password)}]");
+}
+        lines.Add($"End of FILE. Closing LOG FILE : {log.logTitle}");
         return lines;
     }
 }
 
-    class Query
+
+class Query
     {
         // 특정 아이템의 정보를 조회합니다.
         public List<string> Result(string[] args)
@@ -708,6 +847,11 @@ class Module_Boot : ICommand
 
         ConnectedModule = moduleName;
 
+        // ModuleManager에도 상태 전달
+        ModuleManager.BootModule(moduleName);
+
+
+
         return lines;
     }
 
@@ -715,6 +859,7 @@ class Module_Boot : ICommand
     public static void ResetModule()
     {
         ConnectedModule = null;
+        ModuleManager.ExitModule();
     }
 }
 
@@ -761,155 +906,295 @@ class Module_Exit : ICommand
     }
 }
 
-public class DeepmindMatch
+public class DeepmindMatchCommand : ICommand
 {
+    private TerminalManager terminalManager;
+    private CommandManager commandManager;
+    public DeepmindMatchCommand(TerminalManager termMgr, CommandManager cmdMgr)
+    {
+        this.terminalManager = termMgr;
+        this.commandManager = cmdMgr;
+    }
     public List<string> Execute(string[] args)
     {
         var lines = new List<string>();
-
-        if (args.Length != 2)
+        // 1. DEEPMIND 모듈 연결 상태 확인
+        if (ModuleManager.ConnectedModule != "DEEPMIND")
         {
-            lines.Add("ERROR: LOG FILES NOT SPECIFIED PROPERLY");
+            lines.Add("ERROR : MODULE NOT READY");
+            lines.Add("SYSTEM > Connect to 'DEEPMIND' module rst.");
             return lines;
         }
-
-        LogData logA = GetLogByName(args[0]);
-        LogData logB = GetLogByName(args[1]);
-
+        // 2. 인자 개수 확인
+        if (args.Length < 3)
+        {
+            lines.Add("SYSTEM > No target LOG FILE specied.");
+        }
+        string logTitleA = args[1];
+        string logTitleB = args[2];
+        // 3. 로그 파일 존재 여부 확인
+        var logA = terminalManager.OwnedLogs.Find(l => l.logTitle.Equals(logTitleA, System.StringComparison.OrdinalIgnoreCase));
+        var logB = terminalManager.OwnedLogs.Find(l => l.logTitle.Equals(logTitleB, System.StringComparison.OrdinalIgnoreCase));
+        Debug.Log(logA, logB);
         if (logA == null)
         {
-            lines.Add($"ERROR: LOG NOT FOUND : {args[0]}");
+            lines.Add($"SYSTEM > LOG FILE NOT FOUND : {logTitleA}");
             return lines;
         }
         if (logB == null)
         {
-            lines.Add($"ERROR: LOG NOT FOUND : {args[1]}");
+            lines.Add($"SYSTEM > LOG FILE NOT FOUND : {logTitleB}");
             return lines;
         }
-
-        string[] linesA = (logA.fixEngContent.Length > 0 ? logA.fixEngContent : logA.engContent).Split('\n');
-        string[] linesB = (logB.fixEngContent.Length > 0 ? logB.fixEngContent : logB.engContent).Split('\n');
-
-        int lineCount = Mathf.Max(linesA.Length, linesB.Length);
-
-        lines.Add("SYSTEM > DEEPMIND MATCH RESULT:");
-
-        for (int i = 0; i < lineCount; i++)
+        // 4. 로그 손상 여부 확인
+        if (logA.isCorrupted == LogData.Corrupted.True || logB.isCorrupted ==
+        LogData.Corrupted.True)
         {
-            string lineA = i < linesA.Length ? linesA[i].Trim() : "";
-            string lineB = i < linesB.Length ? linesB[i].Trim() : "";
-
-            if (lineA == lineB)
-            {
-                lines.Add($"<color=green>[MATCH]</color> Line {i + 1}: \"{lineA}\"");
-            }
-            else
-            {
-                lines.Add($"<color=red>[DIFF]</color>  Line {i + 1}:\n    A: \"{lineA}\"\n    B: \"{lineB}\"");
-            }
+            string corruptedLog = logA.isCorrupted == LogData.Corrupted.True ? logA.logTitle
+            : logB.logTitle;
+            lines.Add($"SYSTEM > LOG FILE CORRUPTED : {corruptedLog}");
         }
-
+        // 5. 매칭 로직 수행
+        lines.Add($"\\ROOT\\DEEPMIND_MATCH {logA.logTitle} {logB.logTitle}");
+        lines.Add("————————————————————————————————————————————————");
+        lines.Add("C.R.T. DEEPMIND MODULE STARTUP");
+        lines.Add("————————————————————————————————————————————————");
+        lines.Add("Preparing MODULE...");
+        lines.Add("Reading LOG FILES 100%");
+        lines.Add($"Connecting LOG FILES : {logA.logTitle} and {logB.logTitle}");
+        // 실제 매치 확인: LogA의 match 리스트에 LogB가 있거나 그 반대인 경우
+        LogData resultLog = FindMatchResult(logA, logB);
+        if (resultLog != null)
+        {
+            lines.Add("MATCHING RESULT : SUCCESS");
+            lines.Add("————————————————————————————————————————————————");
+            terminalManager.AddLog(resultLog); // 성공 시 새 로그 추가
+            lines.Add($"NEW LOG FILE SAVED : {resultLog.logTitle}");
+        }
+        else
+        {
+            lines.Add("MATCHING RESULT : FAILED");
+            lines.Add("————————————————————————————————————————————————");
+        }
         return lines;
-
     }
-    private LogData GetLogByName(string name)
+    private LogData FindMatchResult(LogData logA, LogData logB)
     {
-        var m = CommandManager.instance;
-        switch (name.ToUpper())
+        
+        if ((logA.logTitle == "RACHEL_LIBRARY.LOG" && logB.logTitle == "RACHEL_MEMORY.LOG") ||
+        (logA.logTitle == "RACHEL_MEMORY.LOG" && logB.logTitle == "RACHEL_LIBRARY.LOG"))
         {
-            case "RACHEL_LIBRARY.LOG": return m.rachelLibraryLog;
-            case "RACHEL_PROFILE.LOG": return m.rachelProfileLog;
-            case "ROMEO.LOG": return m.romeoProfileLog;
-            case "MISSING_MEMORY.LOG": return m.missingMemoryLog;
-            // 필요 시 다른 로그도 추가
-            default: return null;
+            // CommandManager에서 BOOKCLUB.LOG 에셋을 찾아 반환
+            // return commandManager.bellarunBookclubLog;
         }
+       
+        if ((logA.logTitle == "RACHEL_LOCALMYTH.LOG" && logB.logTitle ==
+        "BELLARUN_BOOKCLUB.LOG") ||
+        (logA.logTitle == "BELLARUN_BOOKCLUB.LOG" && logB.logTitle ==
+        "RACHEL_LOCALMYTH.LOG"))
+        {
+            // return commandManager.mirelinMythLog;
+            Debug.Log("match");
+        }
+        // 매칭되는 레시피가 없는 경우
+        return null;
     }
+
 }
 
 
 
-class Vacine_Connect
-    {
-        // 백신 모듈의 로그 파일 연결 설정을 수정합니다.
-        public List<string> Result(string[] args)
-        {
-            var response = new List<string>
-            {
-
-            };
-            return response;
-        }
-    }
-
-class Vacine_Verify : ICommand
+public class VacineConnectCommand : ICommand
 {
     private TerminalManager terminalManager;
-    public Vacine_Verify(TerminalManager terminalMgr)
+    private CommandManager commandManager;
+
+    public VacineConnectCommand(TerminalManager termMgr, CommandManager cmdMgr)
     {
-        terminalManager = terminalMgr;
+        this.terminalManager = termMgr;
+        this.commandManager = cmdMgr;
     }
+
     public List<string> Execute(string[] args)
     {
         var lines = new List<string>();
 
-        // 1. 모듈이 VACINE 상태인지 확인
-        if (Module_Boot.ConnectedModule != "VACINE")
+        // 1. VACINE 모듈이 부팅되었는지 확인합니다.
+        if (ModuleManager.ConnectedModule != "VACINE")
         {
             lines.Add("ERROR : MODULE NOT READY");
-            lines.Add("SYSTEM > Submit correct LOG FILE to use 'VACINE_VERIFY' command");
+            lines.Add("SYSTEM > Connect to 'VACINE' module first.");
             return lines;
         }
 
-        // 2. 인자 확인
+        // 2. 인자가 없는 경우 (연결 해제)
         if (args.Length < 2)
         {
-            lines.Add("Usage: VACINE_VERIFY <LOGFILE_NAME>");
+            // 현재 연결된 로그가 있는지 확인합니다.
+            if (commandManager.VacineConnectedLog == null)
+            {
+                lines.Add("SYSTEM > No log file is currently connected to the VACINE module.");
+                return lines;
+            }
+
+            // 기획서에 따른 연결 해제 메시지를 출력합니다. [cite: 132-138]
+            lines.Add("\\\\ROOT\\VACINE_CONNECT");
+            lines.Add("————————————————————————————————————————————————");
+            lines.Add("C.R.T. V.A.C.I.N.E. MODULE SHUTDOWN");
+            lines.Add("————————————————————————————————————————————————");
+            lines.Add($"Disconnecting LOG FILE : {commandManager.VacineConnectedLog.logTitle}");
+            lines.Add("Saving Analysis State 100%");
+            lines.Add("File disconnected succesfully");
+
+            // CommandManager에서 로그 연결을 해제합니다.
+            commandManager.DisconnectLogFromVacine();
             return lines;
         }
 
-        string logFileName = args[1];
-        var log = terminalManager.OwnedLogs.Find(l => l.logTitle == logFileName);
+        // 3. 인자가 있는 경우 (로그 연결)
+        string logTitleToConnect = args[1];
 
-        if (log == null)
+        // 이미 다른 로그가 연결되어 있는지 확인합니다. [cite: 143, 144]
+        if (commandManager.VacineConnectedLog != null)
         {
-            lines.Add($"LOG FILE '{logFileName}' NOT FOUND.");
+            lines.Add("ERROR : 연결 상태에서 연결 시도"); // [cite: 143]
+            lines.Add("SYSTEM > VACINE MODULE IS ALREADY CONNECTED TO THE LOG FILE."); // [cite: 144]
             return lines;
         }
 
-        // 3. 시뮬레이션된 값들
-        string[] keywords = log.keyword; // 배열 사용
-        string hashed = "XXXX-XXXX-XXXX-XXXX";
+        // 소유한 로그 목록에서 해당 로그를 찾습니다.
+        var targetLog = terminalManager.OwnedLogs.Find(l => l.logTitle.Equals(logTitleToConnect, System.StringComparison.OrdinalIgnoreCase));
 
-        lines.Add($"\\\\ROOT\\VACINE_VERIFY {logFileName}.LOG");
-        lines.Add("Reading LOG FILE 100%");
-        lines.Add("");
-        lines.Add($"FILE ID : {logFileName}.LOG");
-        lines.Add($"HASH : [{hashed}]");
-        lines.Add($"Extracted KEYWORD : {string.Join(", ", keywords.Select(k => $"'{k}'"))}");
-        lines.Add("");
-
-        // 4. 검증
-        string expected = CommandManager.instance.Temp_SubjectName;
-        bool matched = keywords.Contains(expected);
-
-        if (matched)
+        if (targetLog == null)
         {
-            string greenText = CommandManager.instance.ColorText("GREEN", $"PASSWORD VERIFIED : '[{expected}]'");
-            lines.Add($"{greenText} / PASSWORD UNVERIFIED");
-            lines.Add("");
-            lines.Add("• ACT 진도 상승");
-            lines.Add($"SYSTEM > ACT {{n}}. PASSWORD : '[{expected}]'");
+            lines.Add("SYSTEM > LOG FILE NOT FOUND : " + logTitleToConnect); // [cite: 117, 142]
+            return lines;
         }
-        else
+
+        // 해당 로그가 손상된 로그인지 확인합니다.
+        if (targetLog.isCorrupted != LogData.Corrupted.True)
         {
-            string redText = CommandManager.instance.ColorText("RED", "PASSWORD UNVERIFIED");
-            lines.Add($"PASSWORD VERIFIED : '[{expected}]' / {redText}");
+            lines.Add($"SYSTEM > LOG FILE '{targetLog.logTitle}' IS NOT CORRUPTED.");
+            return lines;
         }
+
+        // CommandManager에 로그를 연결합니다.
+        commandManager.ConnectLogToVacine(targetLog);
+
+        // 기획서에 따른 연결 성공 메시지를 출력합니다. [cite: 123-131]
+        lines.Add($"\\ROOT\\VACINE_CONNECT {targetLog.logTitle}");
+        lines.Add("————————————————————————————————————————————————");
+        lines.Add("C.R.T. V.A.C.I.N.E. MODULE STARTUP");
+        lines.Add("————————————————————————————————————————————————");
+        lines.Add("Preparing MODULE...");
+        lines.Add("Reading LOG FILES 100%");
+        lines.Add($"Connecting LOG FILE : {targetLog.logTitle}");
+        lines.Add("————————————————————————————————————————————————");
+
+        // 남은 패스워드를 출력합니다. [cite: 129, 513]
+        int totalPasswordCount = targetLog.password.Length; // 이 값은 변하지 않아야 하므로 별도 저장이 필요할 수 있습니다.
+        int currentAct = 1; // 최초 연결 시 ACT는 1입니다. [cite: 513]
+        lines.Add($"SYSTEM > ACT {currentAct}. PASSWORD : ['{string.Join("', '", targetLog.password)}']");
+        lines.Add("SYSTEM > Sumbit correct LOG FILE by using ‘VACINE_VERIFY’ command"); // [cite: 130]
 
         return lines;
     }
 }
+
+public class VacineVerifyCommand : ICommand
+{
+    private TerminalManager terminalManager;
+    private CommandManager commandManager;
+    public VacineVerifyCommand(TerminalManager termMgr, CommandManager cmdMgr)
+    {
+        this.terminalManager = termMgr;
+        this.commandManager = cmdMgr;
+    }
+    public List<string> Execute(string[] args)
+    {
+        var lines = new List<string>();
+        // 1. VACINE 모듈 연결 상태 확인
+        if (ModuleManager.ConnectedModule != "VACINE")
+        {
+            lines.Add("ERROR : MODULE NOT READY");
+            lines.Add("SYSTEM > Connect to 'VACINE' module rst.");
+            return lines;
+        }
+        // 2. VACINE_CONNECT로 로그가 지정되었는지 확인
+        LogData corruptedLog = commandManager.VacineConnectedLog;
+        if (corruptedLog == null)
+        {
+            lines.Add("SYSTEM > No log le is connected to VACINE module.");
+            lines.Add("SYSTEM > Use 'VACINE_CONNECT {LOGFILE_NAME}' rst.");
+            return lines;
+        }
+        // 3. 인자(패스워드로 사용할 로그) 확인
+        if (args.Length < 2)
+        {
+            lines.Add("SYSTEM > Submit correct LOG FILE to use 'VACINE_VERIFY' command");
+            // [cite: 344]
+            return lines;
+        }
+        string passwordLogTitle = args[1];
+        var passwordLog = terminalManager.OwnedLogs.Find(l =>
+        l.logTitle.Equals(passwordLogTitle, System.StringComparison.OrdinalIgnoreCase));
+        if (passwordLog == null)
+        {
+            lines.Add($"SYSTEM > LOG FILE NOT FOUND : {passwordLogTitle}");
+            return lines;
+        }
+        // 4. 인증 로직 수행
+        lines.Add($"\\ROOT\\VACINE_VERIFY {passwordLog.logTitle}");
+        lines.Add("Reading LOG FILE 100%");
+        lines.Add("————————————————————————————————————————————————");
+        lines.Add($"FILE ID : {passwordLog.logTitle}");
+        lines.Add($"HASH : [{string.Join("-", passwordLog.hash)}]");
+        lines.Add($"Extracted KEYWORD : '{string.Join("', '", passwordLog.keyword)}'");
+        lines.Add("————————————————————————————————————————————————");
+        // 임시 리스트를 만들어 해금할 패스워드를 관리
+        List<string> requiredPasswords = new List<string>(corruptedLog.password);
+        List<string> veriedPasswords = new List<string>();
+        // 제출된 로그의 키워드들이 필요한 패스워드에 포함되는지 확인
+        foreach (string key in passwordLog.keyword)
+        {
+            if (requiredPasswords.Contains(key))
+            {
+                veriedPasswords.Add(key);
+                requiredPasswords.Remove(key); // 확인된 패스워드는 목록에서 제거
+            }
+        }
+        if (veriedPasswords.Count > 0)
+        {
+            // 하나라도 맞았을 경우
+            corruptedLog.password = requiredPasswords.ToArray(); // 남은 패스워드로 갱신
+            lines.Add($"PASSWORD VERIFIED : ['{string.Join("', '", veriedPasswords)}']"); //
+            
+GameManager.instance.IncreaseMentalOnLogFix(); // 정신력 10% 증가 [cite:594]
+}
+        else
+        {
+            // 하나도 맞추지 못했을 경우
+            lines.Add("PASSWORD UNVERIFIED");
+        }
+        // 5. 최종 결과 처리
+        if (requiredPasswords.Count == 0)
+        {
+            // 모든 패스워드 해금 완료
+            corruptedLog.isCorrupted = LogData.Corrupted.Fixed; // 상태를 '수정됨'으로 변경
+            lines.Add("SYSTEM > All passwords veried. Log le has been xed.");
+            lines.Add($"SYSTEM > C.R.T. CIRCUIT INTEGRITY RECOVERED."); // 시스템 메시지
+            commandManager.DisconnectLogFromVacine(); // VACINE 연결 자동 해제
+        }
+        else
+        {
+            // 남은 패스워드가 있을 경우
+            int currentAct = (corruptedLog.password.Length - requiredPasswords.Count) + 1;
+            lines.Add($"SYSTEM > ACT {currentAct}. PASSWORD : ['{string.Join("', '",requiredPasswords)}']"); // [cite: 561]
+}
+        return lines;
+    }
+}
+
 
 
 class Crt_Condition
