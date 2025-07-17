@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5746701e0d41a4b4b9071fd58d1d792e, type: 3}
   m_Name: MIRELIN_MYTH
   m_EditorClassIdentifier: 
-  logTitle: 
+  logTitle: MIRELIN_MYTH.LOG
   engContent: "\r\nNOTE > TRANSLATED FROM MULTIPLE HANDWRITTEN SOURCES\r\n\r\n\"Nobody
     remembers what we did wrong.  \r\nNot clearly.  \r\nBut every spring, someone
     disappears,  \r\nand every night the sea returns what should have stayed forgotten.\"\r\n\r\n\"Old

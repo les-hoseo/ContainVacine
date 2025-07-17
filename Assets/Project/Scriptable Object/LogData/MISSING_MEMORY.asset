@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5746701e0d41a4b4b9071fd58d1d792e, type: 3}
   m_Name: MISSING_MEMORY
   m_EditorClassIdentifier: 
-  logTitle: MISSING_MEMORY
+  logTitle: MISSING_MEMORY.LOG
   engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n\u2014
     OBSERVATION SUMMARY \u2014\r\n\t\r\nSome of subjects remember nothing after the
     Everlight left port.\r\n\r\nMost frequent gaps include:\r\n   - Timeline between

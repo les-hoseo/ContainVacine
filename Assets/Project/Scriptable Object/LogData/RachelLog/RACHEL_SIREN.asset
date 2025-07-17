@@ -43,6 +43,6 @@ MonoBehaviour:
   keyword:
   - ALONE
   canAsk: []
-  isCorrupted: 0
+  isCorrupted: 1
   password: []
   match: []

@@ -170,7 +170,9 @@ public class CommandManager : MonoBehaviour
                     return string.Join("\n", exit.Execute(parts));
 
                 case "DEEPMIND_MATCH":
-                    return "";
+                    var match = new DeepmindMatch();
+                    return string.Join("\n", match.Execute(parts));
+
                 case "VACINE_CONNECT":
                     return "";
                 case "VACINE_VERIFY":
@@ -759,21 +761,75 @@ class Module_Exit : ICommand
     }
 }
 
-
-class DeepMind_Match
+public class DeepmindMatch
+{
+    public List<string> Execute(string[] args)
     {
-        // 백신 모듈의 로그 파일 여결 설정을 수정합니다.
-        public List<string> Result(string[] args)
-        {
-            var response = new List<string>
-            {
+        var lines = new List<string>();
 
-            };
-            return response;
+        if (args.Length != 2)
+        {
+            lines.Add("ERROR: LOG FILES NOT SPECIFIED PROPERLY");
+            return lines;
+        }
+
+        LogData logA = GetLogByName(args[0]);
+        LogData logB = GetLogByName(args[1]);
+
+        if (logA == null)
+        {
+            lines.Add($"ERROR: LOG NOT FOUND : {args[0]}");
+            return lines;
+        }
+        if (logB == null)
+        {
+            lines.Add($"ERROR: LOG NOT FOUND : {args[1]}");
+            return lines;
+        }
+
+        string[] linesA = (logA.fixEngContent.Length > 0 ? logA.fixEngContent : logA.engContent).Split('\n');
+        string[] linesB = (logB.fixEngContent.Length > 0 ? logB.fixEngContent : logB.engContent).Split('\n');
+
+        int lineCount = Mathf.Max(linesA.Length, linesB.Length);
+
+        lines.Add("SYSTEM > DEEPMIND MATCH RESULT:");
+
+        for (int i = 0; i < lineCount; i++)
+        {
+            string lineA = i < linesA.Length ? linesA[i].Trim() : "";
+            string lineB = i < linesB.Length ? linesB[i].Trim() : "";
+
+            if (lineA == lineB)
+            {
+                lines.Add($"<color=green>[MATCH]</color> Line {i + 1}: \"{lineA}\"");
+            }
+            else
+            {
+                lines.Add($"<color=red>[DIFF]</color>  Line {i + 1}:\n    A: \"{lineA}\"\n    B: \"{lineB}\"");
+            }
+        }
+
+        return lines;
+
+    }
+    private LogData GetLogByName(string name)
+    {
+        var m = CommandManager.instance;
+        switch (name.ToUpper())
+        {
+            case "RACHEL_LIBRARY.LOG": return m.rachelLibraryLog;
+            case "RACHEL_PROFILE.LOG": return m.rachelProfileLog;
+            case "ROMEO.LOG": return m.romeoProfileLog;
+            case "MISSING_MEMORY.LOG": return m.missingMemoryLog;
+            // 필요 시 다른 로그도 추가
+            default: return null;
         }
     }
+}
 
-    class Vacine_Connect
+
+
+class Vacine_Connect
     {
         // 백신 모듈의 로그 파일 연결 설정을 수정합니다.
         public List<string> Result(string[] args)

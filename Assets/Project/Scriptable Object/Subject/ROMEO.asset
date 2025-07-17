@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20dba2f2d50d0d4bb8d4f15a8300a7e, type: 3}
   m_Name: ROMEO
   m_EditorClassIdentifier: 
+  subjectName: ROMEO
