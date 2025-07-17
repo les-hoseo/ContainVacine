@@ -169,7 +169,7 @@ public class CRTController : MonoBehaviour
             }
 
             // 실제 커맨드 처리 후 문자열 결과 수신
-            string results = CommandManager.instance.InputCommands();
+            string results = CommandManager.instance.InputCommands(command);
             string outPut = "";
             foreach (char ch in results)
                 outPut += ch;
@@ -342,4 +342,6 @@ public class CRTController : MonoBehaviour
 
         return parts;
     }
+
+    
 }

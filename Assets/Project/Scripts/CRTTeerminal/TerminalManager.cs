@@ -19,9 +19,9 @@ public class TermianlManager : MonoBehaviour
     [Header("컨트롤러")]
     [SerializeField] private CRTController crtController;
     
-    //[Header("플레이어가 소유한 로그 데이터")]
-    //[SerializeField] private List<LogData_TEMP> ownedLogs = new();
-    //public List<LogData_TEMP> OwnedLogs => ownedLogs;
+    [Header("플레이어가 소유한 로그 데이터")]
+    [SerializeField] private List<LogData> ownedLogs = new();
+    public List<LogData> OwnedLogs => ownedLogs;
 
 
     private void Awake()
@@ -113,4 +113,7 @@ public class TermianlManager : MonoBehaviour
             dialogTerminal.gameObject.SetActive(true);
         }
     }
+
+    
+
 }
