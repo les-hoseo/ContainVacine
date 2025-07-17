@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Project/Scriptable Object/LogData/EVERLIGHT.asset.meta
-guid: 50e62af89f8bef0449ed46b5a0246880
+<<<<<<<< HEAD:Assets/Project/Scriptable Object/StoryData/Intro.asset.meta
+guid: 00c6e5e3086ad2f4e94c29292f5237f2
 ========
-guid: f21733de64d494b4caf8e53e0f654705
->>>>>>>> feature-J:Assets/Project/Scriptable Object/LogData/BELLARUN.asset.meta
+guid: 91c6f53b9ef03d1408a9a1b4d4f11787
+>>>>>>>> feature-J:Assets/Project/Scriptable Object/LogData/BELLARUN_BOOKCLUB.LOG.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

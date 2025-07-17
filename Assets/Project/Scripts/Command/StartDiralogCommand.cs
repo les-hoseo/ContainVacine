@@ -4,7 +4,7 @@ using Unity.Collections;
 public class StartDiralogCommand : ICommand
 {
     private CommandManager commandManager;
-    private TermianlManager termianlManager;
+    private TerminalManager termianlManager;
     //private LogData_TEMP romeoFamilyTripLog;
 
 

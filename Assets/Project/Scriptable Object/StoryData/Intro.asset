@@ -14,14 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Story:
   - Name: "\uB808\uC774\uCCBC"
-    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
+    Content: "\uC774\uAC70 \uD14C\uC2A4\uD2B8\uB798\uC694"
     Sprite: {fileID: -7807039364846549133, guid: 32d3a70b37980ff4abc5e76e2a64080c, type: 3}
   - Name: "\uB808\uC774\uCCBC"
-    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
+    Content: "\uD14C\uC2A4\uD2B8\uAC00 \uBA87\uBC88\uC9F8\uC778\uC9C0 \uBAA8\uB974\uACA0\uC5B4\uC694"
     Sprite: {fileID: -6964340433041597978, guid: dc662e56d7159db4a960628479e4bbb2, type: 3}
   - Name: "\uB808\uC774\uCCBC"
-    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
+    Content: "\uC5B8\uC81C\uAE4C\uC9C0 \uBC18\uBCF5\uC791\uC5C5\uC774\uC5D0\uC694"
     Sprite: {fileID: -490914541500067938, guid: 385f8df6e9bfeab4093b55fff7e9673e, type: 3}
-  - Name: "\uB808\uC774\uCCBC"
-    Content: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
-    Sprite: {fileID: -7450329836573684982, guid: b99791ca5bf9a834f9bcd25d38c31094, type: 3}

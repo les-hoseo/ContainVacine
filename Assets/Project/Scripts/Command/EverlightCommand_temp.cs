@@ -4,7 +4,7 @@ using Unity.Collections;
 public class EverlightCommand : ICommand
 {
     private CommandManager commandManager;
-    private TermianlManager termianlManager;
+    private TerminalManager termianlManager;
     //private LogData_TEMP everlightLog;
 
 

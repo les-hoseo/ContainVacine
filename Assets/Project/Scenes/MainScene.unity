@@ -544,7 +544,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ad1ee5c05e2562f44ad8f4bd1733c68d, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -610,7 +610,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &444481641
@@ -1497,7 +1497,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 41927141550be4144809c369eb98d123, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ad1ee5c05e2562f44ad8f4bd1733c68d, type: 2}
   m_sharedMaterial: {fileID: -3191151673687554186, guid: 41927141550be4144809c369eb98d123, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1563,7 +1563,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1586859506
@@ -1802,6 +1802,10 @@ MonoBehaviour:
   rootTerminal: {fileID: 444481640}
   dialogTerminal: {fileID: 1586859505}
   crtController: {fileID: 0}
+  ownedLogs:
+  - {fileID: 11400000, guid: 00c6e5e3086ad2f4e94c29292f5237f2, type: 2}
+  - {fileID: 11400000, guid: 911928e339517f64f99be7ef12bfec81, type: 2}
+  - {fileID: 11400000, guid: 731eb3e19e3ac334bbaaa48e97b8840e, type: 2}
 --- !u!1 &1934727350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,6 +1851,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terminalManager: {fileID: 1794894488}
+  RachelLibraryLog: {fileID: 11400000, guid: 4b1ee43de2b64944baf112042c9c14c0, type: 2}
+  RachelProfileLog: {fileID: 11400000, guid: 472d76492a91fed4bbf117975ba52e6c, type: 2}
+  RachelDepartureLog: {fileID: 11400000, guid: 5a0c8a843bd4f8d43a7dea8b3a391570, type: 2}
+  RachelLocalmythLog: {fileID: 11400000, guid: 77e060cd3ae0f324796d019335b5f470, type: 2}
+  RachelMemoryLog: {fileID: 11400000, guid: e084f02ed0d8cd948885a2a04150fc55, type: 2}
+  RachelFrIendsLog: {fileID: 11400000, guid: 58e2a5c7c419b8b429f41ad1aa3b692a, type: 2}
+  RachelCurseLog: {fileID: 11400000, guid: 731b0f32a15faca459a14c89d1f1c96d, type: 2}
+  RachelSirenLog: {fileID: 11400000, guid: 2c006b25feef2da4cbd9599050a25084, type: 2}
+  RomeoProfileLog: {fileID: 11400000, guid: a5b513ccce68ef8499d5294e0f43bdae, type: 2}
+  HeartBeatLog: {fileID: 11400000, guid: 77c11cd877aaa1f49a9dba46c1e776a5, type: 2}
+  MissingMemoryLog: {fileID: 11400000, guid: ecd26ac24ac3bd749a6db7f1daf01044, type: 2}
+  BellarunBookclubLog: {fileID: 11400000, guid: 50e62af89f8bef0449ed46b5a0246880, type: 2}
+  MirelinMythLog: {fileID: 11400000, guid: d51a4876bc005b344bac5500093db564, type: 2}
+  EverlightLog: {fileID: 11400000, guid: 911928e339517f64f99be7ef12bfec81, type: 2}
+  BellarunLog: {fileID: 11400000, guid: 00c6e5e3086ad2f4e94c29292f5237f2, type: 2}
+  MirelinLog: {fileID: 11400000, guid: 2c006b25feef2da4cbd9599050a25084, type: 2}
+  Romeo: {fileID: 11400000, guid: 46f633a7f832afe4b807080d7356c2db, type: 2}
+  Rachel: {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
+  malcom: {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
+  crtTemp: 36.5
+  powerPort1: 1
+  powerPort2: 1
+  powerPort3: 1
+  cameraEnergy: 70
+  cameraStatus: 1
+  installedModels:
+  - PRO_CAM
+  - GeForce RTX 4090
+  subjectMental: 55
+  crtHp: 450
   Temp_SubjectName: 
   state: 0
 --- !u!1 &1936753811

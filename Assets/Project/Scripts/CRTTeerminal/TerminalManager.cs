@@ -2,10 +2,10 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 
-public class TermianlManager : MonoBehaviour
+public class TerminalManager : MonoBehaviour
 { 
     // 싱글톤
-    public static TermianlManager instance;
+    public static TerminalManager instance;
 
     // ??...
     [SerializeField] private CommandManager commandManager;
@@ -19,15 +19,16 @@ public class TermianlManager : MonoBehaviour
     [Header("컨트롤러")]
     [SerializeField] private CRTController crtController;
     
-    //[Header("플레이어가 소유한 로그 데이터")]
-    //[SerializeField] private List<LogData_TEMP> ownedLogs = new();
-    //public List<LogData_TEMP> OwnedLogs => ownedLogs;
+    [Header("플레이어가 소유한 로그 데이터")]
+    [SerializeField] private List<LogData> ownedLogs = new();
+    public List<LogData> OwnedLogs => ownedLogs;
 
 
     private void Awake()
     {
         instance = this;
         //commandManager.RegisterAskCommand(ownedLogs);
+
     }
 
     private void Update()
@@ -56,14 +57,14 @@ public class TermianlManager : MonoBehaviour
     //    yield return Input.GetKeyDown(KeyCode.Tab) && !crtController.isTyping;
     //}
     // 로그 추가
-    //public void AddLog(LogData_TEMP log)
-    //{
-    //    if (!ownedLogs.Contains(log))
-    //    { 
-    //        ownedLogs.Add(log);
-    //        Debug.Log($"Log added: {log.logID}");
-    //    }
-    //}
+    public void AddLog(LogData log)
+    {
+        if (!ownedLogs.Contains(log))
+        {
+            ownedLogs.Add(log);
+            Debug.Log($"Log added: {log.logTitle}");
+        }
+    }
 
     // 로그 삭제
     //public void RemoveLog(LogData_TEMP log)
@@ -76,10 +77,10 @@ public class TermianlManager : MonoBehaviour
     //}
 
     // 현재 소유한 로그 전체 반환
-    //public List<LogData_TEMP> GetOwnedLogs()
-    //{
-    //    return ownedLogs;
-    //}
+    public List<LogData> GetOwnedLogs()
+    {
+        return ownedLogs;
+    }
 
 
     public void ToggleTab()
@@ -113,4 +114,7 @@ public class TermianlManager : MonoBehaviour
             dialogTerminal.gameObject.SetActive(true);
         }
     }
+
+    
+
 }
