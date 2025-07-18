@@ -136,21 +136,21 @@ public class CommandManager : MonoBehaviour
     private void InitializeCommands()
     {
         commands = new Dictionary<string, ICommand>
-{
-{ "INFO", new InfoCommand() },
-{ "HELP", new HelpCommand() },
-{ "COMMANDS", new CommmandsCommand() }, // CommandsCommand는 Help와 유사하게구현
-//{ "CLS", new ClsCommand() }, // ClsCommand는 InfoCommand를 호출하여 화면을 정리
-{ "LOGS", new LogsCommand(terminalManager) },
-{ "READ", new ReadCommand(terminalManager) },
-{ "DEEPMIND_MATCH", new DeepmindMatchCommand(terminalManager, this) },
-        { "VACINE_VERIFY", new VacineVerifyCommand(terminalManager, this) },
-        { "VACINE_CONNECT", new VacineConnectCommand(terminalManager, this) }, // <-- 추가
-        { "V_CON", new VacineConnectCommand(terminalManager, this) },          // <-- 단축 명령어 추가
-// ... (기획서의 모든 명령어 등록) ...
-// { "CRT_CONDITION", new CrtConditionCommand(this) },
-// { "ASK", new AskCommand(terminalManager) }
-};
+        {
+            { "INFO", new InfoCommand() },
+            { "HELP", new HelpCommand() },
+            { "COMMANDS", new CommmandsCommand() },
+            { "LOGS", new LogsCommand(terminalManager) },
+            { "READ", new ReadCommand(terminalManager) },
+            { "DEEPMIND_MATCH", new DeepmindMatchCommand(terminalManager, this) },
+            { "VACINE_VERIFY", new VacineVerifyCommand(terminalManager, this) },
+            { "VACINE_CONNECT", new VacineConnectCommand(terminalManager, this) },
+            { "V_CON", new VacineConnectCommand(terminalManager, this) },
+            
+            // 아래 두 줄을 추가하여 모듈 명령어를 등록합니다.
+            { "MODULE_BOOT", new Module_Boot() },
+            { "MODULE_EXIT", new Module_Exit() } // 기획서의 MODULE_EIXT 오타도 고려하여 EXIT로 통일
+        };
     }
 
 
@@ -257,7 +257,9 @@ public class CommandManager : MonoBehaviour
                     return string.Join("\n", match.Execute(parts));
 
                 case "VACINE_CONNECT":
-                    return "";
+                    // VacineConnectCommand를 생성하고 실행하도록 수정합니다.
+                    var vacineConnect = new VacineConnectCommand(terminalManager, this);
+                    return string.Join("\n", vacineConnect.Execute(parts));
                 case "VACINE_VERIFY":
                     var verify = new VacineVerifyCommand(terminalManager, this);
                     return string.Join("\n", verify.Execute(parts));
@@ -1001,9 +1003,6 @@ public class DeepmindMatchCommand : ICommand
     }
 
 }
-
-
-
 public class VacineConnectCommand : ICommand
 {
     private TerminalManager terminalManager;
@@ -1027,7 +1026,6 @@ public class VacineConnectCommand : ICommand
             return lines;
         }
 
-        // 2. 인자가 없는 경우 (연결 해제)
         if (args.Length < 2)
         {
             // 현재 연결된 로그가 있는지 확인합니다.
@@ -1037,7 +1035,6 @@ public class VacineConnectCommand : ICommand
                 return lines;
             }
 
-            // 기획서에 따른 연결 해제 메시지를 출력합니다. [cite: 132-138]
             lines.Add("\\\\ROOT\\VACINE_CONNECT");
             lines.Add("————————————————————————————————————————————————");
             lines.Add("C.R.T. V.A.C.I.N.E. MODULE SHUTDOWN");
@@ -1051,14 +1048,12 @@ public class VacineConnectCommand : ICommand
             return lines;
         }
 
-        // 3. 인자가 있는 경우 (로그 연결)
+        // 3. 인자가 있는 경우 (로그 연결 로직)
         string logTitleToConnect = args[1];
 
-        // 이미 다른 로그가 연결되어 있는지 확인합니다. [cite: 143, 144]
         if (commandManager.VacineConnectedLog != null)
         {
-            lines.Add("ERROR : 연결 상태에서 연결 시도"); // [cite: 143]
-            lines.Add("SYSTEM > VACINE MODULE IS ALREADY CONNECTED TO THE LOG FILE."); // [cite: 144]
+            lines.Add("SYSTEM > VACINE MODULE IS ALREADY CONNECTED TO THE LOG FILE."); 
             return lines;
         }
 
@@ -1067,11 +1062,11 @@ public class VacineConnectCommand : ICommand
 
         if (targetLog == null)
         {
-            lines.Add("SYSTEM > LOG FILE NOT FOUND : " + logTitleToConnect); // [cite: 117, 142]
+            lines.Add($"SYSTEM > LOG NOT FOUND : {logTitleToConnect}"); 
             return lines;
         }
 
-        // 해당 로그가 손상된 로그인지 확인합니다.
+        // 해당 로그가 '오염된' 상태가 아니면 연결할 수 없습니다.
         if (targetLog.isCorrupted != LogData.Corrupted.True)
         {
             lines.Add($"SYSTEM > LOG FILE '{targetLog.logTitle}' IS NOT CORRUPTED.");
@@ -1081,8 +1076,7 @@ public class VacineConnectCommand : ICommand
         // CommandManager에 로그를 연결합니다.
         commandManager.ConnectLogToVacine(targetLog);
 
-        // 기획서에 따른 연결 성공 메시지를 출력합니다. [cite: 123-131]
-        lines.Add($"\\ROOT\\VACINE_CONNECT {targetLog.logTitle}");
+        lines.Add($"\\\\ROOT\\VACINE_CONNECT {targetLog.logTitle}");
         lines.Add("————————————————————————————————————————————————");
         lines.Add("C.R.T. V.A.C.I.N.E. MODULE STARTUP");
         lines.Add("————————————————————————————————————————————————");
@@ -1091,106 +1085,119 @@ public class VacineConnectCommand : ICommand
         lines.Add($"Connecting LOG FILE : {targetLog.logTitle}");
         lines.Add("————————————————————————————————————————————————");
 
-        // 남은 패스워드를 출력합니다. [cite: 129, 513]
-        int totalPasswordCount = targetLog.password.Length; // 이 값은 변하지 않아야 하므로 별도 저장이 필요할 수 있습니다.
-        int currentAct = 1; // 최초 연결 시 ACT는 1입니다. [cite: 513]
+        // 남은 패스워드를 출력합니다. [cite_start]최초 연결 시 ACT는 1입니다. [cite: 129, 131]
+        int totalPasswordCount = targetLog.password.Length;
+        int currentAct = 1; // 최초 연결 시 ACT는 1
         lines.Add($"SYSTEM > ACT {currentAct}. PASSWORD : ['{string.Join("', '", targetLog.password)}']");
-        lines.Add("SYSTEM > Sumbit correct LOG FILE by using ‘VACINE_VERIFY’ command"); // [cite: 130]
+        lines.Add("SYSTEM > Sumbit correct LOG FILE by using ‘VACINE_VERIFY’ command"); 
 
         return lines;
     }
 }
-
 public class VacineVerifyCommand : ICommand
 {
     private TerminalManager terminalManager;
     private CommandManager commandManager;
+
     public VacineVerifyCommand(TerminalManager termMgr, CommandManager cmdMgr)
     {
         this.terminalManager = termMgr;
         this.commandManager = cmdMgr;
     }
+
     public List<string> Execute(string[] args)
     {
         var lines = new List<string>();
+
         // 1. VACINE 모듈 연결 상태 확인
         if (ModuleManager.ConnectedModule != "VACINE")
         {
             lines.Add("ERROR : MODULE NOT READY");
-            lines.Add("SYSTEM > Connect to 'VACINE' module rst.");
+            lines.Add("SYSTEM > Connect to 'VACINE' module first.");
             return lines;
         }
-        // 2. VACINE_CONNECT로 로그가 지정되었는지 확인
+
+        // 2. VACINE_CONNECT로 오염된 로그가 지정되었는지 확인
         LogData corruptedLog = commandManager.VacineConnectedLog;
         if (corruptedLog == null)
         {
-            lines.Add("SYSTEM > No log le is connected to VACINE module.");
-            lines.Add("SYSTEM > Use 'VACINE_CONNECT {LOGFILE_NAME}' rst.");
+            lines.Add("SYSTEM > No log file is connected to VACINE module.");
+            lines.Add("SYSTEM > Use 'VACINE_CONNECT {LOGFILE_NAME}' first.");
             return lines;
         }
-        // 3. 인자(패스워드로 사용할 로그) 확인
+
+        // 3. 인자(패스워드로 사용할 로그 파일명)가 있는지 확인
         if (args.Length < 2)
         {
+            lines.Add("SYSTEM > No target LOG FILE specified.");
             lines.Add("SYSTEM > Submit correct LOG FILE to use 'VACINE_VERIFY' command");
-            // [cite: 344]
             return lines;
         }
+
         string passwordLogTitle = args[1];
         var passwordLog = terminalManager.OwnedLogs.Find(l =>
-        l.logTitle.Equals(passwordLogTitle, System.StringComparison.OrdinalIgnoreCase));
+            l.logTitle.Equals(passwordLogTitle, System.StringComparison.OrdinalIgnoreCase));
+
         if (passwordLog == null)
         {
-            lines.Add($"SYSTEM > LOG FILE NOT FOUND : {passwordLogTitle}");
+            lines.Add($"SYSTEM > LOG FILE NOT FOUND : {passwordLogTitle}.LOG");
             return lines;
         }
-        // 4. 인증 로직 수행
-        lines.Add($"\\ROOT\\VACINE_VERIFY {passwordLog.logTitle}");
+
+        lines.Add($"\\\\ROOT\\VACINE_VERIFY {passwordLog.logTitle}");
         lines.Add("Reading LOG FILE 100%");
         lines.Add("————————————————————————————————————————————————");
         lines.Add($"FILE ID : {passwordLog.logTitle}");
         lines.Add($"HASH : [{string.Join("-", passwordLog.hash)}]");
-        lines.Add($"Extracted KEYWORD : '{string.Join("', '", passwordLog.keyword)}'");
+        lines.Add($"Extracted KEYWORD : ‘{string.Join("', '", passwordLog.keyword)}’");
         lines.Add("————————————————————————————————————————————————");
+
         // 임시 리스트를 만들어 해금할 패스워드를 관리
-        List<string> requiredPasswords = new List<string>(corruptedLog.password);
-        List<string> veriedPasswords = new List<string>();
-        // 제출된 로그의 키워드들이 필요한 패스워드에 포함되는지 확인
-        foreach (string key in passwordLog.keyword)
+        List<string> remainingPasswords = new List<string>(corruptedLog.password);
+        List<string> verifiedPasswords = new List<string>();
+
+        foreach (string keyword in passwordLog.keyword)
         {
-            if (requiredPasswords.Contains(key))
+            if (remainingPasswords.Contains(keyword))
             {
-                veriedPasswords.Add(key);
-                requiredPasswords.Remove(key); // 확인된 패스워드는 목록에서 제거
+                verifiedPasswords.Add(keyword);
+                remainingPasswords.Remove(keyword); // 확인된 패스워드는 남은 목록에서 제거
             }
         }
-        if (veriedPasswords.Count > 0)
+
+        // 5. 인증 결과에 따른 출력
+        if (verifiedPasswords.Count > 0)
         {
             // 하나라도 맞았을 경우
-            corruptedLog.password = requiredPasswords.ToArray(); // 남은 패스워드로 갱신
-            lines.Add($"PASSWORD VERIFIED : ['{string.Join("', '", veriedPasswords)}']"); //
-            
-GameManager.instance.IncreaseMentalOnLogFix(); // 정신력 10% 증가 [cite:594]
-}
+            corruptedLog.password = remainingPasswords.ToArray(); // 남은 패스워드로 데이터 갱신
+            lines.Add($"PASSWORD VERIFIED : [‘{string.Join("', '", verifiedPasswords)}’]");
+        }
         else
         {
             // 하나도 맞추지 못했을 경우
             lines.Add("PASSWORD UNVERIFIED");
         }
-        // 5. 최종 결과 처리
-        if (requiredPasswords.Count == 0)
+
+        // 6. 최종 결과 처리
+        if (remainingPasswords.Count == 0)
         {
+            FlowManager.instance.CurrentState = FlowManager.GameState.VNStory;
             // 모든 패스워드 해금 완료
             corruptedLog.isCorrupted = LogData.Corrupted.Fixed; // 상태를 '수정됨'으로 변경
-            lines.Add("SYSTEM > All passwords veried. Log le has been xed.");
+            lines.Add("SYSTEM > All passwords verified. Log file has been fixed.");
             lines.Add($"SYSTEM > C.R.T. CIRCUIT INTEGRITY RECOVERED."); // 시스템 메시지
             commandManager.DisconnectLogFromVacine(); // VACINE 연결 자동 해제
+            FlowManager.instance.SetState(FlowManager.GameState.VNStory);
         }
         else
         {
-            // 남은 패스워드가 있을 경우
-            int currentAct = (corruptedLog.password.Length - requiredPasswords.Count) + 1;
-            lines.Add($"SYSTEM > ACT {currentAct}. PASSWORD : ['{string.Join("', '",requiredPasswords)}']"); // [cite: 561]
-}
+            // ACT 계산: (원본 패스워드 개수 - 남은 패스워드 개수) + 1
+            int originalPasswordCount = 2;//corruptedLog.originalPasswordCount; // 원본 개수 정보가 필요
+            int currentAct = (originalPasswordCount - remainingPasswords.Count) + 1;
+            lines.Add($"SYSTEM > ACT {currentAct}. PASSWORD : [‘{string.Join("', '", remainingPasswords)}’]"); 
+            lines.Add("SYSTEM > Sumbit correct LOG FILE to use ‘VACINE_VERIFY’ command");
+        }
+
         return lines;
     }
 }

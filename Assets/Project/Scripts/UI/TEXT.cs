@@ -2,162 +2,198 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using static FlowManager;
 
 public class TEXT : MonoBehaviour
 {
-    public enum VNType { CharName, Content};
+    public enum VNType { CharName, Content, CharImage };
     public VNType type;
 
-    private StoryData storyData;
+    // StoryData는 한번만 Init하면 되므로 static으로 선언하여 모든 TEXT 인스턴스가 공유하도록 합니다.
+    // 이렇게 하면 각 인스턴스가 개별적으로 데이터를 가질 필요가 없어집니다.
+    private static StoryData storyData;
+    private static List<string> lines = new List<string>();
+    private static List<string> names = new List<string>();
+    private static List<Sprite> images = new List<Sprite>();
+    private static int currentLineIndex = 0;
 
+    // UI 컴포넌트는 각 인스턴스에 따라 다르므로 static이 아닙니다.
     private TextMeshProUGUI textBox;
     private TMP_Text CharName;
+    private Image CharImage;
 
     public float typingSpeed = 0.05f;
 
-    private List<string> lines = new List<string>(); // <-
-    private List<string> names = new List<string>();
-    private int currentLineIndex = 0;
-    private Coroutine typingCoroutine;
-    private bool isSkipping = false;
-    private bool isLineCompleted = false;
-    private bool forceAutoSkip = false;
+    // 코루틴과 상태 플래그는 Content 타입 스크립트만 관리하면 되므로 static으로 둡니다.
+    private static Coroutine typingCoroutine;
+    private static bool isSkipping = false;
+    private static bool isLineCompleted = false;
+    private static bool forceAutoSkip = false;
 
+    // 모든 인스턴스가 공유할 UI 컴포넌트 참조 (중앙 관리 방식)
+    private static TEXT nameDisplayer;
+    private static TEXT contentDisplayer;
+    private static TEXT imageDisplayer;
+
+
+    // Init은 한 번만 호출되면 충분합니다.
     public void Init(StoryData data)
     {
+        // 이미 데이터가 초기화되었다면 중복 실행 방지
+        if (storyData != null && storyData == data) return;
+
         storyData = data;
+        currentLineIndex = 0; // 새 데이터로 시작할 때 인덱스 초기화
 
         if (storyData.Story != null && storyData.Story.Count > 0)
         {
             names = storyData.Story.Select(d => d.Name).ToList();
             lines = storyData.Story.Select(d => d.Content).ToList();
-            
+            images = storyData.Story.Select(d => d.Sprite).ToList();
         }
     }
 
     private void Awake()
     {
-        CharName = GetComponent<TMP_Text>();
-        textBox = GetComponent<TextMeshProUGUI>();
-        
+        // 각 타입에 맞는 컴포넌트를 찾고, static 참조에 자기 자신을 등록합니다.
+        switch (type)
+        {
+            case VNType.CharName:
+                CharName = GetComponent<TMP_Text>();
+                nameDisplayer = this;
+                break;
+            case VNType.Content:
+                textBox = GetComponent<TextMeshProUGUI>();
+                contentDisplayer = this;
+                break;
+            case VNType.CharImage:
+                CharImage = GetComponent<Image>();
+                imageDisplayer = this;
+                break;
+        }
     }
+
     void Start()
     {
-        StartLine();
+        // Content 타입의 인스턴스만 시작 로직을 실행하도록 합니다.
+        if (type == VNType.Content)
+        {
+            UpdateCharacterInfo(); // 첫 대사의 이름/이미지 표시
+            StartLine();
+        }
     }
 
     void Update()
     {
-        switch (type)
+        // Update 로직은 Content 타입의 인스턴스만 처리합니다.
+        if (type != VNType.Content) return;
+
+        forceAutoSkip = Input.GetKey(KeyCode.LeftAlt);
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
         {
-            case VNType.CharName:
-                CharName.text = names[currentLineIndex].ToString(); // <-
-                break;
-            case VNType.Content:
-                // LeftAlt 키를 누르고 있으면 자동으로 스킵 모드 진입
-                forceAutoSkip = Input.GetKey(KeyCode.LeftAlt);
-
-                // 마우스 좌클릭 또는 Return 키 입력 처리
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
-                {
-                    // 타이핑이 아직 끝나지 않았고 코루틴이 실행 중이면 스킵 요청
-                    if (!isLineCompleted && typingCoroutine != null)
-                    {
-                        isSkipping = true;
-                    }
-                    else
-                    {
-                        // 이미 한 줄이 완료되었거나 코루틴이 없으면 다음 줄 출력
-                        ShowNextLine();
-                    }
-                }
-
-                // LeftAlt 자동 스킵 중이고 현재 라인이 완료된 상태면 다음 라인으로 전환
-                if (forceAutoSkip && isLineCompleted)
-                {
-                    ShowNextLine();
-                }
-                break;
-            default:
-                break;
+            if (!isLineCompleted && typingCoroutine != null)
+            {
+                isSkipping = true;
+            }
+            else
+            {
+                ShowNextLine();
+            }
         }
-        
+
+        if (forceAutoSkip && isLineCompleted)
+        {
+            ShowNextLine();
+        }
     }
 
-    // 다음 라인을 보여주는 메서드
+    // --- 개선점 1: 이름과 이미지를 한 번에 업데이트하는 함수 ---
+    void UpdateCharacterInfo()
+    {
+        // 이름 설정 (nameDisplayer가 존재하고, 이름 리스트 범위 안일 때)
+        if (nameDisplayer != null && currentLineIndex < names.Count)
+        {
+            nameDisplayer.CharName.text = names[currentLineIndex];
+        }
+
+        // 이미지 설정 (imageDisplayer가 존재하고, 이미지 리스트 범위 안일 때)
+        if (imageDisplayer != null && currentLineIndex < images.Count)
+        {
+            Sprite spriteToShow = images[currentLineIndex];
+            if (spriteToShow != null)
+            {
+                imageDisplayer.CharImage.sprite = spriteToShow;
+                imageDisplayer.CharImage.enabled = true;
+            }
+            else
+            {
+                imageDisplayer.CharImage.enabled = false;
+            }
+        }
+    }
+
     void ShowNextLine()
     {
         currentLineIndex++;
 
-        // 남은 라인이 있으면 새로 출력 시작
         if (currentLineIndex < lines.Count)
         {
+            UpdateCharacterInfo(); // --- 개선점 2: 대사가 바뀔 때만 정보 업데이트 ---
             StartLine();
         }
         else
         {
-            // 모든 대사가 끝난 경우 텍스트 초기화 및 로그
-            textBox.text = "";
+            contentDisplayer.textBox.text = "";
             Debug.Log("모든 대사를 출력했습니다.");
             FlowManager.instance.SetState(GameState.Gameplay);
         }
     }
 
-    // 타이핑 애니메이션을 시작하거나 이전 코루틴을 멈추고 새로 실행
     void StartLine()
     {
         if (typingCoroutine != null)
         {
             StopCoroutine(typingCoroutine);
         }
-
-        // 코루틴을 실행해 텍스트를 한 글자씩 보여줌
         typingCoroutine = StartCoroutine(TypeText(lines[currentLineIndex]));
     }
 
-    // 실제 타이핑 효과를 내는 코루틴
     IEnumerator TypeText(string text)
     {
-        textBox.text = "";         // 출력창 초기화
-        isSkipping = false;        // 스킵 플래그 초기화
-        isLineCompleted = false;   // 완료 플래그 초기화
+        contentDisplayer.textBox.text = "";
+        isSkipping = false;
+        isLineCompleted = false;
 
-        int i = 0;                 // 현재 읽고 있는 문자 인덱스
+        int i = 0;
         while (i < text.Length)
         {
-            // Rich Text 태그(<...>)를 통째로 처리하기 위해 시작 태그 감지
             if (text[i] == '<')
             {
                 int tagClose = text.IndexOf('>', i);
                 if (tagClose != -1)
                 {
-                    // 완전한 태그 구간을 한 번에 추가
-                    string tag = text.Substring(i, tagClose - i + 1);
-                    textBox.text += tag;
+                    string tag = contentDisplayer.textBox.text += text.Substring(i, tagClose - i + 1);
                     i = tagClose + 1;
                     continue;
                 }
             }
 
-            // 일반 문자를 한 글자씩 추가
-            textBox.text += text[i];
+            contentDisplayer.textBox.text += text[i];
 
-            // 스킵 요청이 있거나 자동 스킵 모드라면 남은 텍스트를 한 번에 보여주고 종료
             if (isSkipping || forceAutoSkip)
             {
-                textBox.text = text;
+                contentDisplayer.textBox.text = text;
                 break;
             }
 
             i++;
-            // 지정한 속도만큼 대기
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        // 한 줄 타이핑이 끝났음을 표시
         isLineCompleted = true;
-        typingCoroutine = null; // 코루틴 참조 해제
+        typingCoroutine = null;
     }
 }

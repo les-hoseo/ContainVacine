@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5746701e0d41a4b4b9071fd58d1d792e, type: 3}
   m_Name: HEARTBEAT
   m_EditorClassIdentifier: 
-  logTitle: 
+  logTitle: HEARTBEAT.LOG
   engContent: "HASH [\u2591\u2591\u2591\u2591-4152-5642-\u2591\u2591\u2591\u2591]\r\nINTERGRITY
     CHECK : CORRUPTED\r\n\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\nROMEO
     > ...\uBC15\uB3D9 \uC18C\uB9AC\uC694?\r\nROMEO > \uC544. \uC544... \uB9DE\uC544\uC694.
@@ -37,7 +37,5 @@ MonoBehaviour:
   - TERROR
   canAsk: []
   isCorrupted: 0
-  password:
-  - HEX
-  - SEA
+  password: []
   match: []

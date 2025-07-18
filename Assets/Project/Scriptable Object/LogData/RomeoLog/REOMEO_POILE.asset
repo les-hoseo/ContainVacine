@@ -22,7 +22,9 @@ MonoBehaviour:
   fixEngContent: 
   fixKorContent: 
   hash: []
-  keyword: []
+  keyword:
+  - SEA
+  - HEX
   canAsk: []
   isCorrupted: 0
   password: []
