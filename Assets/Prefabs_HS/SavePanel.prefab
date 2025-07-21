@@ -1102,7 +1102,7 @@ GameObject:
   - component: {fileID: 3142522211607869886}
   - component: {fileID: 5511500350519753964}
   m_Layer: 5
-  m_Name: SavePanel  2
+  m_Name: SavePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

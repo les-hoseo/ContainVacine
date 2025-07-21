@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 8789229663128382397}
   - component: {fileID: 7292555025860154961}
   m_Layer: 5
-  m_Name: Diralog 1
+  m_Name: Diralog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
