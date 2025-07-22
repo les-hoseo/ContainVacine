@@ -17,11 +17,25 @@ public class TMPTextColorOnInteraction : MonoBehaviour,
     private bool isPressed = false;
     private bool isDragging = false;
 
+    private void Awake()
+    {
+        if (tmpText == null)
+        {
+            tmpText = GetComponent<TextMeshProUGUI>();
+            if (tmpText == null)
+            {
+                Debug.LogWarning($"[{gameObject.name}] TextMeshProUGUI 컴포넌트를 찾을 수 없습니다.");
+            }
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (Input.GetMouseButton(1)) return; // 우클릭 시 무시
+        if (Input.GetMouseButton(1)) return;
 
         isPointerOver = true;
+
+        if (tmpText == null) return;
 
         if (isPressed && isDragging)
         {
@@ -39,6 +53,8 @@ public class TMPTextColorOnInteraction : MonoBehaviour,
 
         isPointerOver = false;
 
+        if (tmpText == null) return;
+
         if (!isPressed)
         {
             tmpText.color = normalTextColor;
@@ -52,7 +68,10 @@ public class TMPTextColorOnInteraction : MonoBehaviour,
         isPressed = true;
         isDragging = false;
 
-        tmpText.color = pressedTextColor;
+        if (tmpText != null)
+        {
+            tmpText.color = pressedTextColor;
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -61,6 +80,8 @@ public class TMPTextColorOnInteraction : MonoBehaviour,
 
         isPressed = false;
         isDragging = false;
+
+        if (tmpText == null) return;
 
         if (isPointerOver)
         {
@@ -78,11 +99,9 @@ public class TMPTextColorOnInteraction : MonoBehaviour,
 
         isDragging = true;
 
-        if (isPointerOver && isPressed)
+        if (tmpText != null && isPointerOver && isPressed)
         {
             tmpText.color = pressedTextColor;
         }
     }
 }
-
-
