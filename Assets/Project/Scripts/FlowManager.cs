@@ -22,6 +22,12 @@ public class FlowManager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        SetState(GameState.VNStory);
+        StoryManager.instance.ShowStory(0);
+    }
+
     public void UpdateState(GameState state)
     {
         switch (state)

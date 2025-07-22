@@ -35,6 +35,7 @@ MonoBehaviour:
     > \uADF8 \uACB0\uACFC \uC9C4\uC9DC\uB85C \uB098\uB9CC \uC0B4\uC544\uB0A8\uC544
     \uBC84\uB838\uC5B4.\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r"
   fixKorContent: 
+  originalPasswordCount: 2
   hash:
   - 5349
   - 5245
@@ -43,6 +44,8 @@ MonoBehaviour:
   keyword:
   - ALONE
   canAsk: []
-  isCorrupted: 1
-  password: []
+  isCorrupted: 0
+  password:
+  - FORGET
+  - SHIP
   match: []

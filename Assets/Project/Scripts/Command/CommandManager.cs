@@ -174,9 +174,9 @@ public class CommandManager : MonoBehaviour
             if (commandName == "ASK")
             {
                 // ASK 명령어 처리 로직
-                // ICommand askCommand = commands["ASK"];
-                // List<string> resultLines = askCommand.Execute(parts);
-                // return string.Join("\n", resultLines);
+                ICommand askCommand = commands["ASK"];
+                List<string> resultLines = askCommand.Execute(parts);
+                return string.Join("\n", resultLines);
             }
         }
         // 알 수 없는 명령어 처리
@@ -197,7 +197,9 @@ public class CommandManager : MonoBehaviour
         if (state == TabState.ROOT)
         {
             string[] parts = fullInput.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length == 0) return "";
+
+            if (parts.Length == 0) 
+                return "";
 
             string cmd = parts[0].ToUpper();
             CRTController.instance.command = cmd;
@@ -1192,7 +1194,7 @@ public class VacineVerifyCommand : ICommand
         else
         {
             // ACT 계산: (원본 패스워드 개수 - 남은 패스워드 개수) + 1
-            int originalPasswordCount = 2;//corruptedLog.originalPasswordCount; // 원본 개수 정보가 필요
+            int originalPasswordCount = corruptedLog.originalPasswordCount; // 원본 개수 정보가 필요
             int currentAct = (originalPasswordCount - remainingPasswords.Count) + 1;
             lines.Add($"SYSTEM > ACT {currentAct}. PASSWORD : [‘{string.Join("', '", remainingPasswords)}’]"); 
             lines.Add("SYSTEM > Sumbit correct LOG FILE to use ‘VACINE_VERIFY’ command");
