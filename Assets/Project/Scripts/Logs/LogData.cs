@@ -12,7 +12,9 @@ public class LogData : ScriptableObject
     public string fixEngContent;
     [TextArea(5, 15)]
     public string fixKorContent;
-    
+
+    public int originalPasswordCount;
+
     public string[] hash;
     public string[] keyword;
     public SubjectData[] canAsk;

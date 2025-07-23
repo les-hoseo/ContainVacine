@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5746701e0d41a4b4b9071fd58d1d792e, type: 3}
   m_Name: RACHEL_CURSE
   m_EditorClassIdentifier: 
-  logTitle: 
+  logTitle: RACHEL_CURSE.LOG
   engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\nRACHEL
     > \uC774 \uCC45\uC740 \uBD84\uBA85\uD788 \uAE30\uC5B5\uB098\uB124\uC694.\r\nRACHEL
     > \uC81C\uAC00 \uB2F4\uB2F9\uD574\uC11C \uBD84\uC11D\uD558\uACE0 \uD574\uC124\uD588\uB358
@@ -28,6 +28,7 @@ MonoBehaviour:
   korContent: 
   fixEngContent: 
   fixKorContent: 
+  originalPasswordCount: 0
   hash:
   - 5241
   - 4348

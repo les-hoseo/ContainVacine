@@ -12,8 +12,6 @@ public class CRTController : MonoBehaviour
     [Header("타이핑 효과")]
     public float typingSpeed = 0.02f;
 
-    [SerializeField] private CommandManager commandManager; // 명령어 처리 매니저
-
     [SerializeField] private TMP_Text Dialog; // DIALOG 탭에 출력할 텍스트 컴포넌트
     [SerializeField] private TMP_Text Root;   // ROOT 탭에 출력할 텍스트 컴포넌트
 
@@ -32,7 +30,7 @@ public class CRTController : MonoBehaviour
     private bool isUserScrolling = false;    // 사용자가 마우스 휠로 스크롤 중인지 여부
 
     // 프롬프트 텍스트
-    private const string PROMPT_A = "\\\\ROOT\\ ";
+    private const string PROMPT_R = "\\\\ROOT\\ ";
     private const string PROMPT_D = "\\\\DIALOG\\";
 
     private void Awake()
@@ -80,8 +78,8 @@ public class CRTController : MonoBehaviour
         isTyping = true;
 
         // 컬러태그 적용된 상태 텍스트
-        string systemStatus = commandManager.ColorText("GREEN", "STABLE");
-        string syncStatus = commandManager.ColorText("GREEN", "STABLE");
+        string systemStatus = CommandManager.instance.ColorText("GREEN", "STABLE");
+        string syncStatus = CommandManager.instance.ColorText("GREEN", "STABLE");
 
         // 환영 메시지 문자열 조합
         string welcome =
@@ -137,7 +135,7 @@ public class CRTController : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0 && displayLines.Count > GetVisibleLineCount())
         {
-            scrollOffset += (int)(-Mathf.Sign(scroll));
+            scrollOffset += (int)(Mathf.Sign(scroll));
             scrollOffset = Mathf.Clamp(scrollOffset, 0, displayLines.Count - GetVisibleLineCount());
             isUserScrolling = true;
         }
@@ -152,9 +150,9 @@ public class CRTController : MonoBehaviour
 
         // 현재 탭 상태에 맞는 프롬프트와 함께 입력값 화면에 추가
         if (CommandManager.instance.state == CommandManager.TabState.DIALOG)
-            AddLine(PROMPT_A + command);
-        else
             AddLine(PROMPT_D + command);
+        else
+            AddLine(PROMPT_R + command);
 
         if (!string.IsNullOrEmpty(command))
         {
@@ -180,9 +178,9 @@ public class CRTController : MonoBehaviour
         {
             // 빈 커맨드라도 프롬프트만 출력
             if (CommandManager.instance.state == CommandManager.TabState.DIALOG)
-                AddLine(PROMPT_A + command);
-            else
                 AddLine(PROMPT_D + command);
+            else
+                AddLine(PROMPT_R + command);
         }
 
         // 입력 버퍼 및 스크롤 초기화
@@ -198,7 +196,7 @@ public class CRTController : MonoBehaviour
     {
         if (history.Count == 0) return;
 
-        historyIndex = Mathf.Clamp(historyIndex + direction, 0, history.Count + 1);
+        historyIndex = Mathf.Clamp(historyIndex + direction, 0, history.Count - 1);
         currentInput.Clear().Append(history[historyIndex]);
     }
 
@@ -283,7 +281,7 @@ public class CRTController : MonoBehaviour
             if (CommandManager.instance.state == CommandManager.TabState.DIALOG)
                 sb.Append(PROMPT_D).Append(currentInput);
             else
-                sb.Append(PROMPT_A).Append(currentInput);
+                sb.Append(PROMPT_R).Append(currentInput);
 
             if (Time.time % 1f < 0.5f)
                 sb.Append("_");
@@ -341,7 +339,5 @@ public class CRTController : MonoBehaviour
         }
 
         return parts;
-    }
-
-    
+    }    
 }
