@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5746701e0d41a4b4b9071fd58d1d792e, type: 3}
+  m_Name: MISSING_MEMORY
+  m_EditorClassIdentifier: 
+  logTitle: MISSING_MEMORY.LOG
+  engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n\u2014
+    OBSERVATION SUMMARY \u2014\r\n\t\r\nSome of subjects remember nothing after the
+    Everlight left port.\r\n\r\nMost frequent gaps include:\r\n   - Timeline between
+    10:41\u201310:57 PM, 2002.03.08\r\n   - Names and identities of fellow passengers\r\n  
+    - The condition of the vessel during incident\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r"
+  korContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n\u2014
+    \uAD00\uCC30 \uC694\uC57D \u2014\r\n\t\r\n\uB300\uC0C1 \uB300\uBD80\uBD84\uC740
+    \uC5D0\uBC84\uB77C\uC774\uD2B8 \uD638 \uCD9C\uD56D \uC774\uD6C4\uB97C \uAE30\uC5B5\uD558\uC9C0
+    \uBABB\uD568.\r\n\r\n\uB300\uB2F5\uC774 \uAC00\uC7A5 \uC801\uC5C8\uB358 \uB0B4\uC6A9:\r\n  
+    - 2002\uB144 3\uC6D4 8\uC77C \uC624\uD6C4 10\uC2DC 41\uBD84 \u2013 10\uC2DC 57\uBD84
+    \uB3D9\uC548\uC758 \uD0C0\uC784\uB77C\uC778\r\n   - \uB2E4\uB978 \uC2B9\uAC1D\uB4E4\uC5D0
+    \uB300\uD55C \uC774\uB984 \uBC0F \uC2E0\uC6D0\r\n   - \uC0AC\uACE0 \uB2F9\uC2DC
+    \uC120\uBC15\uC758 \uC0C1\uD0DC\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r"
+  fixEngContent: 
+  fixKorContent: 
+  originalPasswordCount: 0
+  hash:
+  - 494E
+  - 4559
+  - 534D
+  - 5247
+  keyword:
+  - EVENT
+  canAsk:
+  - {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
+  - {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
+  - {fileID: 11400000, guid: 46f633a7f832afe4b807080d7356c2db, type: 2}
+  isCorrupted: 1
+  password: []
+  match: []

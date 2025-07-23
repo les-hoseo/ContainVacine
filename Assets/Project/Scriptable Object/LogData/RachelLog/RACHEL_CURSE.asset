@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5746701e0d41a4b4b9071fd58d1d792e, type: 3}
+  m_Name: RACHEL_CURSE
+  m_EditorClassIdentifier: 
+  logTitle: RACHEL_CURSE.LOG
+  engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\nRACHEL
+    > \uC774 \uCC45\uC740 \uBD84\uBA85\uD788 \uAE30\uC5B5\uB098\uB124\uC694.\r\nRACHEL
+    > \uC81C\uAC00 \uB2F4\uB2F9\uD574\uC11C \uBD84\uC11D\uD558\uACE0 \uD574\uC124\uD588\uB358
+    \uC624\uB798\uB41C \uAE30\uB85D\uC785\uB2C8\uB2E4.\r\nRACHEL > \uB300\uBD80\uBD84\uC758
+    \uC0AC\uB8CC\uAC00 \uBC43\uC0AC\uB78C\uB4E4\uC758 \uC218\uD544\uB4E4\uB85C \uC774\uB8E8\uC5B4\uC9C4
+    \uC77C\uC885\uC758 \uBC43\uB178\uB798.\r\nRACHEL > \uB0B4\uC6A9 \uC790\uCCB4\uB294
+    \uC5B4\uC5C5\uC744 \uC8FC\uB85C \uD558\uB358 \uBBF8\uB808\uB9B0\uC5D0\uC11C \uBC14\uB2E4\uC758
+    \uC704\uD5D8\uC131\uC744 \uB418\uC0C8\uAE30\uBA70\r\nRACHEL > \uBB34\uBAA8\uD55C
+    \uC77C\uC744 \uD558\uC9C0 \uC54A\uB3C4\uB85D \uD558\uB294 \uAC83\uC744 \uBAA9\uD45C\uB85C
+    \uD55C\uB2E4\uACE0 \uBD84\uC11D\uD588\uC5C8\uC2B5\uB2C8\uB2E4.\r\nRACHEL > \uADF8\uB798\uC11C
+    \uD56D\uC0C1 \uBC14\uB2E4\uC5D0 \uC624\uB974\uBA74 \uC138\uBA85\uC774\uC11C \uAC00\uB77C\uACE0
+    \uC870\uC5B8\uD558\uB294 \uC774\uC57C\uAE30\uB3C4...\r\nRACHEL > \uC138\uBA85...?\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r"
+  korContent: 
+  fixEngContent: 
+  fixKorContent: 
+  originalPasswordCount: 0
+  hash:
+  - 5241
+  - 4348
+  - 455C
+  - 5552
+  keyword:
+  - LORE
+  canAsk:
+  - {fileID: 11400000, guid: 46f633a7f832afe4b807080d7356c2db, type: 2}
+  - {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
+  - {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
+  isCorrupted: 1
+  password: []
+  match: []
