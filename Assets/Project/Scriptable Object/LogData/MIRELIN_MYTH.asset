@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5746701e0d41a4b4b9071fd58d1d792e, type: 3}
+  m_Name: MIRELIN_MYTH
+  m_EditorClassIdentifier: 
+  logTitle: MIRELIN_MYTH.LOG
+  engContent: "\r\nNOTE > TRANSLATED FROM MULTIPLE HANDWRITTEN SOURCES\r\n\r\n\"Nobody
+    remembers what we did wrong.  \r\nNot clearly.  \r\nBut every spring, someone
+    disappears,  \r\nand every night the sea returns what should have stayed forgotten.\"\r\n\r\n\"Old
+    fishermen still tie knots before dawn.  \r\nThey say it's for protection.  \r\nBut
+    when asked from what, they only smile.  \r\nSome smile too wide.\"\r\n\r\n\"Something
+    is watching beneath the sea.  \r\nan idea that we failed to face.\"\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r"
+  korContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\n\uCC38\uACE0
+    > \uB2E4\uC218\uC758 \uC218\uAE30 \uC790\uB8CC\uC5D0\uC11C \uBC88\uC5ED\uB428\r\n\r\n\"\uC544\uBB34\uB3C4
+    \uC6B0\uB9AC\uAC00 \uBB34\uC2A8 \uC798\uBABB\uC744 \uC800\uC9C8\uB800\uB294\uC9C0 
+    \r\n\uC644\uBCBD\uD558\uAC8C \uAE30\uC5B5\uD558\uC9C0 \uBABB\uD569\uB2C8\uB2E4. 
+    \r\n\uD558\uC9C0\uB9CC \uB9E4 \uBD04\uB9C8\uB2E4, \uB204\uAD6C\uB294 \uC0AC\uB77C\uC9C0\uACE0, 
+    \r\n\uADF8\uB9AC\uACE0 \uB9E4 \uBC24\uB9C8\uB2E4 \uBC14\uB2E4\uB294 \uC78A\uACE0
+    \uC788\uB358 \uBB34\uC5B8\uAC00\uB97C \uD658\uAE30\uC2DC\uCF1C \uC8FC\uC5C8\uC2B5\uB2C8\uB2E4.\"\r\n\r\n\"\uB299\uC740
+    \uC5B4\uBD80\uB294 \uC5EC\uC804\uD788 \uC0C8\uBCBD \uC804\uC5D0 \uB9E4\uB4ED\uC744
+    \uBB36\uC2B5\uB2C8\uB2E4.\r\n\uADF8\uB4E4\uC740 \uC774\uAC83\uC774 \uBCF4\uD638\uB97C
+    \uC704\uD55C \uAC83\uC774\uB77C\uACE0 \uD569\uB2C8\uB2E4.  \r\n\uC774\uC720\uB97C
+    \uBB3C\uC73C\uB2C8, \uADF8\uB4E4\uC740 \uC6C3\uAE30\uB9CC \uD569\uB2C8\uB2E4.\r\n\uC5B4\uB290
+    \uB204\uAD6C\uB294 \uC544\uC8FC \uD65C\uC9DD \uC6C3\uAE30\uB3C4 \uD588\uC2B5\uB2C8\uB2E4.\"\r\n\r\n\"\uB204\uAD70\uAC00
+    \uBC14\uB2E4 \uAE4A\uC740 \uACF3\uC5D0\uC11C \uC9C0\uCF1C\uBCF4\uACE0 \uC788\uC2B5\uB2C8\uB2E4. 
+    \r\n\uC6B0\uB9AC\uAC00 \uC9C1\uBA74\uD558\uC9C0 \uBABB\uD55C \uC0DD\uAC01\uC785\uB2C8\uB2E4.\"\r\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r"
+  fixEngContent: 
+  fixKorContent: 
+  originalPasswordCount: 0
+  hash:
+  - 5445
+  - 5F59
+  - 4D49
+  - 5248
+  keyword:
+  - LORE
+  canAsk:
+  - {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
+  - {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
+  isCorrupted: 1
+  password: []
+  match: []
