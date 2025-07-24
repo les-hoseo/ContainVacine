@@ -988,8 +988,8 @@ public class DeepmindMatchCommand : ICommand
         if ((logA.logTitle == "RACHEL_LIBRARY.LOG" && logB.logTitle == "RACHEL_MEMORY.LOG") ||
         (logA.logTitle == "RACHEL_MEMORY.LOG" && logB.logTitle == "RACHEL_LIBRARY.LOG"))
         {
-            // CommandManager에서 BOOKCLUB.LOG 에셋을 찾아 반환
-            // return commandManager.bellarunBookclubLog;
+            //CommandManager에서 BOOKCLUB.LOG 에셋을 찾아 반환
+            return commandManager.bellarunBookclubLog;
         }
        
         if ((logA.logTitle == "RACHEL_LOCALMYTH.LOG" && logB.logTitle ==
@@ -997,8 +997,10 @@ public class DeepmindMatchCommand : ICommand
         (logA.logTitle == "BELLARUN_BOOKCLUB.LOG" && logB.logTitle ==
         "RACHEL_LOCALMYTH.LOG"))
         {
-            // return commandManager.mirelinMythLog;
+
             Debug.Log("match");
+            return commandManager.mirelinMythLog;
+            
         }
         // 매칭되는 레시피가 없는 경우
         return null;
@@ -1188,8 +1190,8 @@ public class VacineVerifyCommand : ICommand
             corruptedLog.isCorrupted = LogData.Corrupted.Fixed; // 상태를 '수정됨'으로 변경
             lines.Add("SYSTEM > All passwords verified. Log file has been fixed.");
             lines.Add($"SYSTEM > C.R.T. CIRCUIT INTEGRITY RECOVERED."); // 시스템 메시지
-            commandManager.DisconnectLogFromVacine(); // VACINE 연결 자동 해제
-            FlowManager.instance.SetState(FlowManager.GameState.VNStory);
+            //commandManager.DisconnectLogFromVacine(); // VACINE 연결 자동 해제
+            //FlowManager.instance.SetState(FlowManager.GameState.VNStory);
         }
         else
         {
@@ -1546,6 +1548,23 @@ class Ask : ICommand
                         }
                     }
                 case "MIRELIN_CURSE.LOG":
+                    {
+                        if (terminalManager.OwnedLogs.Contains(m.rachelSirenLog))
+                        {
+                            lines.Add("RACHEL > 그거에 관해선 더이상 할 얘기가 없네요");
+                            break;
+
+                        }
+                        else
+                        {
+                            terminalManager.AddLog(m.rachelSirenLog);
+                            Debug.Log("RACHEL_SIREN.LOG 로그 추가됨!");
+                            lines.Add(m.rachelSirenLog.engContent);
+                            lines.Add("RACHEL_SIREN.LOG 로그 추가됨!");
+                            break;
+                        }
+                    }
+                case "RACHEL_CURSE.LOG":
                     {
                         if (terminalManager.OwnedLogs.Contains(m.rachelSirenLog))
                         {
