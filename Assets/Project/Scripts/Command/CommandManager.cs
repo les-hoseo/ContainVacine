@@ -34,6 +34,9 @@ public class CommandManager : MonoBehaviour
 
     public static CommandManager instance;
 
+    [Header("기믹")]
+    [SerializeField] private GimmickManager gimmickManager;
+
     [Header("필수 참조")]
     [SerializeField] private TerminalManager terminalManager;
     [SerializeField] private LogDatabase logDatabase; // 모든 로그 파일을 관리하는 DB
@@ -67,6 +70,7 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new LogsCommand(terminalManager));
         RegisterCommand(new ReadCommand(terminalManager));
         RegisterCommand(new AskCommand(terminalManager));
+        RegisterCommand(new TestDmgCommand());
 
         // 모듈 명령어
         RegisterCommand(new ModuleBootCommand(), new[] { "MOD_BOOT" });
