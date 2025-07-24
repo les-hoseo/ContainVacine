@@ -1,116 +1,92 @@
+// 파일명: CRTController.cs
+
 using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// CRT 터미널의 사용자 입력, 텍스트 출력, 타이핑 효과 등 모든 시각적 표현을 제어합니다.
+/// </summary>
 [RequireComponent(typeof(TMP_Text))]
 public class CRTController : MonoBehaviour
 {
     public static CRTController instance;
 
+    [Header("UI 컴포넌트")]
+    [SerializeField] private TMP_Text rootTerminalText; // ROOT 탭에 출력할 텍스트 컴포넌트
+    [SerializeField] private TMP_Text dialogTerminalText; // DIALOG 탭에 출력할 텍스트 컴포넌트
+
     [Header("타이핑 효과")]
     public float typingSpeed = 0.02f;
 
-    [SerializeField] private TMP_Text Dialog; // DIALOG 탭에 출력할 텍스트 컴포넌트
-    [SerializeField] private TMP_Text Root;   // ROOT 탭에 출력할 텍스트 컴포넌트
-
-    // 화면에 표시할 문자열 라인들
-    private readonly List<string> displayLines = new();
-    // 사용자가 입력했던 명령어 히스토리
-    private readonly List<string> history = new();
-    private int historyIndex = -1;            // 히스토리 내비게이션 인덱스
-
-    private StringBuilder currentInput = new(); // 현재 사용자가 입력 중인 문자열
-    private Coroutine typingCoroutine;         // 타이핑 효과용 코루틴 참조
-    public bool isTyping;              // 타이핑 효과가 진행 중인지 여부
-    public string command;                     // 방금 처리된 커맨드
-
-    private int scrollOffset = 0;            // 현재 스크롤 오프셋(위치)
-    private bool isUserScrolling = false;    // 사용자가 마우스 휠로 스크롤 중인지 여부
+    // 내부 상태 변수
+    private readonly List<string> displayLines = new(); // 화면에 표시된 모든 라인 기록
+    private readonly List<string> commandHistory = new(); // 사용자가 입력했던 명령어 히스토리
+    private int historyIndex = -1;
+    private StringBuilder currentInput = new();
+    private Coroutine typingCoroutine;
+    private bool isTyping = false;
+    private int scrollOffset = 0;
 
     // 프롬프트 텍스트
-    private const string PROMPT_R = "\\\\ROOT\\ ";
-    private const string PROMPT_D = "\\\\DIALOG\\";
+    private const string PROMPT_ROOT = "\\\\ROOT> ";
+    private const string PROMPT_DIALOG = "\\\\DIALOG> ";
 
     private void Awake()
     {
-        // 자신을 싱글톤 인스턴스로 설정
         instance = this;
     }
 
     void Start()
     {
-        isTyping = false;
-        // 게임 시작 시 ROOT 탭이면 환영 메시지 코루틴 실행
-        if (CommandManager.instance.state == CommandManager.TabState.ROOT)
-            StartCoroutine(ShowWelcomeMessage());
-
-        ClearTerminal(); // 터미널 초기화
+        // 게임 시작 시 ROOT 탭이므로 환영 메시지 코루틴 실행
+        StartCoroutine(ShowWelcomeMessage());
+        UpdateTerminalUI();
     }
-
 
     private void Update()
     {
-        // 타이핑 중이 아닐 때
+        // 타이핑 중이 아닐 때만 사용자 입력 처리
         if (!isTyping)
         {
-            // 키보드 입력을 처리
             HandleKeyboardInput();
-            // 마우스 휠 스크롤 처리
             HandleMouseScroll();
+            // Tab 키로 터미널 탭 전환
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                TerminalManager.instance.ToggleTab();
+                ToggleTab();
             }
         }
-
-        // 화면에 표시할 텍스트 갱신
         UpdateDisplay();
     }
+
     /// <summary>
-    /// 게임 시작 시 잠시 대기 후 환영 메시지를 타이핑 효과로 출력하는 코루틴
+    /// 게임 시작 시 환영 메시지를 타이핑 효과로 출력합니다.
     /// </summary>
-    IEnumerator ShowWelcomeMessage()
-    {   
+    private IEnumerator ShowWelcomeMessage()
+    {
         yield return new WaitForSeconds(0.3f);
-
-        isTyping = true;
-
-        // 컬러태그 적용된 상태 텍스트
-        string systemStatus = CommandManager.instance.ColorText("GREEN", "STABLE");
-        string syncStatus = CommandManager.instance.ColorText("GREEN", "STABLE");
-
-        // 환영 메시지 문자열 조합
-        string welcome =
-            "----------------------------------------\n" +
-            "C.R.T. OS\n" +
-            "----------------------------------------\n" +
-            $"System Status : {systemStatus}\n" +
-            "USER ID [GAGAJ74625E40B5B]\n" +
-            $"Neural Sync Status : {syncStatus}\n" +
-            "----------------------------------------\n" +
-            "type \"HELP\" to get help using terminal";
-
-        StartTyping(welcome);
+        var infoCommand = new InfoCommand(); // 시작 정보는 InfoCommand에서 가져옴
+        string welcomeMessage = string.Join("\n", infoCommand.Execute(new string[0]));
+        StartTyping(welcomeMessage);
     }
 
     /// <summary>
-    /// 키보드 입력(문자·백스페이스·엔터·히스토리 탐색) 처리
+    /// 키보드 입력을 처리합니다 (문자, 백스페이스, 엔터, 히스토리 탐색).
     /// </summary>
-    void HandleKeyboardInput()
+    private void HandleKeyboardInput()
     {
-        // 실제 타이핑된 문자열이 있으면 문자별로 처리
         if (Input.inputString.Length > 0)
         {
             foreach (char c in Input.inputString)
             {
-                if (c == '\b') // 백스페이스
+                if (c == '\b' && currentInput.Length > 0) // 백스페이스
                 {
-                    if (currentInput.Length > 0)
-                        currentInput.Length--;
+                    currentInput.Length--;
                 }
-                else if (c == '\n' || c == '\r') // 엔터 입력 시 명령 처리
+                else if ((c == '\n' || c == '\r')) // 엔터
                 {
                     ProcessCommand();
                 }
@@ -120,224 +96,199 @@ public class CRTController : MonoBehaviour
                 }
             }
         }
-        // 방향키 ↑↓ 로 히스토리 탐색
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            NavigateHistory(-1);
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-            NavigateHistory(1);
+
+        // 방향키로 명령어 히스토리 탐색
+        if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateHistory(-1);
+        else if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateHistory(1);
     }
 
     /// <summary>
-    /// 마우스 휠 스크롤로 버퍼된 텍스트 라인 스크롤 처리
+    /// 마우스 휠 입력을 받아 터미널 내용을 스크롤합니다.
     /// </summary>
-    void HandleMouseScroll()
+    private void HandleMouseScroll()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0 && displayLines.Count > GetVisibleLineCount())
+        if (scroll != 0)
         {
-            scrollOffset += (int)(Mathf.Sign(scroll));
-            scrollOffset = Mathf.Clamp(scrollOffset, 0, displayLines.Count - GetVisibleLineCount());
-            isUserScrolling = true;
+            // 스크롤 방향에 따라 오프셋 조정
+            scrollOffset -= (int)Mathf.Sign(scroll) * 3; // 스크롤 감도
+            scrollOffset = Mathf.Clamp(scrollOffset, 0, Mathf.Max(0, displayLines.Count - 5));
         }
     }
 
     /// <summary>
-    /// 엔터(명령 실행) 시 호출되어 커맨드 처리하고 결과를 타이핑 효과로 출력
+    /// 입력된 명령어를 처리하고 결과를 출력합니다.
     /// </summary>
-    void ProcessCommand()
+    private void ProcessCommand()
     {
-        command = currentInput.ToString().Trim();
+        string command = currentInput.ToString().Trim();
+        string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
 
-        // 현재 탭 상태에 맞는 프롬프트와 함께 입력값 화면에 추가
-        if (CommandManager.instance.state == CommandManager.TabState.DIALOG)
-            AddLine(PROMPT_D + command);
-        else
-            AddLine(PROMPT_R + command);
+        // 입력한 명령어와 프롬프트를 화면에 추가
+        displayLines.Add(prompt + command);
 
         if (!string.IsNullOrEmpty(command))
         {
-            // 히스토리에 저장하고 인덱스 갱신
-            history.Add(command);
-            historyIndex = history.Count;
+            // 히스토리에 저장
+            commandHistory.Add(command);
+            historyIndex = commandHistory.Count;
 
-            // CLS 입력 시 화면 클리어
-            if (command == "CLS")
+            // CLS 명령어는 화면을 즉시 지움
+            if (command.ToUpper() == "CLS")
             {
                 ClearTerminal();
+                var infoCommand = new InfoCommand();
+                displayLines.AddRange(infoCommand.Execute(new string[0]));
             }
-
-            // 실제 커맨드 처리 후 문자열 결과 수신
-            string results = CommandManager.instance.InputCommands(command);
-            string outPut = "";
-            foreach (char ch in results)
-                outPut += ch;
-
-            StartTyping(outPut);
-        }
-        else
-        {
-            // 빈 커맨드라도 프롬프트만 출력
-            if (CommandManager.instance.state == CommandManager.TabState.DIALOG)
-                AddLine(PROMPT_D + command);
             else
-                AddLine(PROMPT_R + command);
+            {
+                // [수정된 부분] CommandManager의 새 메서드인 ProcessInput을 호출합니다.
+                string results = CommandManager.instance.ProcessInput(command);
+                if (!string.IsNullOrEmpty(results))
+                {
+                    StartTyping(results);
+                }
+            }
         }
 
-        // 입력 버퍼 및 스크롤 초기화
         currentInput.Clear();
-        scrollOffset = 0;
-        isUserScrolling = false;
+        scrollOffset = 0; // 명령어 실행 후 스크롤 초기화
     }
 
     /// <summary>
-    /// 히스토리 목록 내비게이션
+    /// 이전에 입력한 명령어 기록을 탐색합니다.
     /// </summary>
-    void NavigateHistory(int direction)
+    private void NavigateHistory(int direction)
     {
-        if (history.Count == 0) return;
+        if (commandHistory.Count == 0) return;
+        historyIndex = Mathf.Clamp(historyIndex + direction, 0, commandHistory.Count);
 
-        historyIndex = Mathf.Clamp(historyIndex + direction, 0, history.Count - 1);
-        currentInput.Clear().Append(history[historyIndex]);
+        if (historyIndex < commandHistory.Count)
+        {
+            currentInput.Clear().Append(commandHistory[historyIndex]);
+        }
     }
 
     /// <summary>
-    /// displayLines 리스트에 새 라인 추가
+    /// 타이핑 효과 코루틴을 시작합니다.
     /// </summary>
-    void AddLine(string line)
+    private void StartTyping(string message)
     {
-        displayLines.Add(line);
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        typingCoroutine = StartCoroutine(TypeWriterEffect(message));
     }
 
     /// <summary>
-    /// 한 글자씩 출력하는 타자기 효과 코루틴
+    /// 한 글자씩 텍스트를 출력하는 타자기 효과를 구현합니다.
     /// </summary>
-    IEnumerator TypeWriterEffect(string msg)
+    private IEnumerator TypeWriterEffect(string message)
     {
         isTyping = true;
-        string[] lines = msg.Split('\n');
+        string[] lines = message.Split('\n');
+
         foreach (var line in lines)
         {
-            AddLine(""); // 새 줄 확보
-            int lineIndex = displayLines.Count - 1;
+            displayLines.Add(""); // 새 줄을 위한 공간 확보
+            int currentLineIndex = displayLines.Count - 1;
 
-            var parts = ParseRichText(line);
-            StringBuilder sb = new();
-
-            foreach (var part in parts)
+            // Rich Text Tag를 고려하여 한 글자씩 타이핑
+            var sb = new StringBuilder();
+            int i = 0;
+            while (i < line.Length)
             {
-                sb.Append(part);
-                displayLines[lineIndex] = sb.ToString();
-                UpdateDisplay();
-                yield return new WaitForSeconds(typingSpeed);
-            }
-        }
-
-        // 타이핑 완료 후 상태 리셋
-        scrollOffset = 0;
-        isTyping = false;
-    }
-
-    /// <summary>
-    /// 타이핑 효과 시작 트리거
-    /// </summary>
-    void StartTyping(string msg)
-    {
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-
-        typingCoroutine = StartCoroutine(TypeWriterEffect(msg));
-    }
-
-    // Tab 키 입력이 풀릴 때까지 대기하는(입력 잠금용) 코루틴
-
-    /// <summary>
-    /// 터미널 화면 및 상태 완전 초기화
-    /// </summary>
-    void ClearTerminal()
-    {
-        displayLines.Clear();
-        currentInput.Clear();
-        scrollOffset = 0;
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-        isTyping = false;
-    }
-
-    /// <summary>
-    /// 화면에 보이는 라인과 커서를 조합하여 텍스트 컴포넌트에 반영
-    /// </summary>
-    void UpdateDisplay()
-    {
-        int visibleCount = GetVisibleLineCount();
-        int startLine = Mathf.Max(0, displayLines.Count - visibleCount - scrollOffset);
-
-        StringBuilder sb = new();
-        for (int i = startLine; i < displayLines.Count; i++)
-            sb.AppendLine(displayLines[i]);
-
-        // 입력 중이 아닐 때 프롬프트와 깜박이는 커서 표시
-        if (!isTyping)
-        {
-            if (CommandManager.instance.state == CommandManager.TabState.DIALOG)
-                sb.Append(PROMPT_D).Append(currentInput);
-            else
-                sb.Append(PROMPT_R).Append(currentInput);
-
-            if (Time.time % 1f < 0.5f)
-                sb.Append("_");
-        }
-
-        // 현재 탭에 맞춰 알맞은 텍스트 컴포넌트에 할당
-        if (CommandManager.instance.state == CommandManager.TabState.DIALOG)
-            Dialog.text = sb.ToString();
-        else
-            Root.text = sb.ToString();
-    }
-
-    /// <summary>
-    /// 화면에 보이는 최대 라인 수 계산
-    /// </summary>
-    int GetVisibleLineCount()
-    {
-        TMP_Text target = (CommandManager.instance.state == CommandManager.TabState.DIALOG) ? Dialog : Root;
-        if (target == null || target.font == null || target.font.faceInfo.lineHeight <= 0)
-            return 15;
-
-        return Mathf.FloorToInt(target.rectTransform.rect.height / target.font.faceInfo.lineHeight);
-    }
-
-    /// <summary>
-    /// <color> 태그 등 RichText 파싱해서 태그와 텍스트를 분리
-    /// </summary>
-    List<string> ParseRichText(string input)
-    {
-        var parts = new List<string>();
-        int i = 0;
-
-        while (i < input.Length)
-        {
-            if (input[i] == '<')                         // 태그 시작
-            {
-                int tagEnd = input.IndexOf('>', i);
-                if (tagEnd == -1)
+                // 태그일 경우 한 번에 추가
+                if (line[i] == '<')
                 {
-                    parts.Add(input[i].ToString());
-                    i++;
+                    int tagEnd = line.IndexOf('>', i);
+                    if (tagEnd != -1)
+                    {
+                        string tag = line.Substring(i, tagEnd - i + 1);
+                        sb.Append(tag);
+                        i = tagEnd;
+                    }
+                    else
+                    {
+                        sb.Append(line[i]);
+                    }
                 }
                 else
                 {
-                    string tag = input.Substring(i, tagEnd - i + 1);
-                    parts.Add(tag);
-                    i = tagEnd + 1;
+                    sb.Append(line[i]);
                 }
-            }
-            else                                         // 일반 문자
-            {
-                parts.Add(input[i].ToString());
+
+                displayLines[currentLineIndex] = sb.ToString();
+                yield return new WaitForSeconds(typingSpeed);
                 i++;
             }
         }
 
-        return parts;
-    }    
+        isTyping = false;
+        scrollOffset = 0; // 타이핑 완료 후 스크롤 초기화
+    }
+
+    /// <summary>
+    /// 현재 표시해야 할 텍스트를 조합하여 UI에 업데이트합니다.
+    /// </summary>
+    private void UpdateDisplay()
+    {
+        var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
+        if (targetTextComponent == null) return;
+
+        // 화면에 표시될 라인 수 계산
+        int visibleLineCount = Mathf.FloorToInt(targetTextComponent.rectTransform.rect.height / targetTextComponent.font.faceInfo.lineHeight);
+
+        var sb = new StringBuilder();
+        int startLine = Mathf.Max(0, displayLines.Count - visibleLineCount - scrollOffset);
+        int endLine = Mathf.Min(displayLines.Count, startLine + visibleLineCount);
+
+        for (int i = startLine; i < endLine; i++)
+        {
+            sb.AppendLine(displayLines[i]);
+        }
+
+        // 타이핑 중이 아닐 때만 프롬프트와 현재 입력 내용 표시
+        if (!isTyping)
+        {
+            string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
+            sb.Append(prompt).Append(currentInput);
+
+            // 커서 깜빡임 효과
+            if (Time.time % 1f < 0.5f)
+            {
+                sb.Append("_");
+            }
+        }
+
+        targetTextComponent.text = sb.ToString();
+    }
+
+    /// <summary>
+    /// 터미널 탭(ROOT/DIALOG)을 전환합니다.
+    /// </summary>
+    public void ToggleTab()
+    {
+        var cm = CommandManager.instance;
+        cm.state = (cm.state == CommandManager.TabState.ROOT) ? CommandManager.TabState.DIALOG : CommandManager.TabState.ROOT;
+        ClearTerminal(); // 탭 전환 시 화면 내용 초기화
+        UpdateTerminalUI();
+    }
+
+    /// <summary>
+    /// 현재 탭 상태에 맞춰 터미널 UI를 활성화/비활성화합니다.
+    /// </summary>
+    private void UpdateTerminalUI()
+    {
+        var isRoot = CommandManager.instance.state == CommandManager.TabState.ROOT;
+        rootTerminalText.gameObject.SetActive(isRoot);
+        dialogTerminalText.gameObject.SetActive(!isRoot);
+    }
+
+    /// <summary>
+    /// 터미널 화면의 모든 내용을 지웁니다.
+    /// </summary>
+    public void ClearTerminal()
+    {
+        displayLines.Clear();
+        scrollOffset = 0;
+    }
 }

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts_HS.meta
 guid: 1c1bcff8465ddaa4385bd1fa47529602
+========
+guid: aea828212d7eda3488978f8e29b3932f
+>>>>>>>> feature-J:Assets/Project/Scripts/Data.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -1,29 +1,11 @@
+// ÆÄÀÏ¸í: ClsCommand.cs
 using System.Collections.Generic;
-
 public class ClsCommand : ICommand
 {
-    private CommandManager commandManager;
-
-    public ClsCommand(CommandManager cmdMgr)
-    {
-        commandManager = cmdMgr;
-    }
-
+    public string Name => "CLS";
     public List<string> Execute(string[] args)
     {
-        var lines = new List<string>();
-
-        var infoCommand = commandManager.GetCommand("INFO");
-        if (infoCommand != null)
-        {
-            var infoLines = infoCommand.Execute(new string[] { "INFO" });
-            lines.AddRange(infoLines);
-        }
-        else
-        {
-            lines.Add("INFO command not found.");
-        }
-
-        return lines;
+        var infoCommand = new InfoCommand();
+        return infoCommand.Execute(new string[0]);
     }
 }
