@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     [Header("게임 오버")]
     public GameObject gameOver;
 
+    [Header("게임 로그")]
+    public GameObject LOG;
+
     // 세팅 UI
     // UI 열기
     public void ShowSettingUI()
@@ -70,7 +73,7 @@ public class UIManager : MonoBehaviour
     public void ShowGameOver()
     {
         Debug.Log("세팅창 켜볼게");
-         gameOver.SetActive(true);
+        gameOver.SetActive(true);
     }
     // UI 닫기
     public void HideGameOver()
@@ -78,5 +81,17 @@ public class UIManager : MonoBehaviour
         gameOver.SetActive(false);
     }
 
+    // 로그 UI
+    // UI 열기
+    public void Showlog()
+    {
+        Debug.Log("세팅창 켜볼게");
+        LOG.SetActive(true);
+    }
+    // UI 닫기
+    public void Hidelog()
+    {
+        LOG.SetActive(false);
+    }
 
 }
