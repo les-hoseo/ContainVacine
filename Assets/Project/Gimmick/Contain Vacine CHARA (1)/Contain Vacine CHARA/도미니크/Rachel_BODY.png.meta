@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rachel_BODY_0: -3373378556902557759
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

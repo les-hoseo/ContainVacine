@@ -223,7 +223,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rachel_Mons_JUMPSCARE_0_0: 5175699495382195843
+      Rachel_Mons_JUMPSCARE_0_1: -8487912099977392725
+      Rachel_Mons_JUMPSCARE_0_2: 5930187558838418217
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

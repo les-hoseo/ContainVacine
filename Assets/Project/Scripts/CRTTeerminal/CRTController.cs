@@ -291,4 +291,15 @@ public class CRTController : MonoBehaviour
         displayLines.Clear();
         scrollOffset = 0;
     }
+    /// <summary>
+    /// 외부에서 터미널에 메시지를 타이핑 효과로 출력합니다.
+    /// </summary>
+    public void PrintMessage(string message)
+    {
+        // 타이핑 중이 아닐 때만 새 메시지 출력을 허용
+        if (isTyping) return;
+
+        displayLines.Add(" "); // 메시지 출력 전 한 줄 띄우기
+        StartTyping(message);
+    }
 }
