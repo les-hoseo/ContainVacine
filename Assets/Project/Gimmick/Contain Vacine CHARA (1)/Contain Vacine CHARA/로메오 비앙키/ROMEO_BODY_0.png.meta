@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_2.png.meta
-guid: afd2242834243c346beac23dfeecd0eb
-TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 4846372726128063549
-    second: SAVELOAD_FILE_1_2_0
-========
 guid: 1684478cf2ce84f4cabcd6c62f5d2c12
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: 242152335734050405
     second: ROMEO_BODY_0_0
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_BODY_0.png.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -148,22 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_2.png.meta
-      name: SAVELOAD_FILE_1_2_0
-========
       name: ROMEO_BODY_0_0
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_BODY_0.png.meta
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_2.png.meta
-        width: 729
-        height: 133
-========
         width: 1733
         height: 4706
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_BODY_0.png.meta
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,13 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_2.png.meta
-      spriteID: d3431063156c14340800000000000000
-      internalID: 4846372726128063549
-========
       spriteID: 56e85f0344c4c5300800000000000000
       internalID: 242152335734050405
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_BODY_0.png.meta
       vertices: []
       indices: 
       edges: []
@@ -197,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SAVELOAD_FILE_1_2_0: 4846372726128063549
+      ROMEO_BODY_0_0: 242152335734050405
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

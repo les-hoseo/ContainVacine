@@ -33,9 +33,13 @@ public class CommandManager : MonoBehaviour
     }
 
     public static CommandManager instance;
+    // CommandManager.cs
 
     [Header("기믹")]
     [SerializeField] private GimmickManager gimmickManager;
+    [SerializeField] private RachelDominiqueController rachelDominiqueController; // 이 줄을 추가!
+
+    // ... 이하 생략 ...
 
     [Header("필수 참조")]
     [SerializeField] private TerminalManager terminalManager;
@@ -70,7 +74,11 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new LogsCommand(terminalManager));
         RegisterCommand(new ReadCommand(terminalManager));
         RegisterCommand(new AskCommand(terminalManager));
+
+        //test
         RegisterCommand(new TestDmgCommand());
+        RegisterCommand(new TestBitingCommand());
+
 
         // 모듈 명령어
         RegisterCommand(new ModuleBootCommand(), new[] { "MOD_BOOT" });
@@ -86,6 +94,8 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new CrtTemperatureCommand(), new[] { "CRT_TEMP" });
         RegisterCommand(new CrtLinkCommand());
         //RegisterCommand(new CrtFlashCommand());
+
+
     }
 
     /// <summary>
@@ -116,14 +126,23 @@ public class CommandManager : MonoBehaviour
         // 탭 상태에 따라 허용되는 명령어가 다름
         List<string> allowedCommands = GetAllowedCommandsForState(state);
 
+        // 🔽 주석을 제거하고 if-else 구조로 수정합니다.
+        // 올바른 명령어가 들어왔는지 확인
         if (commands.TryGetValue(commandName, out ICommand command) && allowedCommands.Contains(command.Name))
         {
+            // 성공! -> 명령어 실행
             List<string> resultLines = command.Execute(parts);
             return string.Join("\n", resultLines);
         }
-
-        // 알 수 없거나 현재 탭에서 허용되지 않는 명령어
-        return $"SYSTEM > Command '{parts[0]}' not found or not allowed in this tab.";
+        else
+        {
+            // 실패! -> "실수했다"고 알리고 에러 메시지 반환
+            if (rachelDominiqueController != null)
+            {
+                rachelDominiqueController.OnWrongCommand();
+            }
+            return $"SYSTEM > Command '{parts[0]}' not found or not allowed in this tab.";
+        }
     }
 
     // 현재 탭 상태에서 허용되는 명령어 목록을 반환

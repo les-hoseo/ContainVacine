@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ROMEO_BODY_HIGH_0: -7786367150574948287
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
