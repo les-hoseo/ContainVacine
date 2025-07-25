@@ -6,16 +6,20 @@ using UnityEngine;
 
 public class FlowManager : MonoBehaviour
 {
+    public static FlowManager instance;
+
     public enum GameState { VNStory, Gameplay }
+    public enum ExamType { Noraml, Special }
+
+    public GameState CurrentState;
+    public ExamType CurrentExamType;
 
     [SerializeField] private GameObject CRT;
     [SerializeField] private GameObject Character;
-    [SerializeField] private GameObject VNStory;
+    [SerializeField] private GameObject VNStory;    
 
-    public static FlowManager instance;
-    public GameState CurrentState;
-
-    public event Action<GameState> StateChanged;
+    // 얜 무슨 코드지?
+    //public event Action<GameState> StateChanged;
 
     private void Awake()
     {
@@ -24,6 +28,8 @@ public class FlowManager : MonoBehaviour
 
     private void Start()
     {
+        if (!VNStory)
+            Debug.Log("VN Story Panel is null");
         SetState(GameState.VNStory);
         StoryManager.instance.ShowStory(0);
     }
@@ -35,12 +41,12 @@ public class FlowManager : MonoBehaviour
             case GameState.VNStory:
                 CRT.SetActive(false);
                 Character.SetActive(false);
-                VNStory.SetActive(true);
+                //VNStory.SetActive(true);
                 break;
             case GameState.Gameplay:
                 CRT.SetActive(true);
                 Character.SetActive(true);
-                VNStory.SetActive(false);
+                //VNStory.SetActive(false);
                 break;
             default:
                 break;
@@ -52,5 +58,11 @@ public class FlowManager : MonoBehaviour
         CurrentState = state;
         UpdateState(CurrentState);
         Debug.Log($"현재 게임 단계 : {state}");
+    }
+
+    public void SetExamMode(ExamType type)
+    {
+        CurrentExamType = type;
+        Debug.Log($"현재 검진 : {type}");
     }
 }

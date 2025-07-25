@@ -1,10 +1,19 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_KNIFE.png.meta
 guid: c28c8f7a96748044aa243c00b6255311
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -3079430365059135188
     second: ROMEO_KNIFE_0
+========
+guid: d1177f480dfb4db44a6278027347f7bd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7772703502123973992
+    second: SELECTED_0
+>>>>>>>> feature-E:Assets/Project/Sprites/UI/SELECTED.png.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +148,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+<<<<<<<< HEAD:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_KNIFE.png.meta
       name: ROMEO_KNIFE_0
+========
+      name: SELECTED_0
+>>>>>>>> feature-E:Assets/Project/Sprites/UI/SELECTED.png.meta
       rect:
         serializedVersion: 2
         x: 0
         y: 0
+<<<<<<<< HEAD:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_KNIFE.png.meta
         width: 186
         height: 592
+========
+        width: 546
+        height: 55
+>>>>>>>> feature-E:Assets/Project/Sprites/UI/SELECTED.png.meta
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +172,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_KNIFE.png.meta
       spriteID: c294914066aa345d0800000000000000
       internalID: -3079430365059135188
+========
+      spriteID: 892477ba85fc12490800000000000000
+      internalID: -7772703502123973992
+>>>>>>>> feature-E:Assets/Project/Sprites/UI/SELECTED.png.meta
       vertices: []
       indices: 
       edges: []
@@ -173,7 +196,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
+<<<<<<<< HEAD:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_KNIFE.png.meta
     nameFileIdTable: {}
+========
+    nameFileIdTable:
+      SELECTED_0: -7772703502123973992
+>>>>>>>> feature-E:Assets/Project/Sprites/UI/SELECTED.png.meta
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
