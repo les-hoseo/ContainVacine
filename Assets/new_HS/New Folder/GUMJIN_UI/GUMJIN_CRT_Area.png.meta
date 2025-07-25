@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      GUMJIN_CRT_Area_0: -7574583444170380949
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

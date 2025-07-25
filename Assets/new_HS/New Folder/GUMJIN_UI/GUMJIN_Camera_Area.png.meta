@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      GUMJIN_Camera_Area_0: 8112827258256222818
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

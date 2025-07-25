@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      VISU_MINI_0: 5867558966066011107
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

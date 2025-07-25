@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: 6aee618a55ddb254c80f8c99c4610623
+guid: 15044b428ef16924bb6e88267dc06e8e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2180060613260037807
-    second: GUMJIN_UNDERINFO_Area_0
+      213: -2463496153328917470
+    second: CS_RACHEL_C0_0
   - first:
-      213: -7519871701099567391
-    second: GUMJIN_UNDERINFO_Area_1
+      213: 4676276550361405748
+    second: CS_RACHEL_C0_1
   - first:
-      213: -5875428882999216998
-    second: GUMJIN_UNDERINFO_Area_2
+      213: -6399466616786468591
+    second: CS_RACHEL_C0_2
+  - first:
+      213: 4649695148092870010
+    second: CS_RACHEL_C0_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GUMJIN_UNDERINFO_Area_0
+      name: CS_RACHEL_C0_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 4
-        width: 437
-        height: 77
+        x: 722
+        y: 977
+        width: 147
+        height: 86
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 151b0d53c6edeb1e0800000000000000
-      internalID: -2180060613260037807
+      spriteID: 224e94bfc47efcdd0800000000000000
+      internalID: -2463496153328917470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUMJIN_UNDERINFO_Area_1
+      name: CS_RACHEL_C0_1
       rect:
         serializedVersion: 2
-        x: 444
-        y: 4
-        width: 389
-        height: 77
+        x: 703
+        y: 726
+        width: 224
+        height: 190
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +146,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1e6a273a78c04a790800000000000000
-      internalID: -7519871701099567391
+      spriteID: 439d7cf1fb875e040800000000000000
+      internalID: 4676276550361405748
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUMJIN_UNDERINFO_Area_2
+      name: CS_RACHEL_C0_2
       rect:
         serializedVersion: 2
-        x: 836
-        y: 4
-        width: 410
-        height: 77
+        x: 283
+        y: 471
+        width: 124
+        height: 155
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,8 +168,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a94f2cd6f88467ea0800000000000000
-      internalID: -5875428882999216998
+      spriteID: 111c87294078037a0800000000000000
+      internalID: -6399466616786468591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C0_3
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 516
+        width: 86
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7dceef1a19078040800000000000000
+      internalID: 4649695148092870010
       vertices: []
       indices: 
       edges: []
@@ -184,10 +209,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      GUMJIN_UNDERINFO_Area_0: -2180060613260037807
-      GUMJIN_UNDERINFO_Area_1: -7519871701099567391
-      GUMJIN_UNDERINFO_Area_2: -5875428882999216998
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
