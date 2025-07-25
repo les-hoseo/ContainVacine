@@ -1,67 +1,3 @@
-/*using UnityEngine;
-
-public class GameManager : MonoBehaviour
-{
-    public static GameManager instance;
-
-    public int Day;
-    public int Week;
-    public int Score;
-    public int PlayerHP;
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    private void Start()
-    {
-        Day = 1;
-        Week = 1;
-    }
-
-    private void OnEnable()
-    {
-        //FlowManager.instance.StateChanged +=
-    }
-
-    public void NextStage()
-    {
-        ++Day;
-        if(Day > 4)
-        {
-            ++Week;
-            if(Week > 3)
-            {
-                GameClear();
-            }
-        }
-    }
-
-    public void GameResume()
-    {
-        Debug.Log("Game Resume");
-        Time.timeScale = 1f;
-    }
-
-    public void GamePause()
-    {
-        Debug.Log("Game Pause");
-        Time.timeScale = 0f;
-    }
-
-    public void GameOver()
-    {
-        Debug.Log("Game Over!");
-    }
-
-    public void GameClear()
-    {
-        Debug.Log("Game Clear!");
-    }
-
-}*/
-
 using UnityEngine;
 /// <summary>
 /// 게임의 핵심 루프(주차, 일차)와 플레이어/피검진자의 상태를 관리합니다.
@@ -70,17 +6,23 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    [Header("CRT 상태")]
+    public float CrtTemp = 0;
+
     [Header("게임 진행 상태")]
     public int Day = 1; // 1-4일 [cite: 201, 202]
     public int Week = 1;// 1-3주 [cite: 198, 199]
+
     [Header("플레이어 및 피검진자 상태")]
     public int PlayerHP = 100;
     public int SubjectMental = 100; // 피검진자 정신력 [cite: 220]
     private float mentalDecreaseTimer = 0f;
+
     private void Awake()
     {
         instance = this;
     }
+
     void Update()
     {
         // 시간에 따른 정신력 감소 로직 [cite: 593]
@@ -91,11 +33,14 @@ public class GameManager : MonoBehaviour
             mentalDecreaseTimer = 0f;
         }
     }
+
     /// <summary>
     /// 다음 일차로 진행합니다.
     /// </summary>
     public void NextStage()
     {
+        FlowManager.instance.SetExamMode(FlowManager.ExamType.Noraml);
+        FlowManager.instance.SetState(FlowManager.GameState.VNStory);
         Day++;
         if (Day > 4)
         {
@@ -113,20 +58,23 @@ public class GameManager : MonoBehaviour
         // 일차 시작 관련 로직 (예: 일차 스토리 출력, 검진 시작)
         Debug.Log($"{Week}주차 {Day}일차 시작");
     }
+
     /// <summary>
     /// 잘못된 로그 질문 시 정신력을 감소시킵니다. [cite: 592]
-                /// </summary>
+    /// </summary>
     public void DecreaseMentalOnWrongAnswer()
     {
         SubjectMental = Mathf.Max(0, SubjectMental - 5);
     }
+
     /// <summary>
-   /// 오염된 로그 수정 시 정신력을 증가시킵니다. [cite: 594]
-                /// </summary>
+    /// 오염된 로그 수정 시 정신력을 증가시킵니다. [cite: 594]
+    /// </summary>
     public void IncreaseMentalOnLogFix()
     {
         SubjectMental = Mathf.Min(100, SubjectMental + 10);
     }
+
     /// <summary>
     /// 정신력 상태에 따라 플레이어에게 데미지를 적용합니다.
     /// </summary>
@@ -134,15 +82,21 @@ public class GameManager : MonoBehaviour
     {
         int damage = 0;
         if (SubjectMental <= 10) damage = 20; // CORRUPTED [cite: 591]
-else if (SubjectMental <= 40) damage = 10; // CRITICAL [cite: 591]
-else if (SubjectMental <= 70) damage = 5; // UNSTABLE [cite: 591]
-else damage = 2;// STABLE [cite: 591]
+        else if (SubjectMental <= 40) damage = 10; // CRITICAL [cite: 591]
+        else if (SubjectMental <= 70) damage = 5; // UNSTABLE [cite: 591]
+        else damage = 2;// STABLE [cite: 591]
         PlayerHP = Mathf.Max(0, PlayerHP - damage);
         if (PlayerHP == 0)
         {
             GameOver();
         }
     }
+
+    public void TogglePowerPort(int temp)
+    {
+
+    }
+
     public void GameClear()
     {
         Debug.Log("Game Clear!");

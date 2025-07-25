@@ -1,10 +1,19 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_1.png.meta
 guid: 25683a1d6defdc14791a230e31c133b7
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -4312651624920452456
     second: SAVELOAD_FILE_1_1_0
+========
+guid: 4c776a9d64363c74cb2f0f02f265b365
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 237533373202995880
+    second: ROMEO_HEART_2_0
+>>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_HEART_2.png.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +148,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_1.png.meta
       name: SAVELOAD_FILE_1_1_0
+========
+      name: ROMEO_HEART_2_0
+>>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_HEART_2.png.meta
       rect:
         serializedVersion: 2
         x: 0
         y: 0
+<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_1.png.meta
         width: 729
         height: 133
+========
+        width: 434
+        height: 546
+>>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_HEART_2.png.meta
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +172,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_1_1.png.meta
       spriteID: 892fa9052326624c0800000000000000
       internalID: -4312651624920452456
+========
+      spriteID: 8aa901c2853eb4300800000000000000
+      internalID: 237533373202995880
+>>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/로메오 비앙키/ROMEO_HEART_2.png.meta
       vertices: []
       indices: 
       edges: []
