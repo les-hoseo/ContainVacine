@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ROMEO_HEART_3_0: 1118831914819492102
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

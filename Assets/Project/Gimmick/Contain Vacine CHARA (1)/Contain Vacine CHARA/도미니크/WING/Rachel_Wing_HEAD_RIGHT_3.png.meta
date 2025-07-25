@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rachel_Wing_HEAD_RIGHT_3_0: 7180033902896495162
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_3.png.meta
-guid: d2870914fc4ba014e836a163d9ba2149
-TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 3741774109913685207
-    second: SAVELOAD_FILE_3_0
-========
 guid: 5df829398f0d8bb4a93cd96ff82e5840
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: 1208040086343421634
     second: image_0
->>>>>>>> feature-J:Assets/Project/Gimmick/image.png.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -148,22 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_3.png.meta
-      name: SAVELOAD_FILE_3_0
-========
       name: image_0
->>>>>>>> feature-J:Assets/Project/Gimmick/image.png.meta
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_3.png.meta
-        width: 729
-        height: 133
-========
         width: 929
         height: 523
->>>>>>>> feature-J:Assets/Project/Gimmick/image.png.meta
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,13 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_3.png.meta
-      spriteID: 7dc982b6ab37de330800000000000000
-      internalID: 3741774109913685207
-========
       spriteID: 2ce8eecde02d3c010800000000000000
       internalID: 1208040086343421634
->>>>>>>> feature-J:Assets/Project/Gimmick/image.png.meta
       vertices: []
       indices: 
       edges: []
@@ -197,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SAVELOAD_FILE_3_0: 3741774109913685207
+      image_0: 1208040086343421634
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

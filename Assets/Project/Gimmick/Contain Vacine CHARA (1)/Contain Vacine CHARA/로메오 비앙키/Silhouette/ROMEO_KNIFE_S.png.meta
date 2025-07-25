@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ROMEO_KNIFE_S_0: 1677045267966963141
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

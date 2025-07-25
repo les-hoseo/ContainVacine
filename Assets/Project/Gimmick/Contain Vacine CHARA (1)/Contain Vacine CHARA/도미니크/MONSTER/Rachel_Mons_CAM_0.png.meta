@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rachel_Mons_CAM_0_0: -6787321582125309916
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rachel_Wing_HEAD_LFET_3_0: -7828595135858897234
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

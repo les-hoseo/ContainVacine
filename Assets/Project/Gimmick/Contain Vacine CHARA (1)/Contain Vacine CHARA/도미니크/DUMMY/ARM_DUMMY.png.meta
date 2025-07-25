@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_0_1.png.meta
-guid: 9558c68eb36d053479240866432a8a0f
-TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 7301254735259951347
-    second: SAVELOAD_FILE_0_1_0
-========
 guid: 52cdd83422a71eb4da71d97bda6811f1
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -3475042914783532762
     second: ARM_DUMMY_0
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/도미니크/DUMMY/ARM_DUMMY.png.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -148,22 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_0_1.png.meta
-      name: SAVELOAD_FILE_0_1_0
-========
       name: ARM_DUMMY_0
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/도미니크/DUMMY/ARM_DUMMY.png.meta
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_0_1.png.meta
-        width: 729
-        height: 133
-========
         width: 2093
         height: 2548
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/도미니크/DUMMY/ARM_DUMMY.png.meta
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,13 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-<<<<<<<< HEAD:Assets/Project/Sprites/UI/SAVELOAD_FILE_0_1.png.meta
-      spriteID: 3f0eecd7f74435560800000000000000
-      internalID: 7301254735259951347
-========
       spriteID: 629e61d61ea26cfc0800000000000000
       internalID: -3475042914783532762
->>>>>>>> feature-J:Assets/Project/Gimmick/Contain Vacine CHARA (1)/Contain Vacine CHARA/도미니크/DUMMY/ARM_DUMMY.png.meta
       vertices: []
       indices: 
       edges: []
@@ -197,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SAVELOAD_FILE_0_1_0: 7301254735259951347
+      ARM_DUMMY_0: -3475042914783532762
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
