@@ -56,7 +56,7 @@ public class RachelDominiqueController : MonoBehaviour
             if (CRTController.instance != null)
             {
                 string randomLog = trashLogs[Random.Range(0, trashLogs.Length)];
-                CRTController.instance.PrintToRootTab(randomLog);
+                /*CRTController.instance.PrintToRootTab(randomLog);*/
             }
 
             if (GimmickManager.Instance != null)
@@ -174,22 +174,22 @@ public class RachelDominiqueController : MonoBehaviour
 
         if (CRTController.instance != null)
         {
-            crtController.typingSpeed = originalTypingSpeed / 2f;
+            /*crtController.typingSpeed = originalTypingSpeed / 2f;
             crtController.PrintToRootTab("SYSTEM > SUBJECT WEAKEN DETECTED...");
             CRTController.instance.PrintToRootTab("SYSTEM > SUBJECT WEAKEN DETECTED");
             CRTController.instance.PrintToRootTab("SYSTEM > LOADING DELAY x2 APPLIED");
-            CRTController.instance.PrintToRootTab("SYSTEM > SUBJECT STATE : HYPOACTIVATION PHASE ENGAGED");
+            CRTController.instance.PrintToRootTab("SYSTEM > SUBJECT STATE : HYPOACTIVATION PHASE ENGAGED");*/
         }
 
         yield return new WaitForSeconds(40f);
 
         if (CRTController.instance != null)
         {
-            crtController.typingSpeed = originalTypingSpeed;
+           /* crtController.typingSpeed = originalTypingSpeed;
             crtController.PrintToRootTab("SYSTEM > SUBJECT STATE NORMALIZING...");
             CRTController.instance.PrintToRootTab("SYSTEM > SUBJECT STATE NORMALIZING");
             CRTController.instance.PrintToRootTab("SYSTEM > LOADING DELAY RESTORED");
-            CRTController.instance.PrintToRootTab("SYSTEM > SUBJECT STATE : HYPOACTIVATION PHASE TERMINATED");
+            CRTController.instance.PrintToRootTab("SYSTEM > SUBJECT STATE : HYPOACTIVATION PHASE TERMINATED");*/
         }
 
         isHypoactive = false;
