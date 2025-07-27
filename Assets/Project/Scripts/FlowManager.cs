@@ -1,3 +1,7 @@
+using System;
+using System.Collections;
+using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlowManager : MonoBehaviour
@@ -12,11 +16,7 @@ public class FlowManager : MonoBehaviour
 
     [SerializeField] private GameObject CRT;
     [SerializeField] private GameObject Character;
-    [SerializeField] private GameObject VNStory;
-    [SerializeField] private GameObject crtUI;
-    [SerializeField] private GameObject CamObj;
-    [SerializeField] private GameObject NorCharacterObj;
-    [SerializeField] private GameObject SpeCharacterObj;
+    [SerializeField] private GameObject VNStory;    
 
     // ¾ë ¹«½¼ ÄÚµåÁö?
     //public event Action<GameState> StateChanged;
@@ -33,30 +33,20 @@ public class FlowManager : MonoBehaviour
         SetState(GameState.VNStory);
         StoryManager.instance.ShowStory(0);
     }
-    public void StartSpecialExamination()
-    {
-        NorCharacterObj.SetActive(false);
-        SpeCharacterObj.SetActive(true);
-        CurrentExamType = ExamType.Special;
-        CRTController.instance.ClearTerminal();
-    }
+
     public void UpdateState(GameState state)
     {
         switch (state)
         {
             case GameState.VNStory:
-                CamObj.SetActive(false);
-                crtUI.SetActive(false);
                 CRT.SetActive(false);
                 Character.SetActive(false);
-                VNStory.SetActive(true);
+                //VNStory.SetActive(true);
                 break;
             case GameState.Gameplay:
-                CamObj.SetActive(true);
-                crtUI.SetActive(true);
                 CRT.SetActive(true);
                 Character.SetActive(true);
-                VNStory.SetActive(false);
+                //VNStory.SetActive(false);
                 break;
             default:
                 break;

@@ -13,14 +13,6 @@ MonoBehaviour:
   m_Name: RACHEL_MEMORY
   m_EditorClassIdentifier: 
   logTitle: RACHEL_MEMORY.LOG
-  keyword:
-  - FORGET
-  hash:
-  - 524D
-  - 5245
-  - 4F43
-  - 4845
-  password: []
   engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\nRACHEL
     > \uBC30\uAC00 \uCD9C\uD56D\uD55C \uB4A4\uC758 \uAE30\uC5B5\uC774\uC694?\r\nRACHEL
     > ...\uC7A0\uC2DC\uB9CC.\r\nRACHEL > \uBD84\uBA85 \uBC30\uC5D0 \uD0C0\uAE30 \uC804\uC5D0
@@ -31,13 +23,17 @@ MonoBehaviour:
   korContent: 
   fixEngContent: 
   fixKorContent: 
-  isCorrupted: 1
+  hash:
+  - 524D
+  - 5245
+  - 4F43
+  - 4845
+  keyword:
+  - FORGET
   canAsk:
   - {fileID: 11400000, guid: 46f633a7f832afe4b807080d7356c2db, type: 2}
   - {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
-  originalPasswordCount: 0
-  interactionResultLog:
-  - {fileID: 11400000, guid: 50e62af89f8bef0449ed46b5a0246880, type: 2}
+  isCorrupted: 1
+  password: []
   match:
-  - logToMatch: {fileID: 0}
-    resultLog: {fileID: 0}
+  - {fileID: 11400000, guid: 4b1ee43de2b64944baf112042c9c14c0, type: 2}

@@ -11,7 +11,7 @@ public class StoryManager : MonoBehaviour
 
     [SerializeField] private List<StoryData> storyData;
     [SerializeField] private List<speech> textComponent;
-    [SerializeField] private FadeController fadeController;
+    [SerializeField] private Image image; // 이 변수는 현재 사용되지 않으므로 나중에 사용하거나 제거할 수 있습니다.
 
     private void Awake()
     {
@@ -44,8 +44,6 @@ public class StoryManager : MonoBehaviour
             Debug.LogError($"[StoryManager] storyData 리스트의 {index}번째 항목이 비어있습니다(null).");
             return;
         }
-
-        fadeController.Init(selectedStory);
 
         foreach (var text in textComponent)
         {

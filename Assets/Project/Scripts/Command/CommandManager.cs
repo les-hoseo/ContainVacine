@@ -3,30 +3,46 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Unity.IO.LowLevel.Unsafe;
 
-/// <summary>
-/// 터미널에 입력된 모든 명령어를 관리하고 실행하는 중앙 관리자입니다.
-/// </summary>
 public class CommandManager : MonoBehaviour
 {
+    private Dictionary<string, string> colorTable = new()
+    {
+        { "RED", "#ab1a1a" },
+        { "ORANGE", "#A05F2C" },
+        { "YELLOW", "#edd532" },
+        { "GREEN", "#4D684E" },
+        { "LIME", "#6C9149" },
+        { "BLUE", "#3a67a6" },
+        { "GRAY", "#787777" },
+        { "PURPLE", "#904ba6" }
+    };
+
+    public string ColorText(string color, string text)
+    {
+        if (colorTable.TryGetValue(color, out string hex))
+        {
+            return $"<color={hex}>{text}</color>";
+        }
+        return text;
+    }
+
     public static CommandManager instance;
+
+    [Header("기믹")]
+    [SerializeField] private GimmickManager gimmickManager;
+    [SerializeField] private RachelDominiqueController rachelDominiqueController;
 
     [Header("필수 참조")]
     [SerializeField] private TerminalManager terminalManager;
     [SerializeField] private LogDatabase logDatabase;
 
-    // [참고] 기획서의 특수 기믹과 연동이 필요할 경우 이 참조를 사용합니다.
-    [Header("연동될 외부 컨트롤러")]
-    [SerializeField] private RachelGimmickManager rachelGimmickManager;
-
-    [Header("현재 대화 대상")]
-    public SubjectData CurChar; // 현재 대화중인 피검진자 데이터
-
     [Header("모듈 상태")]
     public string ConnectedModule { get; private set; } = null;
     public LogData VacineConnectedLog { get; private set; }
 
-    // 명령어 이름과 실제 명령어 클래스를 매핑하는 딕셔너리
     private readonly Dictionary<string, ICommand> commands = new();
 
     public enum TabState { ROOT, DIALOG }
@@ -38,39 +54,27 @@ public class CommandManager : MonoBehaviour
         InitializeCommands();
     }
 
-    /// <summary>
-    /// 모든 명령어 클래스를 생성하고 딕셔너리에 등록합니다.
-    /// </summary>
     private void InitializeCommands()
     {
-        // 일반 명령어
         RegisterCommand(new InfoCommand());
         RegisterCommand(new HelpCommand());
         RegisterCommand(new CommandsCommand());
         RegisterCommand(new ClsCommand());
         RegisterCommand(new LogsCommand(terminalManager));
-        RegisterCommand(new ReadCommand(terminalManager)); // logDatabase 인자 제거됨
-        RegisterCommand(new AskCommand(terminalManager));   // logDatabase 인자 제거됨
-
-        // 모듈 명령어
+        RegisterCommand(new ReadCommand(terminalManager));
+        RegisterCommand(new AskCommand(terminalManager));
+        RegisterCommand(new TestDmgCommand());
+        RegisterCommand(new TestBitingCommand());
         RegisterCommand(new ModuleBootCommand(), new[] { "MOD_BOOT" });
         RegisterCommand(new ModuleExitCommand(), new[] { "MOD_EXIT" });
         RegisterCommand(new DeepmindMatchCommand(terminalManager, logDatabase), new[] { "DM_MAT" });
-
-        // VACINE 명령어
         RegisterCommand(new VacineConnectCommand(terminalManager, this), new[] { "V_CON" });
         RegisterCommand(new VacineVerifyCommand(terminalManager, this), new[] { "V_VER" });
-
-        // CRT 명령어
         RegisterCommand(new CrtConditionCommand(), new[] { "CRT_CON" });
         RegisterCommand(new CrtTemperatureCommand(), new[] { "CRT_TEMP" });
         RegisterCommand(new CrtLinkCommand());
-        // RegisterCommand(new CrtFlashCommand());
     }
 
-    /// <summary>
-    /// 명령어를 딕셔너리에 등록합니다. 별칭(Alias)도 함께 등록할 수 있습니다.
-    /// </summary>
     private void RegisterCommand(ICommand command, string[] aliases = null)
     {
         commands[command.Name.ToUpper()] = command;
@@ -83,15 +87,18 @@ public class CommandManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 사용자 입력을 받아 적절한 명령어를 실행하고 결과를 반환합니다.
-    /// </summary>
     public string ProcessInput(string fullInput)
     {
         string[] parts = fullInput.Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 0) return "";
-
         string commandName = parts[0].ToUpper();
+
+        // GAZE 기믹 확인 로직
+        if (rachelDominiqueController != null && state == TabState.ROOT && rachelDominiqueController.ShouldCommandFail())
+        {
+            return "<color=#ab1a1a>SYSTEM > FAILED TO EXECUTE. TRY AGAIN</color>";
+        }
+
         List<string> allowedCommands = GetAllowedCommandsForState(state);
 
         if (commands.TryGetValue(commandName, out ICommand command) && allowedCommands.Contains(command.Name))
@@ -101,49 +108,26 @@ public class CommandManager : MonoBehaviour
         }
         else
         {
-            // 잘못된 명령어 입력 시 기믹 매니저에 알림
-            if (rachelGimmickManager != null && rachelGimmickManager.gameObject.activeInHierarchy)
+            if (rachelDominiqueController != null)
             {
-                rachelGimmickManager.OnWrongCommand();
+                rachelDominiqueController.OnWrongCommand();
             }
             return $"SYSTEM > Command '{parts[0]}' not found or not allowed in this tab.";
         }
     }
 
-    // 현재 탭 상태에서 허용되는 명령어 목록을 반환
     private List<string> GetAllowedCommandsForState(TabState currentState)
     {
         if (currentState == TabState.DIALOG)
         {
             return new List<string> { "ASK" };
         }
-        else // ROOT 탭
+        else
         {
             return commands.Values.Select(c => c.Name).Where(name => name != "ASK").Distinct().ToList();
         }
     }
 
-    /// <summary>
-    /// 현재 캐릭터의 소개문 로그를 찾아 소유 목록에 추가하고, CRT 화면에 출력하도록 요청합니다.
-    /// </summary>
-    public void DisplayIntroLogForCurrentCharacter()
-    {
-        if (CurChar == null || CurChar.profileLog == null) return;
-
-        LogData profileLog = CurChar.profileLog;
-
-        if (terminalManager != null && !terminalManager.OwnedLogs.Contains(profileLog))
-        {
-            terminalManager.AddLog(profileLog);
-        }
-
-        if (CRTController.instance != null)
-        {
-            CRTController.instance.PrintMessage(profileLog.engContent);
-        }
-    }
-
-    // --- 모듈 상태 관리 함수 ---
     public void BootModule(string moduleName) => ConnectedModule = moduleName;
     public void ExitModule() => ConnectedModule = null;
     public void ConnectLogToVacine(LogData log) => VacineConnectedLog = log;

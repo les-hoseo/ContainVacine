@@ -45,8 +45,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
   - {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
   originalPasswordCount: 0
-  interactionResultLog:
-  - {fileID: 11400000, guid: 5a0c8a843bd4f8d43a7dea8b3a391570, type: 2}
+  interactionResultLog: {fileID: 0}
   match:
   - logToMatch: {fileID: 0}
     resultLog: {fileID: 0}

@@ -13,14 +13,6 @@ MonoBehaviour:
   m_Name: RACHEL_DEPARTURE
   m_EditorClassIdentifier: 
   logTitle: RACHEL_DEPARTURE.LOG
-  keyword:
-  - CITY
-  hash:
-  - 5245
-  - 4150
-  - 5444
-  - 4543
-  password: []
   engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\nRACHEL
     > \uADF8 \uBC30\uB294... \uAE30\uC5B5\uB0AC\uB2E4. \r\nRACHEL > \uBBF8\uB808\uB9B0\uC73C\uB85C
     \uD5A5\uD558\uB294 \uD398\uB9AC\uC120 \uB9DE\uC8E0?\r\nRACHEL > \uAD00\uB828
@@ -32,10 +24,15 @@ MonoBehaviour:
   korContent: 
   fixEngContent: 
   fixKorContent: 
-  isCorrupted: 1
+  hash:
+  - 5245
+  - 4150
+  - 5444
+  - 4543
+  keyword:
+  - CITY
   canAsk:
   - {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
-  originalPasswordCount: 0
-  interactionResultLog:
-  - {fileID: 11400000, guid: ecd26ac24ac3bd749a6db7f1daf01044, type: 2}
+  isCorrupted: 1
+  password: []
   match: []

@@ -13,14 +13,6 @@ MonoBehaviour:
   m_Name: RACHEL_CURSE
   m_EditorClassIdentifier: 
   logTitle: RACHEL_CURSE.LOG
-  keyword:
-  - LORE
-  hash:
-  - 5241
-  - 4348
-  - 455C
-  - 5552
-  password: []
   engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\nRACHEL
     > \uC774 \uCC45\uC740 \uBD84\uBA85\uD788 \uAE30\uC5B5\uB098\uB124\uC694.\r\nRACHEL
     > \uC81C\uAC00 \uB2F4\uB2F9\uD574\uC11C \uBD84\uC11D\uD558\uACE0 \uD574\uC124\uD588\uB358
@@ -36,12 +28,18 @@ MonoBehaviour:
   korContent: 
   fixEngContent: 
   fixKorContent: 
-  isCorrupted: 1
+  originalPasswordCount: 0
+  hash:
+  - 5241
+  - 4348
+  - 455C
+  - 5552
+  keyword:
+  - LORE
   canAsk:
   - {fileID: 11400000, guid: 46f633a7f832afe4b807080d7356c2db, type: 2}
   - {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
   - {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
-  originalPasswordCount: 0
-  interactionResultLog:
-  - {fileID: 11400000, guid: 2c006b25feef2da4cbd9599050a25084, type: 2}
+  isCorrupted: 1
+  password: []
   match: []
