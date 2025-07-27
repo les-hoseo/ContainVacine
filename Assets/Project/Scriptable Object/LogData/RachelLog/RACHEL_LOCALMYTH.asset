@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: RACHEL_LOCALMYTH
   m_EditorClassIdentifier: 
   logTitle: RACHEL_LOCALMYTH.LOG
+  keyword:
+  - LORE
+  hash:
+  - 4F43
+  - 594C
+  - 484D
+  - 4B41
+  password: []
   engContent: "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\r\nRACHEL
     > \uC608\uC804\uC5D0 \uADF8\uACF3\uC758 \uC9C0\uC5ED \uC2E0\uD654\uC5D0 \uAD00\uD55C
     \uB0B4\uC6A9\uC744 \uC77D\uC5B4\uBCF8 \uC801\uC774 \uC788\uC2B5\uB2C8\uB2E4\r\nRACHEL
@@ -26,17 +34,12 @@ MonoBehaviour:
   korContent: 
   fixEngContent: 
   fixKorContent: 
-  hash:
-  - 4F43
-  - 594C
-  - 484D
-  - 4B41
-  keyword:
-  - LORE
+  isCorrupted: 1
   canAsk:
   - {fileID: 11400000, guid: 46f633a7f832afe4b807080d7356c2db, type: 2}
   - {fileID: 11400000, guid: 4b81d0c45edd7204096d58841f00f9f5, type: 2}
-  isCorrupted: 1
-  password: []
+  originalPasswordCount: 0
+  interactionResultLog: []
   match:
-  - {fileID: 11400000, guid: 50e62af89f8bef0449ed46b5a0246880, type: 2}
+  - logToMatch: {fileID: 11400000, guid: 50e62af89f8bef0449ed46b5a0246880, type: 2}
+    resultLog: {fileID: 11400000, guid: d51a4876bc005b344bac5500093db564, type: 2}

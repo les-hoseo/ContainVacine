@@ -14,7 +14,6 @@ public class speech : MonoBehaviour
     private static StoryData storyData;
     private static List<string> lines = new List<string>();
     private static List<string> names = new List<string>();
-    private static List<Sprite> images = new List<Sprite>();
     private static int currentLineIndex = 0;
 
     private TextMeshProUGUI textBox;
@@ -45,7 +44,6 @@ public class speech : MonoBehaviour
         {
             names = storyData.Story.Select(d => d.Name).ToList();
             lines = storyData.Story.Select(d => d.Content).ToList();
-            images = storyData.Story.Select(d => d.Sprite).ToList();
 
             // 데이터 로드 후, Content를 담당하는 인스턴스가 첫 대사를 시작합니다.
             if (contentDisplayer != null)
@@ -78,19 +76,11 @@ public class speech : MonoBehaviour
                 textBox = GetComponent<TextMeshProUGUI>();
                 contentDisplayer = this;
                 break;
-            case VNType.CharImage:
-                CharImage = GetComponent<Image>();
-                imageDisplayer = this;
-                break;
+            //case VNType.CharImage:
+            //    CharImage = GetComponent<Image>();
+            //    imageDisplayer = this;
+            //    break;
         }
-    }
-
-    // --- [수정된 부분 2] ---
-    // Start() 메소드는 더 이상 필요 없으므로 삭제하거나 비워둡니다.
-    // Init()이 호출되기 전에 실행되어 에러를 유발했습니다.
-    void Start()
-    {
-        // 이 곳의 코드는 Init()으로 이동했으므로 비워둡니다.
     }
 
     void Update()
@@ -120,25 +110,39 @@ public class speech : MonoBehaviour
         }
     }
 
+    //public void UpdateImage()
+    //{
+    //    if (imageDisplayer != null && currentLineIndex < images.Count)
+    //    {
+    //        Sprite spriteToShow = images[currentLineIndex];
+    //        if (spriteToShow != null)
+    //        {
+    //            StartCoroutine(Change2Image());
+    //            Debug.Log("이미지 바뀌고 있음");
+    //            CharImage.sprite = spriteToShow;
+    //            //imageDisplayer.CharImage.sprite = spriteToShow;
+    //            imageDisplayer.CharImage.enabled = true;
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("이미지 바뀌고 있지 않음");
+    //            imageDisplayer.CharImage.enabled = false;
+    //        }
+    //    }
+    //}
+
+    //IEnumerator Change2Image()
+    //{
+    //    FadeController.PlayFadeOut();
+    //    yield return new WaitForSeconds(0.1f);
+    //    FadeController.PlayFadeIn();
+    //}
+
     void UpdateCharacterInfo()
     {
         if (nameDisplayer != null && currentLineIndex < names.Count)
         {
             nameDisplayer.CharName.text = names[currentLineIndex];
-        }
-
-        if (imageDisplayer != null && currentLineIndex < images.Count)
-        {
-            Sprite spriteToShow = images[currentLineIndex];
-            if (spriteToShow != null)
-            {
-                imageDisplayer.CharImage.sprite = spriteToShow;
-                imageDisplayer.CharImage.enabled = true;
-            }
-            else
-            {
-                imageDisplayer.CharImage.enabled = false;
-            }
         }
     }
 
