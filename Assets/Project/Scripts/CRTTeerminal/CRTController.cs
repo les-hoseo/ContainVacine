@@ -1,29 +1,33 @@
-// ÆÄÀÏ¸í: CRTController.cs
+ï»¿// íŒŒì¼ëª…: CRTController.cs
 
 using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
 
 /// <summary>
-/// CRT ÅÍ¹Ì³ÎÀÇ »ç¿ëÀÚ ÀÔ·Â, ÅØ½ºÆ® Ãâ·Â, Å¸ÀÌÇÎ È¿°ú µî ¸ğµç ½Ã°¢Àû Ç¥ÇöÀ» Á¦¾îÇÕ´Ï´Ù.
+/// CRT í„°ë¯¸ë„ì˜ ì‚¬ìš©ì ì…ë ¥, í…ìŠ¤íŠ¸ ì¶œë ¥, íƒ€ì´í•‘ íš¨ê³¼ ë“± ëª¨ë“  ì‹œê°ì  í‘œí˜„ì„ ì œì–´í•©ë‹ˆë‹¤.
+/// ê° íƒ­ì˜ ê¸°ë¡ì„ ë³„ë„ë¡œ ê´€ë¦¬í•©ë‹ˆë‹¤.
 /// </summary>
 [RequireComponent(typeof(TMP_Text))]
 public class CRTController : MonoBehaviour
 {
     public static CRTController instance;
 
-    [Header("UI ÄÄÆ÷³ÍÆ®")]
+    [Header("UI ì»´í¬ë„ŒíŠ¸")]
     [SerializeField] private TMP_Text rootTerminalText;
     [SerializeField] private TMP_Text dialogTerminalText;
 
-    [Header("Å¸ÀÌÇÎ È¿°ú")]
+    [Header("íƒ€ì´í•‘ íš¨ê³¼")]
     public float typingSpeed = 0.02f;
 
-    // [¼öÁ¤] ÅÇ º°·Î ÅØ½ºÆ® ¸ñ·ÏÀ» ºĞ¸®ÇÕ´Ï´Ù.
-    private readonly List<string> rootLines = new();
-    private readonly List<string> dialogLines = new();
+    // --- [âœ¨ìˆ˜ì •ëœ ë¶€ë¶„ 1] íƒ­ë³„ ê¸°ë¡ ë¦¬ìŠ¤íŠ¸ ë¶„ë¦¬ ---
+    private readonly List<string> rootDisplayLines = new();
+    private readonly List<string> dialogDisplayLines = new();
+    private List<string> CurrentDisplayLines =>
+        CommandManager.instance.state == CommandManager.TabState.ROOT ? rootDisplayLines : dialogDisplayLines;
 
     private readonly List<string> commandHistory = new();
     private int historyIndex = -1;
@@ -31,6 +35,7 @@ public class CRTController : MonoBehaviour
     private Coroutine typingCoroutine;
     private bool isTyping = false;
     private int scrollOffset = 0;
+    private bool first = false;
 
     private const string PROMPT_ROOT = "\\\\ROOT> ";
     private const string PROMPT_DIALOG = "\\\\DIALOG> ";
@@ -42,7 +47,12 @@ public class CRTController : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(ShowWelcomeMessage());
+        var currentCharData = CommandManager.instance.CurChar;
+        // ê²Œì„ ì‹œì‘ ì‹œ ROOT íƒ­ì´ë¯€ë¡œ í™˜ì˜ ë©”ì‹œì§€ ì¶œë ¥
+        if (CommandManager.instance.state == CommandManager.TabState.ROOT)
+        {
+            StartCoroutine(ShowWelcomeMessage());
+        }
         UpdateTerminalUI();
     }
 
@@ -70,6 +80,7 @@ public class CRTController : MonoBehaviour
 
     private void HandleKeyboardInput()
     {
+        // ... ê¸°ì¡´ê³¼ ë™ì¼ ...
         if (Input.inputString.Length > 0)
         {
             foreach (char c in Input.inputString)
@@ -85,12 +96,12 @@ public class CRTController : MonoBehaviour
 
     private void HandleMouseScroll()
     {
+        // ... ê¸°ì¡´ê³¼ ë™ì¼, ë‹¨ CurrentDisplayLines ì‚¬ìš© ...
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
-            scrollOffset -= (int)Mathf.Sign(scroll) * 3;
-            // [¼öÁ¤] ÇöÀç ÅÇÀÇ ¶óÀÎ ¼ö¸¦ ±âÁØÀ¸·Î ½ºÅ©·Ñ Á¦ÇÑ
-            scrollOffset = Mathf.Clamp(scrollOffset, 0, Mathf.Max(0, GetCurrentLines().Count - 5));
+            scrollOffset += (int)Mathf.Sign(scroll) * 3;
+            scrollOffset = Mathf.Clamp(scrollOffset, 0, Mathf.Max(0, CurrentDisplayLines.Count - 5));
         }
     }
 
@@ -99,8 +110,8 @@ public class CRTController : MonoBehaviour
         string command = currentInput.ToString().Trim();
         string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
 
-        // [¼öÁ¤] ÇöÀç ÅÇÀÇ ¶óÀÎ ¸ñ·Ï¿¡ ¸í·É¾î Ãß°¡
-        GetCurrentLines().Add(prompt + command);
+        // --- [âœ¨ìˆ˜ì •ëœ ë¶€ë¶„ 2] í˜„ì¬ í™œì„±í™”ëœ íƒ­ì˜ ë¦¬ìŠ¤íŠ¸ì— ê¸°ë¡ ì¶”ê°€ ---
+        CurrentDisplayLines.Add(prompt + command);
 
         if (!string.IsNullOrEmpty(command))
         {
@@ -109,10 +120,9 @@ public class CRTController : MonoBehaviour
 
             if (command.ToUpper() == "CLS")
             {
-                ClearTerminal();
+                ClearTerminal(); // í˜„ì¬ íƒ­ì˜ ê¸°ë¡ë§Œ ì§€ì›€
                 var infoCommand = new InfoCommand();
-                // [¼öÁ¤] ÇöÀç ÅÇÀÇ ¶óÀÎ ¸ñ·Ï¿¡ °á°ú Ãß°¡
-                GetCurrentLines().AddRange(infoCommand.Execute(new string[0]));
+                CurrentDisplayLines.AddRange(infoCommand.Execute(new string[0]));
             }
             else
             {
@@ -123,16 +133,15 @@ public class CRTController : MonoBehaviour
                 }
             }
         }
-
         currentInput.Clear();
         scrollOffset = 0;
     }
 
     private void NavigateHistory(int direction)
     {
+        // ... ê¸°ì¡´ê³¼ ë™ì¼ ...
         if (commandHistory.Count == 0) return;
         historyIndex = Mathf.Clamp(historyIndex + direction, 0, commandHistory.Count);
-
         if (historyIndex < commandHistory.Count)
         {
             currentInput.Clear().Append(commandHistory[historyIndex]);
@@ -149,12 +158,13 @@ public class CRTController : MonoBehaviour
     {
         isTyping = true;
         string[] lines = message.Split('\n');
-        var currentLines = GetCurrentLines(); // [¼öÁ¤]
 
         foreach (var line in lines)
         {
-            currentLines.Add(""); // [¼öÁ¤]
-            int currentLineIndex = currentLines.Count - 1; // [¼öÁ¤]
+            // --- [âœ¨ìˆ˜ì •ëœ ë¶€ë¶„ 3] í˜„ì¬ í™œì„±í™”ëœ íƒ­ì˜ ë¦¬ìŠ¤íŠ¸ì— íƒ€ì´í•‘ ì§„í–‰ ---
+            CurrentDisplayLines.Add("");
+            int currentLineIndex = CurrentDisplayLines.Count - 1;
+
             var sb = new StringBuilder();
             int i = 0;
             while (i < line.Length)
@@ -164,14 +174,15 @@ public class CRTController : MonoBehaviour
                     int tagEnd = line.IndexOf('>', i);
                     if (tagEnd != -1)
                     {
-                        sb.Append(line.Substring(i, tagEnd - i + 1));
+                        string tag = line.Substring(i, tagEnd - i + 1);
+                        sb.Append(tag);
                         i = tagEnd;
                     }
-                    else { sb.Append(line[i]); }
+                    else sb.Append(line[i]);
                 }
-                else { sb.Append(line[i]); }
+                else sb.Append(line[i]);
 
-                currentLines[currentLineIndex] = sb.ToString(); // [¼öÁ¤]
+                CurrentDisplayLines[currentLineIndex] = sb.ToString();
                 yield return new WaitForSeconds(typingSpeed);
                 i++;
             }
@@ -185,23 +196,23 @@ public class CRTController : MonoBehaviour
         var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
         if (targetTextComponent == null) return;
 
-        var currentLines = GetCurrentLines(); // [¼öÁ¤]
-
         int visibleLineCount = Mathf.FloorToInt(targetTextComponent.rectTransform.rect.height / targetTextComponent.font.faceInfo.lineHeight);
+
         var sb = new StringBuilder();
-        int startLine = Mathf.Max(0, currentLines.Count - visibleLineCount - scrollOffset); // [¼öÁ¤]
-        int endLine = Mathf.Min(currentLines.Count, startLine + visibleLineCount); // [¼öÁ¤]
+        // --- [âœ¨ìˆ˜ì •ëœ ë¶€ë¶„ 4] í˜„ì¬ í™œì„±í™”ëœ íƒ­ì˜ ë¦¬ìŠ¤íŠ¸ì—ì„œ ë‚´ìš© ê°€ì ¸ì˜¤ê¸° ---
+        int startLine = Mathf.Max(0, CurrentDisplayLines.Count - visibleLineCount - scrollOffset);
+        int endLine = Mathf.Min(CurrentDisplayLines.Count, startLine + visibleLineCount);
 
         for (int i = startLine; i < endLine; i++)
         {
-            sb.AppendLine(currentLines[i]); // [¼öÁ¤]
+            sb.AppendLine(CurrentDisplayLines[i]);
         }
 
         if (!isTyping)
         {
             string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
             sb.Append(prompt).Append(currentInput);
-            if (Time.time % 1f < 0.5f) { sb.Append("_"); }
+            if (Time.time % 1f < 0.5f) sb.Append("_");
         }
         targetTextComponent.text = sb.ToString();
     }
@@ -210,9 +221,21 @@ public class CRTController : MonoBehaviour
     {
         var cm = CommandManager.instance;
         cm.state = (cm.state == CommandManager.TabState.ROOT) ? CommandManager.TabState.DIALOG : CommandManager.TabState.ROOT;
-        // [¼öÁ¤] ±âÁ¸ ·ÎÁ÷ À¯Áö: ÅÇ ÀüÈ¯ ½Ã È­¸éÀ» Áö¿ó´Ï´Ù.
-        ClearTerminal();
+
         UpdateTerminalUI();
+        scrollOffset = 0; // íƒ­ ì „í™˜ ì‹œ ìŠ¤í¬ë¡¤ ìœ„ì¹˜ ì´ˆê¸°í™”
+
+        // --- [âœ¨ìˆ˜ì •ëœ ë¶€ë¶„ 2] CommandManagerì˜ ìƒˆ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ë„ë¡ ë³€ê²½ ---
+        // DIALOG íƒ­ì— ì²˜ìŒ ì§„ì…í–ˆì„ ë•Œ CommandManagerì— ì†Œê°œë¬¸ ì¶œë ¥ì„ ìš”ì²­í•©ë‹ˆë‹¤.
+        if (!first)
+        {
+            if (cm.state == CommandManager.TabState.DIALOG && dialogDisplayLines.Count == 0)
+            {
+                cm.DisplayIntroLogForCurrentCharacter();
+                first = true;
+            }
+        }
+
     }
 
     private void UpdateTerminalUI()
@@ -222,38 +245,20 @@ public class CRTController : MonoBehaviour
         dialogTerminalText.gameObject.SetActive(!isRoot);
     }
 
+    /// <summary>
+    /// í˜„ì¬ í™œì„±í™”ëœ í„°ë¯¸ë„ íƒ­ì˜ ê¸°ë¡ë§Œ ì§€ì›ë‹ˆë‹¤.
+    /// </summary>
     public void ClearTerminal()
     {
-        GetCurrentLines().Clear(); // [¼öÁ¤]
+        // --- [âœ¨ìˆ˜ì •ëœ ë¶€ë¶„ 6] í˜„ì¬ íƒ­ì˜ ë¦¬ìŠ¤íŠ¸ë§Œ ì§€ìš°ë„ë¡ ìˆ˜ì • ---
+        CurrentDisplayLines.Clear();
         scrollOffset = 0;
     }
 
-    // --- [Ãß°¡/¼öÁ¤µÈ ÇÔ¼öµé] ---
-
-    /// <summary>
-    /// ÇöÀç È°¼ºÈ­µÈ ÅÇ¿¡ ¸Â´Â ÅØ½ºÆ® ¸ñ·ÏÀ» ¹İÈ¯ÇÕ´Ï´Ù.
-    /// </summary>
-    private List<string> GetCurrentLines()
-    {
-        return CommandManager.instance.state == CommandManager.TabState.ROOT ? rootLines : dialogLines;
-    }
-
-    /// <summary>
-    /// ÇöÀç ÅÇ°ú »ó°ü¾øÀÌ ROOT ÅÇ¿¡ Á÷Á¢ ¸Ş½ÃÁö¸¦ Ãß°¡ÇÕ´Ï´Ù. (Å¸ÀÌÇÎX)
-    /// </summary>
-    public void PrintToRootTab(string message)
-    {
-        rootLines.Add(" ");
-        rootLines.Add(message);
-    }
-
-    /// <summary>
-    /// ¿ÜºÎ¿¡¼­ 'ÇöÀç È°¼ºÈ­µÈ ÅÇ'¿¡ ¸Ş½ÃÁö¸¦ Å¸ÀÌÇÎ È¿°ú·Î Ãâ·ÂÇÕ´Ï´Ù.
-    /// </summary>
-    public void PrintMessageToCurrentTab(string message)
+    public void PrintMessage(string message)
     {
         if (isTyping) return;
-        GetCurrentLines().Add(" "); // [¼öÁ¤]
+        CurrentDisplayLines.Add(" ");
         StartTyping(message);
     }
 }

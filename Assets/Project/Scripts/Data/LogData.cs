@@ -27,9 +27,7 @@ public class LogData : ScriptableObject
     public int originalPasswordCount;
 
 
-
-
-    public LogData interactionResultLog;
+    public List<LogData> interactionResultLog;
     public List<MatchInfo> match;
 }
 

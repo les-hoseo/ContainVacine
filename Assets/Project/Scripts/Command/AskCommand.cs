@@ -1,14 +1,15 @@
-// ÆÄÀÏ¸í: AskCommand.cs
+ï»¿// íŒŒì¼ëª…: AskCommand.cs
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 public class AskCommand : ICommand
 {
     public string Name => "ASK";
     private readonly TerminalManager terminalManager;
 
-    // ÀÌ Ä¿¸Çµå´Â ´õ ÀÌ»ó LogDatabase¸¦ Á÷Á¢ ÂüÁ¶ÇÒ ÇÊ¿ä°¡ ¾ø½À´Ï´Ù.
     public AskCommand(TerminalManager tm)
     {
         this.terminalManager = tm;
@@ -19,41 +20,68 @@ public class AskCommand : ICommand
         var lines = new List<string>();
         if (args.Length < 2)
         {
-            lines.Add("RACHEL > ¹«½¼ ·Î±×¿¡ ´ëÇØ ¹°¾îº¸½Ç °Ç°¡¿ä?");
+            lines.Add("RACHEL > ë¬´ìŠ¨ ë¡œê·¸ì— ëŒ€í•´ ë¬¼ì–´ë³´ì‹¤ ê±´ê°€ìš”?");
             return lines;
         }
 
         string logTitle = args[1];
-        string currentSubject = "RACHEL"; // ÀÓ½Ã. ÃßÈÄ GameManager µî¿¡¼­ ÇöÀç ´ëÈ­ »ó´ë¸¦ ¹Ş¾Æ¿Í¾ß ÇÔ.
 
-        var askedLog = terminalManager.OwnedLogs.Find(l => l.logTitle.Equals(logTitle, System.StringComparison.OrdinalIgnoreCase));
-
-        if (askedLog == null)
+        var currentCharData = CommandManager.instance.CurChar;
+        if (currentCharData == null)
         {
-            lines.Add($"{currentSubject} > ±×·± ·Î±×´Â °¡Áö°í ÀÖÁö ¾ÊÀºµ¥¿ä.");
+            lines.Add("SYSTEM > No subject selected for dialogue.");
             return lines;
         }
 
-        // [¼öÁ¤µÈ ºÎºĞ] interactionResultLog°¡ ÀÌ¹Ì LogData Å¸ÀÔÀÌ¹Ç·Î, ¹Ù·Î »ç¿ëÇÕ´Ï´Ù.
-        var resultLogData = askedLog.interactionResultLog;
+        var askedLog = terminalManager.OwnedLogs.Find(l => l.logTitle.Equals(logTitle, StringComparison.OrdinalIgnoreCase));
 
-        if (resultLogData != null && askedLog.canAsk.Any(s => s.subjectName == currentSubject))
+        if (askedLog == null)
         {
-            if (!terminalManager.OwnedLogs.Contains(resultLogData))
+            lines.Add($"{currentCharData.subjectName} > ê·¸ëŸ° ë¡œê·¸ëŠ” ê°€ì§€ê³  ìˆì§€ ì•Šì€ë°ìš”.");
+            return lines;
+        }
+
+        // --- [âœ¨ì¶”ê°€ëœ ë¶€ë¶„] 'ìˆ˜ì • ì™„ë£Œ'ëœ ë¡œê·¸ì¸ì§€ ë¨¼ì € í™•ì¸ ---
+        if (askedLog.isCorrupted == LogData.Corrupted.Fixed)
+        {
+            FlowManager.instance.StartSpecialExamination();
+
+            lines.Add($"{currentCharData.subjectName} > ê·¸ë˜ìš”. ì´ì œ ì „ë¶€ í™•ì‹¤íˆ ê¸°ì–µì´ ë‚˜ìš”.");
+            lines.Add($"{currentCharData.subjectName} > ë¬´ìŠ¨ ì¼ì´ ì¼ì–´ë‚¬ê³ , ë‚´ê°€ ë¬´ì—‡ì„ í–ˆëŠ”ì§€.");
+
+            // ì´ ë¡œì§ì´ ìš°ì„ ì ìœ¼ë¡œ ì‹¤í–‰ë˜ê³ , ì•„ë˜ì˜ ì¼ë°˜ ë¡œê·¸ ë³´ìƒ ë¡œì§ì€ ì‹¤í–‰ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+            return lines;
+        }
+
+        var resultLogDataList = askedLog.interactionResultLog;
+
+        if (resultLogDataList != null && resultLogDataList.Count > 0 && askedLog.canAsk.Contains(currentCharData))
+        {
+            var addedLogTitles = new List<string>();
+
+            foreach (var resultLog in resultLogDataList)
             {
-                terminalManager.AddLog(resultLogData);
-                lines.Add(resultLogData.engContent);
-                lines.Add($"End of Dialog. NEW LOG FILE SAVED : {resultLogData.logTitle}");
+                if (!terminalManager.OwnedLogs.Contains(resultLog))
+                {
+                    terminalManager.AddLog(resultLog);
+                    lines.AddRange(resultLog.engContent.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None));
+                    addedLogTitles.Add(resultLog.logTitle);
+                }
+            }
+
+            if (addedLogTitles.Count > 0)
+            {
+                lines.Add($"End of Dialog. NEW LOG FILE(S) SAVED : {string.Join(", ", addedLogTitles)}");
             }
             else
             {
-                lines.Add($"{currentSubject} > ±× ÁÖÁ¦¿¡ ´ëÇØ¼± ´õ ÇÒ ÀÌ¾ß±â°¡ ¾ø³×¿ä.");
+                lines.Add($"{currentCharData.subjectName} > ê·¸ ì£¼ì œì— ëŒ€í•´ì„  ë” í•  ì´ì•¼ê¸°ê°€ ì—†ë„¤ìš”.");
                 lines.Add("End of Dialog.");
             }
         }
         else
         {
-            lines.Add($"{currentSubject} > ±× ·Î±×¿¡ ´ëÇØ¼± Á¦°¡ ÇÒ ¸»ÀÌ ¾ø¾î¿ä.");
+            lines.Add($"{currentCharData.subjectName} > ê·¸ ë¡œê·¸ì— ëŒ€í•´ì„  ì œê°€ í•  ë§ì´ ì—†ì–´ìš”.");
             lines.Add("End of Dialog.");
         }
 
