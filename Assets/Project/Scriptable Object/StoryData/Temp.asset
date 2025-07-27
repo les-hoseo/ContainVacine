@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0621859bbe482dc4195d9f9e196e4610, type: 3}
-  m_Name: Intro
+  m_Name: Temp
   m_EditorClassIdentifier: 
   Story:
   - Name: "\uB808\uC774\uCCBC"
     Content: "\uC548\uB155\uD558\uC138\uC694?"
-    Sprite: {fileID: -6964340433041597978, guid: dc662e56d7159db4a960628479e4bbb2, type: 3}
+    Sprite: {fileID: -6964340433041597978, guid: 141b3e2305e438345babb4a84b3b27ba, type: 3}
   - Name: "\uB808\uC774\uCCBC"
     Content: "\uD604\uC7AC \uC774\uAC74 \uD14C\uC2A4\uD2B8\uC5D0\uC694."
-    Sprite: {fileID: -4494336587138588816, guid: 87d3e4049f562d34db485b3279e3303a, type: 3}
+    Sprite: {fileID: -4494336587138588816, guid: b1d7f3e581352364c866cbebac432ee1, type: 3}
   - Name: "\uB808\uC774\uCCBC"
     Content: "\uC544\uB9C8 \uC2A4\uD1A0\uB9AC \uB370\uC774\uD130\uAC00 \uC644\uC131\uB420\uB54C
       \uAE4C\uC9C4 \uC774\uB7F4\uAC83 \uAC19\uC544\uC694.."
-    Sprite: {fileID: -5730028569589976545, guid: 034b61b007b26394c92cf7ca24a610a3, type: 3}
+    Sprite: {fileID: -5730028569589976545, guid: 16da813b0fe00bb4a96a8a25de7975f2, type: 3}
   - Name: "\uB808\uC774\uCCBC"
     Content: "\uAE08\uBC29 \uC644\uC131\uD560\uD14C\uB2C8 \uC870\uAE08\uB9CC \uAE30\uB2E4\uB824
       \uC8FC\uC138\uC694."
-    Sprite: {fileID: -490914541500067938, guid: 385f8df6e9bfeab4093b55fff7e9673e, type: 3}
+    Sprite: {fileID: -2492704896663953207, guid: 7b241c42839803f4b89af6e6727181c1, type: 3}
