@@ -1609,6 +1609,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: battery box (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8414325279276765472, guid: f3064f27f414c5243a2b131600e4b5fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

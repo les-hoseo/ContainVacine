@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 385f8df6e9bfeab4093b55fff7e9673e
+guid: 8076829f8f8386347b24a74f2bb1471a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -490914541500067938
-    second: "\uB3D9\uC544\uB9AC_\uB3C4\uBBF8\uB2C8\uD06C(\uAE30\uC068)\uD22C\uBA85_0"
+      213: -6585026039450694460
+    second: SAVE_MANUAL 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,43 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uB3D9\uC544\uB9AC_\uB3C4\uBBF8\uB2C8\uD06C(\uAE30\uC068)\uD22C\uBA85_0"
+      name: SAVE_MANUAL 1_0
       rect:
         serializedVersion: 2
-        x: 779
-        y: 144
-        width: 1979
-        height: 4359
+        x: 0
+        y: 0
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e9f80d253dbef29f0800000000000000
-      internalID: -490914541500067938
+      spriteID: 4cc08d1c4b94d94a0800000000000000
+      internalID: -6585026039450694460
       vertices: []
       indices: 
       edges: []
@@ -173,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      "\uB3D9\uC544\uB9AC_\uB3C4\uBBF8\uB2C8\uD06C(\uAE30\uC068)\uD22C\uBA85_0": -490914541500067938
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
