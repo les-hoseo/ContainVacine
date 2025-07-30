@@ -8,13 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8876112807062447861}
+  - component: {fileID: 8227428800780790848}
   - component: {fileID: 7487329649278008414}
   - component: {fileID: 8366712546407612355}
   - component: {fileID: 6275152920795447589}
   - component: {fileID: 256030792088809203}
   - component: {fileID: 7457134271791622271}
-  - component: {fileID: 4589186038731445520}
+  - component: {fileID: 6624076891721829323}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -22,21 +22,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8876112807062447861
-Transform:
+--- !u!224 &8227428800780790848
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300646082069318629}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2673621, y: -0.5839489, z: 1195.1598}
+  m_LocalPosition: {x: 0, y: 0, z: 1195.1598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.2673621, y: -0.5839489}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7487329649278008414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,6 +57,7 @@ MonoBehaviour:
   GameStart: {fileID: 0}
   Interface: {fileID: 0}
   Save: {fileID: 0}
+  gameOver: {fileID: 0}
 --- !u!114 &8366712546407612355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +116,7 @@ MonoBehaviour:
   buttonText: {fileID: 0}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   savedTextColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
---- !u!114 &4589186038731445520
+--- !u!114 &6624076891721829323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,11 +125,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 300646082069318629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d159c624fdca66c40b5b3df570935b84, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textBox: {fileID: 0}
-  typingSpeed: 0.05
-  pauseMenuUI: {fileID: 3129589415634846312, guid: db590762342031e45b6be04fd15ccfdf, type: 3}
-  pauseBackgroundUI: {fileID: 3129589415634846312, guid: db590762342031e45b6be04fd15ccfdf, type: 3}
-  INTERFACE_BACKBROUND: {fileID: 3129589415634846312, guid: db590762342031e45b6be04fd15ccfdf, type: 3}
+  m_Content: {fileID: 0}
+  m_Horizontal: 1
+  m_Vertical: 1
+  m_MovementType: 1
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 0}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 0}
+  m_HorizontalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 0
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
