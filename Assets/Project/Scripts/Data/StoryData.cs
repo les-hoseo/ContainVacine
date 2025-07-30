@@ -12,7 +12,6 @@ public class StoryData : ScriptableObject
     // 스토리의 각 장면(대사, 인물, 이미지 등)의 정보를 담을 'Data' 클래스의 리스트입니다.
     // 인스펙터 창에서 이 리스트에 요소를 추가하고 관리할 수 있습니다.
     public List<Data> Story = new List<Data>();
-    public Data interactionResultLog;
 }
 
 [System.Serializable]

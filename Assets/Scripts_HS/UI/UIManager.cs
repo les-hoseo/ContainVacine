@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     [Header("게임 오버")]
     public GameObject gameOver;
 
+    [Header("게임 오프닝 컷씬")]
+    public GameObject OPcutscene;
+
     // 세팅 UI
     // UI 열기
     public void ShowSettingUI()
@@ -66,17 +69,28 @@ public class UIManager : MonoBehaviour
     {
         Save.SetActive(false);
     }
-
+    //세팅창
+    // 세팅창 열기
     public void ShowGameOver()
     {
         Debug.Log("세팅창 켜볼게");
-         gameOver.SetActive(true);
+        gameOver.SetActive(true);
     }
     // UI 닫기
     public void HideGameOver()
     {
         gameOver.SetActive(false);
     }
-
-
+    //컷씬
+    //컷씬 열기
+    public void Showcutscene()
+    {
+        Debug.Log("세팅창 켜볼게");
+        OPcutscene.SetActive(true);
+    }
+    // UI 닫기
+    public void Hidecutscene()
+    {
+        OPcutscene.SetActive(false);
+    }
 }

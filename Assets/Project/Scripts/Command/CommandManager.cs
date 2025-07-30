@@ -3,51 +3,28 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Unity.IO.LowLevel.Unsafe;
 
 /// <summary>
 /// 터미널에 입력된 모든 명령어를 관리하고 실행하는 중앙 관리자입니다.
 /// </summary>
 public class CommandManager : MonoBehaviour
 {
-    private Dictionary<string, string> colorTable = new()
-    {
-        { "RED", "#ab1a1a" },
-        { "ORANGE", "#A05F2C" },
-        { "YELLOW", "#edd532" },
-        { "GREEN", "#4D684E" },
-        { "LIME", "#6C9149" },
-        { "BLUE", "#3a67a6" },
-        { "GRAY", "#787777" },
-        { "PURPLE", "#904ba6" }
-    };
-
-    public string ColorText(string color, string text)
-    {
-        if (colorTable.TryGetValue(color, out string hex))
-        {
-            return $"<color={hex}>{text}</color>";
-        }
-        return text;
-    }
-
     public static CommandManager instance;
-    // CommandManager.cs
-
-    [Header("기믹")]
-    [SerializeField] private GimmickManager gimmickManager;
-    [SerializeField] private RachelDominiqueController rachelDominiqueController; // 이 줄을 추가!
-
-    // ... 이하 생략 ...
 
     [Header("필수 참조")]
     [SerializeField] private TerminalManager terminalManager;
-    [SerializeField] private LogDatabase logDatabase; // 모든 로그 파일을 관리하는 DB
+    [SerializeField] private LogDatabase logDatabase;
+
+    // [참고] 기획서의 특수 기믹과 연동이 필요할 경우 이 참조를 사용합니다.
+    [Header("연동될 외부 컨트롤러")]
+    [SerializeField] private RachelGimmickManager rachelGimmickManager;
+
+    [Header("현재 대화 대상")]
+    public SubjectData CurChar; // 현재 대화중인 피검진자 데이터
 
     [Header("모듈 상태")]
     public string ConnectedModule { get; private set; } = null;
-    public LogData VacineConnectedLog { get; private set; } // VACINE 모듈에 연결된 로그
+    public LogData VacineConnectedLog { get; private set; }
 
     // 명령어 이름과 실제 명령어 클래스를 매핑하는 딕셔너리
     private readonly Dictionary<string, ICommand> commands = new();
@@ -72,13 +49,8 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new CommandsCommand());
         RegisterCommand(new ClsCommand());
         RegisterCommand(new LogsCommand(terminalManager));
-        RegisterCommand(new ReadCommand(terminalManager));
-        RegisterCommand(new AskCommand(terminalManager));
-
-        //test
-        RegisterCommand(new TestDmgCommand());
-        RegisterCommand(new TestBitingCommand());
-
+        RegisterCommand(new ReadCommand(terminalManager)); // logDatabase 인자 제거됨
+        RegisterCommand(new AskCommand(terminalManager));   // logDatabase 인자 제거됨
 
         // 모듈 명령어
         RegisterCommand(new ModuleBootCommand(), new[] { "MOD_BOOT" });
@@ -93,9 +65,7 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new CrtConditionCommand(), new[] { "CRT_CON" });
         RegisterCommand(new CrtTemperatureCommand(), new[] { "CRT_TEMP" });
         RegisterCommand(new CrtLinkCommand());
-        //RegisterCommand(new CrtFlashCommand());
-
-
+        // RegisterCommand(new CrtFlashCommand());
     }
 
     /// <summary>
@@ -122,24 +92,19 @@ public class CommandManager : MonoBehaviour
         if (parts.Length == 0) return "";
 
         string commandName = parts[0].ToUpper();
-
-        // 탭 상태에 따라 허용되는 명령어가 다름
         List<string> allowedCommands = GetAllowedCommandsForState(state);
 
-        // 🔽 주석을 제거하고 if-else 구조로 수정합니다.
-        // 올바른 명령어가 들어왔는지 확인
         if (commands.TryGetValue(commandName, out ICommand command) && allowedCommands.Contains(command.Name))
         {
-            // 성공! -> 명령어 실행
             List<string> resultLines = command.Execute(parts);
             return string.Join("\n", resultLines);
         }
         else
         {
-            // 실패! -> "실수했다"고 알리고 에러 메시지 반환
-            if (rachelDominiqueController != null)
+            // 잘못된 명령어 입력 시 기믹 매니저에 알림
+            if (rachelGimmickManager != null && rachelGimmickManager.gameObject.activeInHierarchy)
             {
-                rachelDominiqueController.OnWrongCommand();
+                rachelGimmickManager.OnWrongCommand();
             }
             return $"SYSTEM > Command '{parts[0]}' not found or not allowed in this tab.";
         }
@@ -150,15 +115,33 @@ public class CommandManager : MonoBehaviour
     {
         if (currentState == TabState.DIALOG)
         {
-            return new List<string> { "ASK" }; // 다이얼로그 탭에서는 ASK만 허용
+            return new List<string> { "ASK" };
         }
         else // ROOT 탭
         {
-            // ASK를 제외한 모든 명령어 이름을 가져옴
             return commands.Values.Select(c => c.Name).Where(name => name != "ASK").Distinct().ToList();
         }
     }
 
+    /// <summary>
+    /// 현재 캐릭터의 소개문 로그를 찾아 소유 목록에 추가하고, CRT 화면에 출력하도록 요청합니다.
+    /// </summary>
+    public void DisplayIntroLogForCurrentCharacter()
+    {
+        if (CurChar == null || CurChar.profileLog == null) return;
+
+        LogData profileLog = CurChar.profileLog;
+
+        if (terminalManager != null && !terminalManager.OwnedLogs.Contains(profileLog))
+        {
+            terminalManager.AddLog(profileLog);
+        }
+
+        if (CRTController.instance != null)
+        {
+            CRTController.instance.PrintMessage(profileLog.engContent);
+        }
+    }
 
     // --- 모듈 상태 관리 함수 ---
     public void BootModule(string moduleName) => ConnectedModule = moduleName;
