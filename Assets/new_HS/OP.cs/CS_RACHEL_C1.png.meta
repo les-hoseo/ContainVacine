@@ -1,0 +1,1677 @@
+fileFormatVersion: 2
+guid: 8c65eddc8abdfa747befea0c9f177832
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7829074277645950486
+    second: CS_RACHEL_C1_0
+  - first:
+      213: -7009018691807829346
+    second: CS_RACHEL_C1_1
+  - first:
+      213: 5267930149453937531
+    second: CS_RACHEL_C1_2
+  - first:
+      213: -7403727132579741393
+    second: CS_RACHEL_C1_3
+  - first:
+      213: 8810782330891667818
+    second: CS_RACHEL_C1_4
+  - first:
+      213: 8685328090109763715
+    second: CS_RACHEL_C1_5
+  - first:
+      213: -4125340264902249272
+    second: CS_RACHEL_C1_6
+  - first:
+      213: 2875545257588586975
+    second: CS_RACHEL_C1_7
+  - first:
+      213: -1747964738554222052
+    second: CS_RACHEL_C1_8
+  - first:
+      213: 212207324876727317
+    second: CS_RACHEL_C1_9
+  - first:
+      213: -9100319096885506187
+    second: CS_RACHEL_C1_10
+  - first:
+      213: 9184573314860193976
+    second: CS_RACHEL_C1_11
+  - first:
+      213: -4375675256424400750
+    second: CS_RACHEL_C1_12
+  - first:
+      213: 152683915231442080
+    second: CS_RACHEL_C1_13
+  - first:
+      213: -8510062613429913614
+    second: CS_RACHEL_C1_14
+  - first:
+      213: -3459140725760994993
+    second: CS_RACHEL_C1_15
+  - first:
+      213: 3361385738210100411
+    second: CS_RACHEL_C1_16
+  - first:
+      213: 375328381446294464
+    second: CS_RACHEL_C1_17
+  - first:
+      213: -2901944886069805845
+    second: CS_RACHEL_C1_18
+  - first:
+      213: -3080931670083290121
+    second: CS_RACHEL_C1_19
+  - first:
+      213: 5878141038054947821
+    second: CS_RACHEL_C1_20
+  - first:
+      213: 7824821351828880197
+    second: CS_RACHEL_C1_21
+  - first:
+      213: 2289542671483116506
+    second: CS_RACHEL_C1_22
+  - first:
+      213: 1480457030844986345
+    second: CS_RACHEL_C1_23
+  - first:
+      213: -5488846363830695497
+    second: CS_RACHEL_C1_24
+  - first:
+      213: 3499991705702623588
+    second: CS_RACHEL_C1_25
+  - first:
+      213: -827509605621491441
+    second: CS_RACHEL_C1_26
+  - first:
+      213: -7582070407161465516
+    second: CS_RACHEL_C1_27
+  - first:
+      213: 7748112832756158651
+    second: CS_RACHEL_C1_28
+  - first:
+      213: 7670047100494560765
+    second: CS_RACHEL_C1_29
+  - first:
+      213: 7921754272019643028
+    second: CS_RACHEL_C1_30
+  - first:
+      213: -5684806958691676300
+    second: CS_RACHEL_C1_31
+  - first:
+      213: -2912569063663581451
+    second: CS_RACHEL_C1_32
+  - first:
+      213: 6445330521634648432
+    second: CS_RACHEL_C1_33
+  - first:
+      213: 1489509901380084057
+    second: CS_RACHEL_C1_34
+  - first:
+      213: 3349535266705053938
+    second: CS_RACHEL_C1_35
+  - first:
+      213: -376483217632723627
+    second: CS_RACHEL_C1_36
+  - first:
+      213: -579386078005839175
+    second: CS_RACHEL_C1_37
+  - first:
+      213: 5892821712001514633
+    second: CS_RACHEL_C1_38
+  - first:
+      213: 2853352100067501601
+    second: CS_RACHEL_C1_39
+  - first:
+      213: 5032132453999750179
+    second: CS_RACHEL_C1_40
+  - first:
+      213: 3936941736265314323
+    second: CS_RACHEL_C1_41
+  - first:
+      213: -8035366251932541902
+    second: CS_RACHEL_C1_42
+  - first:
+      213: -4627286949276508505
+    second: CS_RACHEL_C1_43
+  - first:
+      213: 2554568490214779158
+    second: CS_RACHEL_C1_44
+  - first:
+      213: -5431748454923144849
+    second: CS_RACHEL_C1_45
+  - first:
+      213: 6918062901514188723
+    second: CS_RACHEL_C1_46
+  - first:
+      213: -8026950647816975910
+    second: CS_RACHEL_C1_47
+  - first:
+      213: 1869057118134223617
+    second: CS_RACHEL_C1_48
+  - first:
+      213: 830943055224805981
+    second: CS_RACHEL_C1_49
+  - first:
+      213: -382149809170167652
+    second: CS_RACHEL_C1_50
+  - first:
+      213: -1809160581950010643
+    second: CS_RACHEL_C1_51
+  - first:
+      213: 3566412614803363361
+    second: CS_RACHEL_C1_52
+  - first:
+      213: 5182031132095872616
+    second: CS_RACHEL_C1_53
+  - first:
+      213: 9033968968731914156
+    second: CS_RACHEL_C1_54
+  - first:
+      213: 6181307785496145969
+    second: CS_RACHEL_C1_55
+  - first:
+      213: 656024659805776843
+    second: CS_RACHEL_C1_56
+  - first:
+      213: 2247928631260605106
+    second: CS_RACHEL_C1_57
+  - first:
+      213: 8343504814094777279
+    second: CS_RACHEL_C1_58
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_0
+      rect:
+        serializedVersion: 2
+        x: 1183
+        y: 1043
+        width: 44
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61e1c37439576ac60800000000000000
+      internalID: 7829074277645950486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_1
+      rect:
+        serializedVersion: 2
+        x: 1279
+        y: 1016
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e92a8ba92a6fabe90800000000000000
+      internalID: -7009018691807829346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_2
+      rect:
+        serializedVersion: 2
+        x: 1589
+        y: 1062
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7bb5cb6f827b1940800000000000000
+      internalID: 5267930149453937531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_3
+      rect:
+        serializedVersion: 2
+        x: 1652
+        y: 1053
+        width: 34
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f21c9a8466da04990800000000000000
+      internalID: -7403727132579741393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_4
+      rect:
+        serializedVersion: 2
+        x: 1741
+        y: 1015
+        width: 34
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a69061239df264a70800000000000000
+      internalID: 8810782330891667818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_5
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 993
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 380e6b091eb788870800000000000000
+      internalID: 8685328090109763715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_6
+      rect:
+        serializedVersion: 2
+        x: 1334
+        y: 1024
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c4b2e4d2e8dfb6c0800000000000000
+      internalID: -4125340264902249272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_7
+      rect:
+        serializedVersion: 2
+        x: 1642
+        y: 1007
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd9702e2d2df7e720800000000000000
+      internalID: 2875545257588586975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_8
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 1004
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1a2196d45bfdb7e0800000000000000
+      internalID: -1747964738554222052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_9
+      rect:
+        serializedVersion: 2
+        x: 1759
+        y: 982
+        width: 15
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 514630a0079e1f200800000000000000
+      internalID: 212207324876727317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_10
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 952
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57f8f673ffb25b180800000000000000
+      internalID: -9100319096885506187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_11
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 982
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b816c594c8267f70800000000000000
+      internalID: 9184573314860193976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_12
+      rect:
+        serializedVersion: 2
+        x: 1788
+        y: 974
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2987b50a98a7643c0800000000000000
+      internalID: -4375675256424400750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_13
+      rect:
+        serializedVersion: 2
+        x: 1781
+        y: 925
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a4394246317e1200800000000000000
+      internalID: 152683915231442080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_14
+      rect:
+        serializedVersion: 2
+        x: 1786
+        y: 871
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f77d2e242f26e980800000000000000
+      internalID: -8510062613429913614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_15
+      rect:
+        serializedVersion: 2
+        x: 1822
+        y: 883
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f41dde456d9aeffc0800000000000000
+      internalID: -3459140725760994993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_16
+      rect:
+        serializedVersion: 2
+        x: 1608
+        y: 732
+        width: 121
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb4c31ff48a06ae20800000000000000
+      internalID: 3361385738210100411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_17
+      rect:
+        serializedVersion: 2
+        x: 1787
+        y: 813
+        width: 37
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cb8a32ac2f653500800000000000000
+      internalID: 375328381446294464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_18
+      rect:
+        serializedVersion: 2
+        x: 1806
+        y: 784
+        width: 66
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bec3c0450883ab7d0800000000000000
+      internalID: -2901944886069805845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_19
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 740
+        width: 14
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fb3f6338f45e35d0800000000000000
+      internalID: -3080931670083290121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_20
+      rect:
+        serializedVersion: 2
+        x: 1875
+        y: 724
+        width: 45
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deb39e0612a539150800000000000000
+      internalID: 5878141038054947821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_21
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 664
+        width: 22
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54bf6a2df89579c60800000000000000
+      internalID: 7824821351828880197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_22
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 619
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb99dfdde616cf10800000000000000
+      internalID: 2289542671483116506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_23
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 627
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e3beb463d3ab8410800000000000000
+      internalID: 1480457030844986345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_24
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 626
+        width: 37
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b94d213053b3d3b0800000000000000
+      internalID: -5488846363830695497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_25
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 603
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 469e73f99e7729030800000000000000
+      internalID: 3499991705702623588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_26
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 595
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0915b4e5681484f0800000000000000
+      internalID: -827509605621491441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_27
+      rect:
+        serializedVersion: 2
+        x: 1817
+        y: 558
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 455b32fd22317c690800000000000000
+      internalID: -7582070407161465516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_28
+      rect:
+        serializedVersion: 2
+        x: 1834
+        y: 567
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb09314f193d68b60800000000000000
+      internalID: 7748112832756158651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_29
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 415
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfd3e73433b717a60800000000000000
+      internalID: 7670047100494560765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_30
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 407
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49af9a50a89bfed60800000000000000
+      internalID: 7921754272019643028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_31
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 351
+        width: 13
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47f8382c0328b11b0800000000000000
+      internalID: -5684806958691676300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_32
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 333
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f64a883ed97497d0800000000000000
+      internalID: -2912569063663581451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_33
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 355
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 071340ae5f9627950800000000000000
+      internalID: 6445330521634648432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_34
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 357
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 951ef211d5dcba410800000000000000
+      internalID: 1489509901380084057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_35
+      rect:
+        serializedVersion: 2
+        x: 1885
+        y: 336
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f819961490fb7e20800000000000000
+      internalID: 3349535266705053938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_36
+      rect:
+        serializedVersion: 2
+        x: 1897
+        y: 325
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55dfa1d128676caf0800000000000000
+      internalID: -376483217632723627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_37
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 262
+        width: 88
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bab7a88e6b95f7f0800000000000000
+      internalID: -579386078005839175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_38
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 299
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98c3f84202287c150800000000000000
+      internalID: 5892821712001514633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_39
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 267
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12663a70e94299720800000000000000
+      internalID: 2853352100067501601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_40
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 231
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32cae573ec9b5d540800000000000000
+      internalID: 5032132453999750179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_41
+      rect:
+        serializedVersion: 2
+        x: 1905
+        y: 249
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 310f08b76a3d2a630800000000000000
+      internalID: 3936941736265314323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_42
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 223
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23c166197f4ac7090800000000000000
+      internalID: -8035366251932541902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_43
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 163
+        width: 65
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ae929a390398cfb0800000000000000
+      internalID: -4627286949276508505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_44
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 169
+        width: 29
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61968a5d186a37320800000000000000
+      internalID: 2554568490214779158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_45
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 101
+        width: 157
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6177031f8d8e94b0800000000000000
+      internalID: -5431748454923144849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_46
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 95
+        width: 23
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b7bf823e85e10060800000000000000
+      internalID: 6918062901514188723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_47
+      rect:
+        serializedVersion: 2
+        x: 1869
+        y: 106
+        width: 24
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad907471aea8a9090800000000000000
+      internalID: -8026950647816975910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_48
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 72
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1034e47db8930f910800000000000000
+      internalID: 1869057118134223617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_49
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 63
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5a90436e4a188b00800000000000000
+      internalID: 830943055224805981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_50
+      rect:
+        serializedVersion: 2
+        x: 1808
+        y: 56
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c98cd65f5c452baf0800000000000000
+      internalID: -382149809170167652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_51
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 54
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dea0b3b390294e6e0800000000000000
+      internalID: -1809160581950010643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_52
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 18
+        width: 26
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12693d3a0617e7130800000000000000
+      internalID: 3566412614803363361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_53
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 29
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86ef69bebd54ae740800000000000000
+      internalID: 5182031132095872616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_54
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 72
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cafea2db9ea1f5d70800000000000000
+      internalID: 9033968968731914156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_55
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 26
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 130bad15eaa68c550800000000000000
+      internalID: 6181307785496145969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_56
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 0
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcbae9bc3faaa1900800000000000000
+      internalID: 656024659805776843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_57
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 4
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bae7ba1e2f323f10800000000000000
+      internalID: 2247928631260605106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CS_RACHEL_C1_58
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 5
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbb71e13c651ac370800000000000000
+      internalID: 8343504814094777279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CS_RACHEL_C1_0: 7829074277645950486
+      CS_RACHEL_C1_1: -7009018691807829346
+      CS_RACHEL_C1_10: -9100319096885506187
+      CS_RACHEL_C1_11: 9184573314860193976
+      CS_RACHEL_C1_12: -4375675256424400750
+      CS_RACHEL_C1_13: 152683915231442080
+      CS_RACHEL_C1_14: -8510062613429913614
+      CS_RACHEL_C1_15: -3459140725760994993
+      CS_RACHEL_C1_16: 3361385738210100411
+      CS_RACHEL_C1_17: 375328381446294464
+      CS_RACHEL_C1_18: -2901944886069805845
+      CS_RACHEL_C1_19: -3080931670083290121
+      CS_RACHEL_C1_2: 5267930149453937531
+      CS_RACHEL_C1_20: 5878141038054947821
+      CS_RACHEL_C1_21: 7824821351828880197
+      CS_RACHEL_C1_22: 2289542671483116506
+      CS_RACHEL_C1_23: 1480457030844986345
+      CS_RACHEL_C1_24: -5488846363830695497
+      CS_RACHEL_C1_25: 3499991705702623588
+      CS_RACHEL_C1_26: -827509605621491441
+      CS_RACHEL_C1_27: -7582070407161465516
+      CS_RACHEL_C1_28: 7748112832756158651
+      CS_RACHEL_C1_29: 7670047100494560765
+      CS_RACHEL_C1_3: -7403727132579741393
+      CS_RACHEL_C1_30: 7921754272019643028
+      CS_RACHEL_C1_31: -5684806958691676300
+      CS_RACHEL_C1_32: -2912569063663581451
+      CS_RACHEL_C1_33: 6445330521634648432
+      CS_RACHEL_C1_34: 1489509901380084057
+      CS_RACHEL_C1_35: 3349535266705053938
+      CS_RACHEL_C1_36: -376483217632723627
+      CS_RACHEL_C1_37: -579386078005839175
+      CS_RACHEL_C1_38: 5892821712001514633
+      CS_RACHEL_C1_39: 2853352100067501601
+      CS_RACHEL_C1_4: 8810782330891667818
+      CS_RACHEL_C1_40: 5032132453999750179
+      CS_RACHEL_C1_41: 3936941736265314323
+      CS_RACHEL_C1_42: -8035366251932541902
+      CS_RACHEL_C1_43: -4627286949276508505
+      CS_RACHEL_C1_44: 2554568490214779158
+      CS_RACHEL_C1_45: -5431748454923144849
+      CS_RACHEL_C1_46: 6918062901514188723
+      CS_RACHEL_C1_47: -8026950647816975910
+      CS_RACHEL_C1_48: 1869057118134223617
+      CS_RACHEL_C1_49: 830943055224805981
+      CS_RACHEL_C1_5: 8685328090109763715
+      CS_RACHEL_C1_50: -382149809170167652
+      CS_RACHEL_C1_51: -1809160581950010643
+      CS_RACHEL_C1_52: 3566412614803363361
+      CS_RACHEL_C1_53: 5182031132095872616
+      CS_RACHEL_C1_54: 9033968968731914156
+      CS_RACHEL_C1_55: 6181307785496145969
+      CS_RACHEL_C1_56: 656024659805776843
+      CS_RACHEL_C1_57: 2247928631260605106
+      CS_RACHEL_C1_58: 8343504814094777279
+      CS_RACHEL_C1_6: -4125340264902249272
+      CS_RACHEL_C1_7: 2875545257588586975
+      CS_RACHEL_C1_8: -1747964738554222052
+      CS_RACHEL_C1_9: 212207324876727317
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -621,11 +621,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d159c624fdca66c40b5b3df570935b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textBox: {fileID: 1057873535}
+  type: 0
   typingSpeed: 0.05
-  pauseMenuUI: {fileID: 3129589415634846312, guid: db590762342031e45b6be04fd15ccfdf, type: 3}
-  pauseBackgroundUI: {fileID: 3129589415634846312, guid: db590762342031e45b6be04fd15ccfdf, type: 3}
-  INTERFACE_BACKBROUND: {fileID: 3129589415634846312, guid: db590762342031e45b6be04fd15ccfdf, type: 3}
 --- !u!114 &925515456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,7 +1044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2317036936321508002, guid: 31e4929f61a76504aa8e2881a6fe2fde, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: MainScene
+      value: GameStartScene
       objectReference: {fileID: 0}
     - target: {fileID: 2748636323188793088, guid: 31e4929f61a76504aa8e2881a6fe2fde, type: 3}
       propertyPath: m_AnchorMax.y
