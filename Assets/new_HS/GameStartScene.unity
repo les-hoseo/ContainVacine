@@ -652,6 +652,7 @@ MonoBehaviour:
   Interface: {fileID: 1552156055947186060}
   Save: {fileID: 5736457858083542152}
   gameOver: {fileID: 1914265719}
+  OPcutscene: {fileID: 0}
 --- !u!114 &925515459 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7457134271791622271, guid: b4e49621580623745937d8f3c7e960e1, type: 3}
@@ -1163,7 +1164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2317036936321508002, guid: 31e4929f61a76504aa8e2881a6fe2fde, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: MainScene
+      value: GameStartScene
       objectReference: {fileID: 0}
     - target: {fileID: 2748636323188793088, guid: 31e4929f61a76504aa8e2881a6fe2fde, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1565,7 +1566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3664236966734972435, guid: 0b3fba725660522448d06f86689b532a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5427120610234394777, guid: 0b3fba725660522448d06f86689b532a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1994,7 +1995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4267836189539679554, guid: 2efcb79d98eb2df498ba6a5c7b97df35, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9220126632611063562, guid: 2efcb79d98eb2df498ba6a5c7b97df35, type: 3}
       propertyPath: m_Pivot.x

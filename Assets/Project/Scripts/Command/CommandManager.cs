@@ -51,6 +51,7 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new LogsCommand(terminalManager));
         RegisterCommand(new ReadCommand(terminalManager)); // logDatabase 인자 제거됨
         RegisterCommand(new AskCommand(terminalManager));   // logDatabase 인자 제거됨
+        RegisterCommand(new ZoneCommand(terminalManager));
 
         // 모듈 명령어
         RegisterCommand(new ModuleBootCommand(), new[] { "MOD_BOOT" });
@@ -98,6 +99,7 @@ public class CommandManager : MonoBehaviour
         {
             List<string> resultLines = command.Execute(parts);
             return string.Join("\n", resultLines);
+
         }
         else
         {
