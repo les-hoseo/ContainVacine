@@ -20,6 +20,24 @@ public class UIManager : MonoBehaviour
     [Header("게임 오프닝 컷씬")]
     public GameObject OPcutscene;
 
+    [Header("창1")]
+    public GameObject window1;
+
+    [Header("창2")]
+    public GameObject window2;
+
+    [Header("창3")]
+    public GameObject window3;
+
+    [Header("창4")]
+    public GameObject window4;
+
+    [Header("창5")]
+    public GameObject window5;
+
+    [Header("메모장")]
+    public GameObject note;
+
     // 세팅 UI
     // UI 열기
     public void ShowSettingUI()
@@ -92,5 +110,82 @@ public class UIManager : MonoBehaviour
     public void Hidecutscene()
     {
         OPcutscene.SetActive(false);
+    }
+
+    // 창1 UI
+    // UI 열기
+    public void Showwindow1UI()
+    {
+        Debug.Log("세팅창 켜볼게");
+        window1.SetActive(true);
+    }
+    // UI 닫기
+    public void Hidewindow1UI()
+    {
+        window1.SetActive(false);
+    }
+
+    // 창2 UI
+    // UI 열기
+    public void Showwindow2UI()
+    {
+        Debug.Log("세팅창 켜볼게");
+        window2.SetActive(true);
+    }
+    // UI 닫기
+    public void Hidewindow2UI()
+    {
+        window2.SetActive(false);
+    }
+
+    // 창3 UI
+    // UI 열기
+    public void Showwindow3UI()
+    {
+        Debug.Log("세팅창 켜볼게");
+        window3.SetActive(true);
+    }
+    // UI 닫기
+    public void Hidewindow3UI()
+    {
+        window3.SetActive(false);
+    }
+
+    // 창4 UI
+    // UI 열기
+    public void Showwindow4UI()
+    {
+        Debug.Log("세팅창 켜볼게");
+        window4.SetActive(true);
+    }
+    // UI 닫기
+    public void Hidewindow4UI()
+    {
+        window4.SetActive(false);
+    }
+
+    // 창5 UI
+    // UI 열기
+    public void Showwindow5UI()
+    {
+        Debug.Log("세팅창 켜볼게");
+        window5.SetActive(true);
+    }
+    // UI 닫기
+    public void Hidewindow5UI()
+    {
+        window5.SetActive(false);
+    }
+    // 노트 UI
+    // UI 열기
+    public void ShownoteUI()
+    {
+        Debug.Log("세팅창 켜볼게");
+        note.SetActive(true);
+    }
+    // UI 닫기
+    public void HidenoteUI()
+    {
+        note.SetActive(false);
     }
 }
