@@ -11,7 +11,6 @@ public class StoryManager : MonoBehaviour
 
     [SerializeField] private List<StoryData> storyData;
     [SerializeField] private List<speech> textComponent;
-    [SerializeField] private FadeController fadeController;
 
     private void Awake()
     {
@@ -45,7 +44,6 @@ public class StoryManager : MonoBehaviour
             return;
         }
 
-        fadeController.Init(selectedStory);
 
         foreach (var text in textComponent)
         {
