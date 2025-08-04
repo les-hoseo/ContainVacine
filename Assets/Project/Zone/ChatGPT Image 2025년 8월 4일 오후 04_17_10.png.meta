@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9ac4eae236f087044aa1d27a7681073b
+guid: ebb9d7a281709a348ade6c61d84b5622
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7574583444170380949
-    second: GUMJIN_CRT_Area_0
+      213: 3618959481150218453
+    second: "ChatGPT Image 2025\uB144 8\uC6D4 4\uC77C \uC624\uD6C4 04_17_10_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GUMJIN_CRT_Area_0
+      name: "ChatGPT Image 2025\uB144 8\uC6D4 4\uC77C \uC624\uD6C4 04_17_10_0"
       rect:
         serializedVersion: 2
-        x: 4
-        y: 4
-        width: 1242
-        height: 927
+        x: 275
+        y: 88
+        width: 472
+        height: 724
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b696ba84d7ca1e690800000000000000
-      internalID: -7574583444170380949
+      spriteID: 5d0ad7a5970293230800000000000000
+      internalID: 3618959481150218453
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      GUMJIN_CRT_Area_0: -7574583444170380949
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
