@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SETTING_BRIGHNESS_ICON_1_0: 2107254340491558159
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
