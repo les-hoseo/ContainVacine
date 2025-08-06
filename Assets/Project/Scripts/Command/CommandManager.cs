@@ -141,7 +141,8 @@ public class CommandManager : MonoBehaviour
 
         if (CRTController.instance != null)
         {
-            CRTController.instance.PrintMessage(profileLog.engContent);
+            // 새로 만든 함수를 호출합니다.
+            CRTController.instance.PrintMessageToCurrentTab(profileLog.engContent);
         }
     }
 
@@ -150,4 +151,8 @@ public class CommandManager : MonoBehaviour
     public void ExitModule() => ConnectedModule = null;
     public void ConnectLogToVacine(LogData log) => VacineConnectedLog = log;
     public void DisconnectLogFromVacine() => VacineConnectedLog = null;
+    public List<string> GetAllCommandNames()
+    {
+        return commands.Values.Select(c => c.Name).Distinct().ToList();
+    }
 }

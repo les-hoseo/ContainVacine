@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TerminalManager : MonoBehaviour
 { 
@@ -13,7 +14,7 @@ public class TerminalManager : MonoBehaviour
     // 두가지 탭들을 제어하기 위해 시리얼라이즈 선언
     [Header("탭별 출력 UI")]
     [SerializeField] private TMP_Text rootTerminal;
-    [SerializeField] private TMP_Text dialogTerminal;
+    [SerializeField] private TMP_Text dialogTerminal; // 얘 필요 없음
 
     // ?...
     [Header("컨트롤러")]
@@ -114,7 +115,10 @@ public class TerminalManager : MonoBehaviour
             dialogTerminal.gameObject.SetActive(true);
         }
     }
-
-    
+    public List<string> GetOwnedLogTitles()
+    {
+        return ownedLogs.Select(log => log.logTitle).ToList();
+    }
+    // 
 
 }
