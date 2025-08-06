@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 24cb77cbfc212b047be40ec6ae0cba3d
+guid: fc480c84f2c612746bbb43035c0b19c7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3468363722575899059
-    second: ZONE_ICON_3_1_0
+      213: 7301254735259951347
+    second: SAVELOAD_FILE_0_1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ZONE_ICON_3_1_0
+      name: SAVELOAD_FILE_0_1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 80
+        width: 729
+        height: 133
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b9ecf3fd6a122030800000000000000
-      internalID: 3468363722575899059
+      spriteID: 3f0eecd7f74435560800000000000000
+      internalID: 7301254735259951347
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      ZONE_ICON_3_1_0: 3468363722575899059
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

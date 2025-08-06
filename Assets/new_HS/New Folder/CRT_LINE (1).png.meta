@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 24cb77cbfc212b047be40ec6ae0cba3d
+guid: d54667434ed7b2046a6a126204c9bbf5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3468363722575899059
-    second: ZONE_ICON_3_1_0
+      213: -3961403408063720294
+    second: CRT_LINE (1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ZONE_ICON_3_1_0
+      name: CRT_LINE (1)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 80
-        height: 80
+        x: 8
+        y: 8
+        width: 1904
+        height: 1064
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b9ecf3fd6a122030800000000000000
-      internalID: 3468363722575899059
+      spriteID: a94175ab6944609c0800000000000000
+      internalID: -3961403408063720294
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      ZONE_ICON_3_1_0: 3468363722575899059
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
