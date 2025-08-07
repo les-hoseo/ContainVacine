@@ -37,7 +37,9 @@ public class CommandManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        fileSystem = new FileSystem();
         InitializeCommands();
+        
     }
 
     /// <summary>
@@ -73,6 +75,9 @@ public class CommandManager : MonoBehaviour
 
         // 메모
         RegisterCommand(new RootCommand(fileSystem));
+        RegisterCommand(new DirCommand(fileSystem));
+        RegisterCommand(new OpenCommand(fileSystem));
+        RegisterCommand(new EditCommand(fileSystem));
     }
 
     /// <summary>

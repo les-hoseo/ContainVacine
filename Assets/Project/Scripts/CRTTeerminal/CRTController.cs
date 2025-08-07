@@ -15,6 +15,11 @@ public class CRTController : MonoBehaviour
 {
     public static CRTController instance;
 
+    public enum TerminalState { Command, Edit }
+    public TerminalState currentState = TerminalState.Command;
+    private FileSystemNode fileBeingEdited; // 현재 편집 중인 파일
+    private StringBuilder editText = new StringBuilder(); // 편집 중인 텍스트
+
     [Header("UI 컴포넌트")]
     [SerializeField] private TMP_Text rootTerminalText;
     [SerializeField] private TMP_Text dialogTerminalText;
@@ -62,14 +67,87 @@ public class CRTController : MonoBehaviour
 
     private void Update()
     {
-        if (!isTyping)
+        // 현재 상태에 따라 다른 로직을 실행
+        switch (currentState)
         {
-            HandleKeyboardInput();
-            HandleMouseScroll();
+            case TerminalState.Command:
+                if (!isTyping)
+                {
+                    HandleCommandInput();
+                    HandleMouseScroll();
+                }
+                UpdateCommandDisplay();
+                break;
+
+            case TerminalState.Edit:
+                HandleEditInput();
+                UpdateEditDisplay();
+                break;
         }
-        UpdateDisplay();
+    }
+    private void HandleEditInput()
+    {
+        // ESC 키: 저장하고 편집 모드 종료
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitEditMode(true); // true = 저장
+        }
+
+        // 일반 텍스트 입력
+        foreach (char c in Input.inputString)
+        {
+            if (c == '\b' && editText.Length > 0) { editText.Length--; } // 백스페이스
+            else if ((c == '\n' || c == '\r')) { editText.Append('\n'); } // 엔터 (줄바꿈)
+            else if (!char.IsControl(c)) { editText.Append(c); }
+        }
     }
 
+    private void UpdateEditDisplay()
+    {
+        var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
+        if (targetTextComponent == null) return;
+
+        var sb = new StringBuilder();
+        sb.AppendLine("────────────────────────────");
+        sb.AppendLine($"[EDIT MODE: {fileBeingEdited.Name}]");
+        sb.AppendLine("────────────────────────────");
+        sb.Append(editText.ToString()); // 편집 중인 내용 표시
+
+        if (Time.time % 1f < 0.5f) { sb.Append("_"); } // 커서
+
+        sb.AppendLine("\n────────────────────────────");
+        sb.AppendLine("[ESC: 저장 및 종료]");
+
+        targetTextComponent.text = sb.ToString();
+    }
+
+    // --- [추가] 모드 전환 함수들 ---
+    public void EnterEditMode(FileSystemNode fileNode)
+    {
+        fileBeingEdited = fileNode;
+        editText.Clear().Append(fileNode.Content); // 기존 파일 내용을 편집기에 불러옴
+        currentState = TerminalState.Edit;
+        isTyping = true; // 명령어 모드의 타이핑 효과와 겹치지 않도록 설정
+        ClearTerminal(); // 화면을 깨끗하게 비움
+    }
+
+    public void ExitEditMode(bool saveChanges)
+    {
+        if (saveChanges)
+        {
+            fileBeingEdited.Content = editText.ToString(); // 변경된 내용을 파일에 저장
+            CurrentDisplayLines.Add("SYSTEM > 파일 수정 저장됨");
+        }
+        else
+        {
+            CurrentDisplayLines.Add("SYSTEM > 파일 수정 취소됨");
+        }
+
+        fileBeingEdited = null;
+        editText.Clear();
+        currentState = TerminalState.Command;
+        isTyping = false;
+    }
     private IEnumerator ShowWelcomeMessage()
     {
         yield return new WaitForSeconds(0.3f);
@@ -78,7 +156,7 @@ public class CRTController : MonoBehaviour
         StartTyping(welcomeMessage);
     }
 
-    private void HandleKeyboardInput()
+    private void HandleCommandInput()
     {
         bool inputChanged = false;
 
@@ -291,7 +369,7 @@ public class CRTController : MonoBehaviour
         scrollOffset = 0;
     }
 
-    private void UpdateDisplay()
+    private void UpdateCommandDisplay()
     {
         var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
         if (targetTextComponent == null) return;
