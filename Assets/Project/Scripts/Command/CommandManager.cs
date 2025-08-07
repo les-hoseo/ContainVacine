@@ -9,6 +9,8 @@ public class CommandManager : MonoBehaviour
 {
     public static CommandManager instance;
 
+    private FileSystem fileSystem;
+
     [Header("필수 참조")]
     [SerializeField] private TerminalManager terminalManager;
     [SerializeField] private LogDatabase logDatabase;
@@ -30,7 +32,9 @@ public class CommandManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        fileSystem = new FileSystem();
         InitializeCommands();
+        
     }
 
     /// <summary>
@@ -62,6 +66,13 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new CrtTemperatureCommand(), new[] { "CRT_TEMP" });
         RegisterCommand(new CrtLinkCommand());
         // RegisterCommand(new CrtFlashCommand());
+
+
+        // 메모
+        RegisterCommand(new RootCommand(fileSystem));
+        RegisterCommand(new DirCommand(fileSystem));
+        RegisterCommand(new OpenCommand(fileSystem));
+        RegisterCommand(new EditCommand(fileSystem));
     }
 
     /// <summary>
@@ -129,7 +140,8 @@ public class CommandManager : MonoBehaviour
 
         if (CRTController.instance != null)
         {
-            CRTController.instance.PrintMessage(profileLog.engContent);
+            // 새로 만든 함수를 호출합니다.
+            CRTController.instance.PrintMessageToCurrentTab(profileLog.engContent);
         }
     }
 
@@ -138,4 +150,8 @@ public class CommandManager : MonoBehaviour
     public void ExitModule() => ConnectedModule = null;
     public void ConnectLogToVacine(LogData log) => VacineConnectedLog = log;
     public void DisconnectLogFromVacine() => VacineConnectedLog = null;
+    public List<string> GetAllCommandNames()
+    {
+        return commands.Values.Select(c => c.Name).Distinct().ToList();
+    }
 }

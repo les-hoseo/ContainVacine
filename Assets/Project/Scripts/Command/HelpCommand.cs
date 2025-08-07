@@ -8,11 +8,14 @@ public class HelpCommand : ICommand
         return new List<string>
         {
             "————————————————————————————————————————————————",
-            "Type with keyboard on the machine",
-            "Enter to submit",
-            "Tab to change between DIALOG and ROOT",
+            "키보드로 장치에 입력",
+            "ENTER를 눌러 실행",
             "",
-            "type “COMMANDS” to get list of terminal commands",
+            "“INFO” 입력으로 터미널 정보 출력",
+            "",
+            "“COMMANDS” 입력으로 터미널 명령어 목록 출력",
+
+
             "————————————————————————————————————————————————"
         };
     }

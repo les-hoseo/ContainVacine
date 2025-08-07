@@ -16,7 +16,7 @@ public class RachelGimmickManager : MonoBehaviour
     {
         ChangeState(HeadState.WING_HEAD);
     }
-
+    int first = 10;
     void Update()
     {
         // 각 상태에 따른 Update 로직 (타이머 등)
