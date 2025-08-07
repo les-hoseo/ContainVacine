@@ -11,6 +11,8 @@ public class CommandManager : MonoBehaviour
 {
     public static CommandManager instance;
 
+    private FileSystem fileSystem;
+
     [Header("필수 참조")]
     [SerializeField] private TerminalManager terminalManager;
     [SerializeField] private LogDatabase logDatabase;
@@ -67,6 +69,10 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new CrtTemperatureCommand(), new[] { "CRT_TEMP" });
         RegisterCommand(new CrtLinkCommand());
         // RegisterCommand(new CrtFlashCommand());
+
+
+        // 메모
+        RegisterCommand(new RootCommand(fileSystem));
     }
 
     /// <summary>

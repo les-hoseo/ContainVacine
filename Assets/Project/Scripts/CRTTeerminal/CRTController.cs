@@ -36,6 +36,8 @@ public class CRTController : MonoBehaviour
 
     // 자동완성용 변수
     private string currentSuggestion = "";
+    private List<string> suggestionMatches = new List<string>(); // ◀◀ 이 줄을 추가하세요!
+    private int suggestionIndex = -1; // ◀◀ 이 줄을 추가하세요!
 
     // 유저 코드 유지용 변수
     private bool first = false;
@@ -79,36 +81,81 @@ public class CRTController : MonoBehaviour
     private void HandleKeyboardInput()
     {
         bool inputChanged = false;
+
+        // --- 1. 일반 텍스트 입력 처리 ---
         if (Input.inputString.Length > 0)
         {
             foreach (char c in Input.inputString)
             {
                 if (c == '\b' && currentInput.Length > 0) { currentInput.Length--; inputChanged = true; }
-                else if ((c == '\n' || c == '\r')) { ProcessCommand(); }
-                else if (c == '\t') { /* Tab 키는 아래에서 별도 처리 */}
-                else if (!char.IsControl(c)) { currentInput.Append(c); inputChanged = true; }
+                else if ((c == '\n' || c == '\r')) { /* 엔터는 아래에서 처리 */ }
+                else if (c == '\t') { /* 탭도 아래에서 처리 */ }
+                else if (!char.IsControl(c)) { currentInput.Append(char.ToUpper(c)); inputChanged = true; }
             }
         }
 
-        // Tab 키는 Input.inputString으로 감지되지 않으므로 GetKeyDown 사용
+        // --- 2. 특수 키 입력 처리 ---
+
+        // [수정] 입력창에 글자가 있을 때: 방향키는 '추천 목록'을 제어
+        if (currentInput.Length > 0)
+        {
+            if (suggestionMatches.Count > 0)
+            {
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    suggestionIndex = (suggestionIndex + 1) % suggestionMatches.Count;
+                }
+                else if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    suggestionIndex--;
+                    if (suggestionIndex < 0) suggestionIndex = suggestionMatches.Count - 1;
+                }
+            }
+        }
+        // [수정] 입력창이 비어있을 때: 방향키는 '명령어 히스토리'를 제어
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateHistory(-1);
+            else if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateHistory(1);
+        }
+
+        // Tab 키: 현재 보이는 추천 단어로 완성
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ApplySuggestion();
             inputChanged = true;
         }
 
+        // 엔터 키: '현재 입력된 내용'을 그대로 실행
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            ProcessCommand();
+            inputChanged = true;
+        }
+
+        // 입력에 변화가 있었다면 추천 목록 갱신
         if (inputChanged)
         {
             UpdateSuggestion();
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateHistory(-1);
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateHistory(1);
+    // [추가] 인자 자동완성을 위해 필요한 보조 함수
+    private string GetFullSuggestionFromMatch(string match)
+    {
+        string[] parts = currentInput.ToString().Split(' ');
+        if (parts.Length > 1)
+        {
+            return parts[0] + " " + match;
+        }
+        return match;
     }
 
     private void UpdateSuggestion()
     {
-        currentSuggestion = "";
+        suggestionMatches.Clear();
+        suggestionIndex = -1;
+
         string fullInput = currentInput.ToString();
         if (string.IsNullOrEmpty(fullInput)) return;
 
@@ -118,35 +165,32 @@ public class CRTController : MonoBehaviour
         {
             string partialCommand = parts[0].ToUpper();
             if (string.IsNullOrEmpty(partialCommand)) return;
-
             List<string> allCommands = CommandManager.instance.GetAllCommandNames();
-            string match = allCommands.FirstOrDefault(cmd => cmd.StartsWith(partialCommand));
-
-            if (!string.IsNullOrEmpty(match))
-            {
-                currentSuggestion = match;
-            }
+            suggestionMatches = allCommands.Where(cmd => cmd.StartsWith(partialCommand)).ToList();
         }
-        else if (parts.Length == 2 && parts[0].ToUpper() == "ASK")
+        else if (parts.Length == 2 && (parts[0].ToUpper() == "READ" || parts[0].ToUpper() == "ASK"))
         {
             string partialLogName = parts[1].ToUpper();
             if (string.IsNullOrEmpty(partialLogName)) return;
-
             List<string> allLogs = TerminalManager.instance.GetOwnedLogTitles();
-            string match = allLogs.FirstOrDefault(log => log.ToUpper().StartsWith(partialLogName));
+            suggestionMatches = allLogs.Where(log => log.ToUpper().StartsWith(partialLogName)).ToList();
+        }
 
-            if (!string.IsNullOrEmpty(match))
-            {
-                currentSuggestion = parts[0] + " " + match;
-            }
+        // 일치하는 항목이 있으면, 첫 번째(0번)를 기본 선택으로 지정
+        if (suggestionMatches.Count > 0)
+        {
+            suggestionIndex = 0;
         }
     }
 
     private void ApplySuggestion()
     {
-        if (!string.IsNullOrEmpty(currentSuggestion))
+        // 선택된 추천 항목이 있을 때만
+        if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
         {
-            currentInput.Clear().Append(currentSuggestion);
+            string match = suggestionMatches[suggestionIndex];
+            string fullSuggestion = GetFullSuggestionFromMatch(match);
+            currentInput.Clear().Append(fullSuggestion);
         }
     }
 
@@ -252,6 +296,7 @@ public class CRTController : MonoBehaviour
         var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
         if (targetTextComponent == null) return;
 
+        // ... (이전 sb 코드들은 동일) ...
         var currentLines = CurrentDisplayLines;
         int visibleLineCount = Mathf.FloorToInt(targetTextComponent.rectTransform.rect.height / targetTextComponent.font.faceInfo.lineHeight);
         var sb = new StringBuilder();
@@ -263,6 +308,7 @@ public class CRTController : MonoBehaviour
             sb.AppendLine(currentLines[i]);
         }
 
+
         if (!isTyping)
         {
             string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
@@ -271,11 +317,21 @@ public class CRTController : MonoBehaviour
             string userInput = currentInput.ToString();
             sb.Append(userInput);
 
-            if (!string.IsNullOrEmpty(currentSuggestion) && currentSuggestion.ToUpper().StartsWith(userInput.ToUpper()) && userInput.Length > 0)
+            // --- [수정된 부분] ---
+            // 현재 선택된 추천 항목이 있다면 (suggestionIndex != -1)
+            if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
             {
-                string ghostText = currentSuggestion.Substring(userInput.Length);
-                sb.Append($"<color=#787777>{ghostText}</color>");
+                string match = suggestionMatches[suggestionIndex];
+                string fullSuggestion = GetFullSuggestionFromMatch(match);
+
+                // 추천 단어가 사용자 입력보다 길 때만 뒷부분을 회색으로 표시
+                if (fullSuggestion.Length > userInput.Length)
+                {
+                    string ghostText = fullSuggestion.Substring(userInput.Length);
+                    sb.Append($"<color=#787777>{ghostText}</color>");
+                }
             }
+            // --- [수정 끝] ---
 
             if (Time.time % 1f < 0.5f) { sb.Append("_"); }
         }
