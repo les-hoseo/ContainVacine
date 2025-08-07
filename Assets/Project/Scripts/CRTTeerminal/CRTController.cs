@@ -18,16 +18,13 @@ public class CRTController : MonoBehaviour
 
     [Header("UI 컴포넌트")]
     [SerializeField] private TMP_Text rootTerminalText;
-    [SerializeField] private TMP_Text dialogTerminalText;
 
     [Header("타이핑 효과")]
     public float typingSpeed = 0.02f;
 
-    // --- [✨수정된 부분 1] 탭별 기록 리스트 분리 ---
     private readonly List<string> rootDisplayLines = new();
     private readonly List<string> dialogDisplayLines = new();
-    private List<string> CurrentDisplayLines =>
-        CommandManager.instance.state == CommandManager.TabState.ROOT ? rootDisplayLines : dialogDisplayLines;
+    private List<string> CurrentDisplayLines => rootDisplayLines;
 
     private readonly List<string> commandHistory = new();
     private int historyIndex = -1;
@@ -38,7 +35,6 @@ public class CRTController : MonoBehaviour
     private bool first = false;
 
     private const string PROMPT_ROOT = "\\\\ROOT> ";
-    private const string PROMPT_DIALOG = "\\\\DIALOG> ";
 
     private void Awake()
     {
@@ -47,13 +43,7 @@ public class CRTController : MonoBehaviour
 
     void Start()
     {
-        var currentCharData = CommandManager.instance.CurChar;
-        // 게임 시작 시 ROOT 탭이므로 환영 메시지 출력
-        if (CommandManager.instance.state == CommandManager.TabState.ROOT)
-        {
-            StartCoroutine(ShowWelcomeMessage());
-        }
-        UpdateTerminalUI();
+        StartCoroutine(ShowWelcomeMessage());
     }
 
     private void Update()
@@ -62,10 +52,6 @@ public class CRTController : MonoBehaviour
         {
             HandleKeyboardInput();
             HandleMouseScroll();
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                ToggleTab();
-            }
         }
         UpdateDisplay();
     }
@@ -80,7 +66,6 @@ public class CRTController : MonoBehaviour
 
     private void HandleKeyboardInput()
     {
-        // ... 기존과 동일 ...
         if (Input.inputString.Length > 0)
         {
             foreach (char c in Input.inputString)
@@ -96,7 +81,6 @@ public class CRTController : MonoBehaviour
 
     private void HandleMouseScroll()
     {
-        // ... 기존과 동일, 단 CurrentDisplayLines 사용 ...
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
@@ -108,9 +92,8 @@ public class CRTController : MonoBehaviour
     private void ProcessCommand()
     {
         string command = currentInput.ToString().Trim();
-        string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
+        string prompt = PROMPT_ROOT;
 
-        // --- [✨수정된 부분 2] 현재 활성화된 탭의 리스트에 기록 추가 ---
         CurrentDisplayLines.Add(prompt + command);
 
         if (!string.IsNullOrEmpty(command))
@@ -139,7 +122,6 @@ public class CRTController : MonoBehaviour
 
     private void NavigateHistory(int direction)
     {
-        // ... 기존과 동일 ...
         if (commandHistory.Count == 0) return;
         historyIndex = Mathf.Clamp(historyIndex + direction, 0, commandHistory.Count);
         if (historyIndex < commandHistory.Count)
@@ -156,12 +138,18 @@ public class CRTController : MonoBehaviour
 
     private IEnumerator TypeWriterEffect(string message)
     {
+        int preLineCount = 0;
+        //int index = 0;
+
         isTyping = true;
         string[] lines = message.Split('\n');
 
         foreach (var line in lines)
         {
-            // --- [✨수정된 부분 3] 현재 활성화된 탭의 리스트에 타이핑 진행 ---
+
+            rootTerminalText.ForceMeshUpdate();
+            preLineCount = rootTerminalText.textInfo.lineCount;
+
             CurrentDisplayLines.Add("");
             int currentLineIndex = CurrentDisplayLines.Count - 1;
 
@@ -183,6 +171,11 @@ public class CRTController : MonoBehaviour
                 else sb.Append(line[i]);
 
                 CurrentDisplayLines[currentLineIndex] = sb.ToString();
+                //if (CommandManager.instance.state == CommandManager.TabState.ROOT)
+                //    if (CommandManager.instance.state == CommandManager.TabState.ROOT && rootTerminalText.textInfo.lineCount > preLineCount)
+                //    {
+                //        ++index;
+                //    }
                 yield return new WaitForSeconds(typingSpeed);
                 i++;
             }
@@ -193,13 +186,12 @@ public class CRTController : MonoBehaviour
 
     private void UpdateDisplay()
     {
-        var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
+        var targetTextComponent = rootTerminalText;
         if (targetTextComponent == null) return;
 
         int visibleLineCount = Mathf.FloorToInt(targetTextComponent.rectTransform.rect.height / targetTextComponent.font.faceInfo.lineHeight);
 
         var sb = new StringBuilder();
-        // --- [✨수정된 부분 4] 현재 활성화된 탭의 리스트에서 내용 가져오기 ---
         int startLine = Mathf.Max(0, CurrentDisplayLines.Count - visibleLineCount - scrollOffset);
         int endLine = Mathf.Min(CurrentDisplayLines.Count, startLine + visibleLineCount);
 
@@ -210,39 +202,11 @@ public class CRTController : MonoBehaviour
 
         if (!isTyping)
         {
-            string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
+            string prompt = PROMPT_ROOT;
             sb.Append(prompt).Append(currentInput);
             if (Time.time % 1f < 0.5f) sb.Append("_");
         }
         targetTextComponent.text = sb.ToString();
-    }
-
-    public void ToggleTab()
-    {
-        var cm = CommandManager.instance;
-        cm.state = (cm.state == CommandManager.TabState.ROOT) ? CommandManager.TabState.DIALOG : CommandManager.TabState.ROOT;
-
-        UpdateTerminalUI();
-        scrollOffset = 0; // 탭 전환 시 스크롤 위치 초기화
-
-        // --- [✨수정된 부분 2] CommandManager의 새 함수를 호출하도록 변경 ---
-        // DIALOG 탭에 처음 진입했을 때 CommandManager에 소개문 출력을 요청합니다.
-        if (!first)
-        {
-            if (cm.state == CommandManager.TabState.DIALOG && dialogDisplayLines.Count == 0)
-            {
-                cm.DisplayIntroLogForCurrentCharacter();
-                first = true;
-            }
-        }
-
-    }
-
-    private void UpdateTerminalUI()
-    {
-        var isRoot = CommandManager.instance.state == CommandManager.TabState.ROOT;
-        rootTerminalText.gameObject.SetActive(isRoot);
-        dialogTerminalText.gameObject.SetActive(!isRoot);
     }
 
     /// <summary>
@@ -250,7 +214,6 @@ public class CRTController : MonoBehaviour
     /// </summary>
     public void ClearTerminal()
     {
-        // --- [✨수정된 부분 6] 현재 탭의 리스트만 지우도록 수정 ---
         CurrentDisplayLines.Clear();
         scrollOffset = 0;
     }
