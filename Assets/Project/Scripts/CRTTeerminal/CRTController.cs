@@ -30,7 +30,7 @@ public class CRTController : MonoBehaviour
     // --- 내부 상태 변수 ---
     private readonly List<string> rootLines = new();      // ROOT 탭 내용
     private readonly List<string> dialogLines = new();    // DIALOG 탭 내용
-    private List<string> CurrentDisplayLines => CommandManager.instance.state == CommandManager.TabState.ROOT ? rootLines : dialogLines;
+    private List<string> CurrentDisplayLines => rootLines;
 
     private readonly List<string> commandHistory = new();
     private int historyIndex = -1;
@@ -58,11 +58,8 @@ public class CRTController : MonoBehaviour
     void Start()
     {
         var currentCharData = CommandManager.instance.CurChar;
-        if (CommandManager.instance.state == CommandManager.TabState.ROOT)
-        {
-            StartCoroutine(ShowWelcomeMessage());
-        }
-        UpdateTerminalUI();
+
+        StartCoroutine(ShowWelcomeMessage());
     }
 
     private void Update()
@@ -104,7 +101,7 @@ public class CRTController : MonoBehaviour
 
     private void UpdateEditDisplay()
     {
-        var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
+        var targetTextComponent = rootTerminalText;
         if (targetTextComponent == null) return;
 
         var sb = new StringBuilder();
@@ -285,7 +282,7 @@ public class CRTController : MonoBehaviour
     private void ProcessCommand()
     {
         string command = currentInput.ToString().Trim();
-        string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
+        string prompt = PROMPT_ROOT;
 
         CurrentDisplayLines.Add(prompt + command);
 
@@ -371,7 +368,7 @@ public class CRTController : MonoBehaviour
 
     private void UpdateCommandDisplay()
     {
-        var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
+        var targetTextComponent = rootTerminalText;
         if (targetTextComponent == null) return;
 
         // ... (이전 sb 코드들은 동일) ...
@@ -389,7 +386,7 @@ public class CRTController : MonoBehaviour
 
         if (!isTyping)
         {
-            string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
+            string prompt = PROMPT_ROOT;
             sb.Append(prompt);
 
             string userInput = currentInput.ToString();
@@ -414,30 +411,6 @@ public class CRTController : MonoBehaviour
             if (Time.time % 1f < 0.5f) { sb.Append("_"); }
         }
         targetTextComponent.text = sb.ToString();
-    }
-
-    public void ToggleTab()
-    {
-        var cm = CommandManager.instance;
-        cm.state = (cm.state == CommandManager.TabState.ROOT) ? CommandManager.TabState.DIALOG : CommandManager.TabState.ROOT;
-        UpdateTerminalUI();
-        scrollOffset = 0;
-
-        if (!first)
-        {
-            if (cm.state == CommandManager.TabState.DIALOG && dialogLines.Count == 0)
-            {
-                cm.DisplayIntroLogForCurrentCharacter();
-                first = true;
-            }
-        }
-    }
-
-    private void UpdateTerminalUI()
-    {
-        var isRoot = CommandManager.instance.state == CommandManager.TabState.ROOT;
-        rootTerminalText.gameObject.SetActive(isRoot);
-        dialogTerminalText.gameObject.SetActive(!isRoot);
     }
 
     public void ClearTerminal()
