@@ -9,17 +9,26 @@ public class BoardController : MonoBehaviour
     private LineRenderer curLine;
 
     [Header("Line Settings")]
-    [SerializeField] private List<Image> evidenceItems;
+    [SerializeField] private List<Image> evidenceItems = new List<Image>();
+    [SerializeField] private List<Image> evidenceSelecting = new List<Image>();
 
+    [Header("Movable Image Settings")]
     [SerializeField] private List<Image> Image = new List<Image>();
 
     [Header("Selection Settings")]
     [SerializeField] private float selectionOffset = 30.0f;
     [SerializeField] private float selectionMoveSpeed = 8.0f;
+    [Tooltip("선택 시 적용될 알파값 (0.0 ~ 1.0)")]
+    [Range(0, 1)]
+    [SerializeField] private float selectionAlpha = 0.5f; // [추가] 선택 시 알파 값
 
-    // 이미지의 원래 월드 위치(Vector3)를 저장하도록 다시 변경
     private Dictionary<Image, Vector3> originalPositions;
     private Dictionary<Image, Coroutine> runningCoroutines;
+
+    private HashSet<Image> completedEvidence = new HashSet<Image>();
+
+    private bool Click = false;
+    private Image SelectEvi;
 
     private void Awake()
     {
@@ -44,16 +53,50 @@ public class BoardController : MonoBehaviour
         {
             if (item != null)
             {
-                // transform.position으로 원래 위치를 저장
                 originalPositions[item] = item.transform.position;
                 runningCoroutines[item] = null;
             }
+        }
+
+        foreach (var item in evidenceSelecting)
+        {
+            if (item != null) item.gameObject.SetActive(false);
         }
     }
 
     private void Update()
     {
         ConnectAllEvidence();
+    }
+
+    public void SelectEvidence(Image clickedEvidence)
+    {
+        if (completedEvidence.Contains(clickedEvidence)) return;
+
+        if (!Click)
+            clickedEvidence.gameObject.SetActive(true);
+    }
+
+    public void UnSelectEvidence(Image clickedEvidence)
+    {
+        if (completedEvidence.Contains(clickedEvidence)) return;
+
+        if (!Click)
+            clickedEvidence.gameObject.SetActive(false);
+    }
+
+    public void ClickEvidence(Image clickedEvidence)
+    {
+        if (completedEvidence.Contains(clickedEvidence)) return;
+
+        Click = true;
+
+        // [수정] Color.yellow에 원하는 알파 값을 적용합니다.
+        Color newColor = Color.yellow;
+        newColor.a = selectionAlpha;
+        clickedEvidence.color = newColor;
+
+        SelectEvi = clickedEvidence;
     }
 
     public void Select(Image selectedImage)
@@ -72,13 +115,24 @@ public class BoardController : MonoBehaviour
 
         if (selectedImage != null && originalPositions.ContainsKey(selectedImage))
         {
-            // 목표 위치 계산 시 Vector3 사용
             Vector3 targetPosition = originalPositions[selectedImage] + new Vector3(0, selectionOffset, 0);
             StartOrReplaceCoroutine(selectedImage, targetPosition);
         }
     }
 
-    // Vector3를 받도록 헬퍼 함수 시그니처 변경
+    public void SelectImage(Image selectedImage)
+    {
+        if (Click)
+        {
+            SelectEvi.color = selectedImage.color;
+            selectedImage.gameObject.SetActive(false);
+
+            completedEvidence.Add(SelectEvi);
+
+            Click = false;
+        }
+    }
+
     private void StartOrReplaceCoroutine(Image image, Vector3 targetPos)
     {
         if (runningCoroutines.ContainsKey(image) && runningCoroutines[image] != null)
@@ -88,7 +142,6 @@ public class BoardController : MonoBehaviour
         runningCoroutines[image] = StartCoroutine(AnimatePosition(image, targetPos));
     }
 
-    // Vector3.Lerp를 사용하도록 코루틴 수정
     private IEnumerator AnimatePosition(Image image, Vector3 targetPosition)
     {
         float journey = 0f;
