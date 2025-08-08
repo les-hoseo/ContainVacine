@@ -35,7 +35,7 @@ public class MovingGridsController : MonoBehaviour
 
         if (image.material.shader.name != "Unlit/GridShader")
         {
-             // 머티리얼이 할당되지 않았거나 셰이더가 다를 경우를 대비
+            // 머티리얼이 할당되지 않았거나 셰이더가 다를 경우를 대비
             return;
         }
 
