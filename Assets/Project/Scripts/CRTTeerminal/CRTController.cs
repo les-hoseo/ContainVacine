@@ -6,19 +6,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
-/// <summary>
-/// CRT 터미널의 사용자 입력, 텍스트 출력, 타이핑 효과 등 모든 시각적 표현을 제어합니다.
-/// 각 탭의 기록을 별도로 관리합니다.
-/// </summary>
 public class CRTController : MonoBehaviour
 {
     public static CRTController instance;
 
+    // --- 터미널 상태 ---
     public enum TerminalState { Command, Edit }
     public TerminalState currentState = TerminalState.Command;
-    private FileSystemNode fileBeingEdited; // 현재 편집 중인 파일
-    private StringBuilder editText = new StringBuilder(); // 편집 중인 텍스트
+    private FileSystemNode fileBeingEdited;
+    private StringBuilder editText = new StringBuilder();
 
     [Header("UI 컴포넌트")]
     [SerializeField] private TMP_Text rootTerminalText;
@@ -27,11 +25,10 @@ public class CRTController : MonoBehaviour
     [Header("타이핑 효과")]
     public float typingSpeed = 0.02f;
 
-    // --- 내부 상태 변수 ---
-    private readonly List<string> rootLines = new();      // ROOT 탭 내용
-    private readonly List<string> dialogLines = new();    // DIALOG 탭 내용
-    private List<string> CurrentDisplayLines => CommandManager.instance.state == CommandManager.TabState.ROOT ? rootLines : dialogLines;
-
+    // --- 내부 데이터 변수 ---
+    private readonly List<string> rootLines = new();
+    private readonly List<string> dialogLines = new();
+    private List<string> CurrentDisplayLines => rootLines;
     private readonly List<string> commandHistory = new();
     private int historyIndex = -1;
     private StringBuilder currentInput = new();
@@ -41,13 +38,13 @@ public class CRTController : MonoBehaviour
 
     // 자동완성용 변수
     private string currentSuggestion = "";
-    private List<string> suggestionMatches = new List<string>(); // ◀◀ 이 줄을 추가하세요!
-    private int suggestionIndex = -1; // ◀◀ 이 줄을 추가하세요!
+    private List<string> suggestionMatches = new List<string>();
+    private int suggestionIndex = -1;
 
-    // 유저 코드 유지용 변수
-    private bool first = false;
+    // DIALOG 탭 최초 진입 확인용
+    private bool firstDialogEntry = false;
 
-    private const string PROMPT_ROOT = "\\\\ROOT> ";
+    private const string PROMPT_ROOT = "\\\\CRT\\> ";
     private const string PROMPT_DIALOG = "\\\\DIALOG> ";
 
     private void Awake()
@@ -57,17 +54,12 @@ public class CRTController : MonoBehaviour
 
     void Start()
     {
-        var currentCharData = CommandManager.instance.CurChar;
-        if (CommandManager.instance.state == CommandManager.TabState.ROOT)
-        {
-            StartCoroutine(ShowWelcomeMessage());
-        }
-        UpdateTerminalUI();
+        Input.imeCompositionMode = IMECompositionMode.On;
+        StartCoroutine(ShowWelcomeMessage());
     }
 
     private void Update()
     {
-        // 현재 상태에 따라 다른 로직을 실행
         switch (currentState)
         {
             case TerminalState.Command:
@@ -85,57 +77,223 @@ public class CRTController : MonoBehaviour
                 break;
         }
     }
-    private void HandleEditInput()
+
+    #region Command Mode
+    private void HandleCommandInput()
     {
-        // ESC 키: 저장하고 편집 모드 종료
-        if (Input.GetKeyDown(KeyCode.Escape))
+        bool inputChanged = false;
+        if (Input.inputString.Length > 0)
         {
-            ExitEditMode(true); // true = 저장
+            foreach (char c in Input.inputString)
+            {
+                if (c == '\b' && currentInput.Length > 0) { currentInput.Length--; inputChanged = true; }
+                else if ((c == '\n' || c == '\r')) { /* 엔터는 아래에서 처리 */ }
+                else if (c == '\t') { /* 탭도 아래에서 처리 */ }
+                else if (!char.IsControl(c)) { currentInput.Append(c); inputChanged = true; }
+            }
         }
 
-        // 일반 텍스트 입력
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (currentState == TerminalState.Command) ApplySuggestion();
+            inputChanged = true;
+        }
+
+        if (currentInput.Length > 0 && suggestionMatches.Count > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                suggestionIndex = (suggestionIndex + 1) % suggestionMatches.Count;
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                suggestionIndex--;
+                if (suggestionIndex < 0) suggestionIndex = suggestionMatches.Count - 1;
+            }
+        }
+        else if (currentInput.Length == 0)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateHistory(-1);
+            else if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateHistory(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            ProcessCommand();
+            inputChanged = true;
+        }
+
+        if (inputChanged)
+        {
+            UpdateSuggestion();
+        }
+    }
+
+    private void UpdateCommandDisplay()
+    {
+        var targetTextComponent =  rootTerminalText;
+        if (targetTextComponent == null) return;
+        
+
+        var currentLines = CurrentDisplayLines;
+        int visibleLineCount = 25; // 임의의 값, 실제로는 폰트 크기 등으로 계산 필요
+        var sb = new StringBuilder();
+        int startLine = Mathf.Max(0, currentLines.Count - visibleLineCount - scrollOffset);
+        int endLine = Mathf.Min(currentLines.Count, startLine + visibleLineCount);
+
+        for (int i = startLine; i < endLine; i++)
+        {
+            sb.AppendLine(currentLines[i]);
+        }
+
+        if (!isTyping)
+        {
+            string prompt = PROMPT_ROOT;
+            sb.Append(prompt);
+
+            string userInput = currentInput.ToString();
+            sb.Append(userInput);
+
+            if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
+            {
+                string match = suggestionMatches[suggestionIndex];
+                string fullSuggestion = GetFullSuggestionFromMatch(match);
+                if (fullSuggestion.Length > userInput.Length)
+                {
+                    string ghostText = fullSuggestion.Substring(userInput.Length);
+                    sb.Append($"<color=#787777>{ghostText}</color>");
+                }
+            }
+
+            if (Input.compositionString.Length > 0)
+            {
+                sb.Append($"<u>{Input.compositionString}</u>");
+            }
+            if (Time.time % 1f < 0.5f) { sb.Append("_"); }
+        }
+        targetTextComponent.text = sb.ToString();
+    }
+
+    private void ProcessCommand()
+    {
+        string command = currentInput.ToString().Trim();
+        string prompt = PROMPT_ROOT;
+
+        // [수정] 여기서 빈 줄을 추가하던 로직을 삭제합니다.
+        CurrentDisplayLines.Add(prompt + command);
+
+        if (!string.IsNullOrEmpty(command))
+        {
+            // ROOT 명령어 특별 처리
+            if (command.ToUpper() == "ROOT")
+            {
+                string results = CommandManager.instance.ProcessInput(command);
+                List<string> resultLines = results.Split('\n').ToList();
+
+                // 첫 줄은 이미 추가된 프롬프트 라인에 덮어쓰기
+                if (resultLines.Any())
+                {
+                    CurrentDisplayLines[CurrentDisplayLines.Count - 1] = prompt + command + " " + resultLines[0];
+                    resultLines.RemoveAt(0);
+                }
+                // 나머지 줄들은 바로 추가
+                if (resultLines.Any())
+                {
+                    CurrentDisplayLines.AddRange(resultLines);
+                }
+            }
+            // CLS 명령어 처리
+            else if (command.ToUpper() == "CLS")
+            {
+                ClearTerminal();
+                var infoCommand = new InfoCommand();
+                CurrentDisplayLines.AddRange(infoCommand.Execute(new string[0]));
+            }
+            // 그 외 모든 명령어 처리
+            else
+            {
+                string results = CommandManager.instance.ProcessInput(command);
+                if (!string.IsNullOrEmpty(results))
+                {
+                    StartTyping(results);
+                }
+            }
+        }
+
+        // --- 공통 로직 ---
+        if (!string.IsNullOrEmpty(command))
+        {
+            commandHistory.Add(command);
+            historyIndex = commandHistory.Count;
+        }
+
+        // [수정] 모든 명령어 처리가 끝난 후, 다음 프롬프트를 위해 빈 줄을 추가합니다.
+        CurrentDisplayLines.Add("");
+
+        currentInput.Clear();
+        UpdateSuggestion();
+        scrollOffset = 0;
+    }
+    #endregion
+
+    #region Edit Mode
+    private void HandleEditInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitEditMode(true);
+        }
+
         foreach (char c in Input.inputString)
         {
-            if (c == '\b' && editText.Length > 0) { editText.Length--; } // 백스페이스
-            else if ((c == '\n' || c == '\r')) { editText.Append('\n'); } // 엔터 (줄바꿈)
+            if (c == '\b' && editText.Length > 0) { editText.Length--; }
+            else if ((c == '\n' || c == '\r')) { editText.Append('\n'); }
             else if (!char.IsControl(c)) { editText.Append(c); }
         }
     }
 
     private void UpdateEditDisplay()
     {
-        var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
+        var targetTextComponent = rootTerminalText;
         if (targetTextComponent == null) return;
+
+        // [추가] fileBeingEdited가 null이 아닌지 확인하는 안전장치
+        if (fileBeingEdited == null)
+        {
+            // 만약 비어있다면, 아직 편집 모드로 완전히 진입하지 않은 것이므로
+            // 에러를 방지하고 함수를 즉시 종료합니다.
+            return;
+        }
 
         var sb = new StringBuilder();
         sb.AppendLine("────────────────────────────");
         sb.AppendLine($"[EDIT MODE: {fileBeingEdited.Name}]");
         sb.AppendLine("────────────────────────────");
-        sb.Append(editText.ToString()); // 편집 중인 내용 표시
+        sb.Append(editText.ToString());
 
-        if (Time.time % 1f < 0.5f) { sb.Append("_"); } // 커서
+        if (Time.time % 1f < 0.5f) { sb.Append("_"); }
 
         sb.AppendLine("\n────────────────────────────");
-        sb.AppendLine("[ESC: 저장 및 종료]");
+        sb.AppendLine("> 키보드 입력으로 내용 수정");
+        sb.AppendLine("> BACKSPACE 삭제 / ENTER 줄바꿈 / ESC 나가기   ");
 
         targetTextComponent.text = sb.ToString();
     }
 
-    // --- [추가] 모드 전환 함수들 ---
     public void EnterEditMode(FileSystemNode fileNode)
     {
         fileBeingEdited = fileNode;
-        editText.Clear().Append(fileNode.Content); // 기존 파일 내용을 편집기에 불러옴
+        editText.Clear().Append(fileNode.Content);
         currentState = TerminalState.Edit;
-        isTyping = true; // 명령어 모드의 타이핑 효과와 겹치지 않도록 설정
-        ClearTerminal(); // 화면을 깨끗하게 비움
+        isTyping = true; // 명령어 모드 입력 방지
+        //ClearTerminal();
     }
 
     public void ExitEditMode(bool saveChanges)
     {
         if (saveChanges)
         {
-            fileBeingEdited.Content = editText.ToString(); // 변경된 내용을 파일에 저장
+            fileBeingEdited.Content = editText.ToString();
             CurrentDisplayLines.Add("SYSTEM > 파일 수정 저장됨");
         }
         else
@@ -148,6 +306,9 @@ public class CRTController : MonoBehaviour
         currentState = TerminalState.Command;
         isTyping = false;
     }
+    #endregion
+
+    #region Helper Functions
     private IEnumerator ShowWelcomeMessage()
     {
         yield return new WaitForSeconds(0.3f);
@@ -156,162 +317,14 @@ public class CRTController : MonoBehaviour
         StartTyping(welcomeMessage);
     }
 
-    private void HandleCommandInput()
-    {
-        bool inputChanged = false;
-
-        // --- 1. 일반 텍스트 입력 처리 ---
-        if (Input.inputString.Length > 0)
-        {
-            foreach (char c in Input.inputString)
-            {
-                if (c == '\b' && currentInput.Length > 0) { currentInput.Length--; inputChanged = true; }
-                else if ((c == '\n' || c == '\r')) { /* 엔터는 아래에서 처리 */ }
-                else if (c == '\t') { /* 탭도 아래에서 처리 */ }
-                else if (!char.IsControl(c)) { currentInput.Append(char.ToUpper(c)); inputChanged = true; }
-            }
-        }
-
-        // --- 2. 특수 키 입력 처리 ---
-
-        // [수정] 입력창에 글자가 있을 때: 방향키는 '추천 목록'을 제어
-        if (currentInput.Length > 0)
-        {
-            if (suggestionMatches.Count > 0)
-            {
-                if (Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    suggestionIndex = (suggestionIndex + 1) % suggestionMatches.Count;
-                }
-                else if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    suggestionIndex--;
-                    if (suggestionIndex < 0) suggestionIndex = suggestionMatches.Count - 1;
-                }
-            }
-        }
-        // [수정] 입력창이 비어있을 때: 방향키는 '명령어 히스토리'를 제어
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateHistory(-1);
-            else if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateHistory(1);
-        }
-
-        // Tab 키: 현재 보이는 추천 단어로 완성
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            ApplySuggestion();
-            inputChanged = true;
-        }
-
-        // 엔터 키: '현재 입력된 내용'을 그대로 실행
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            ProcessCommand();
-            inputChanged = true;
-        }
-
-        // 입력에 변화가 있었다면 추천 목록 갱신
-        if (inputChanged)
-        {
-            UpdateSuggestion();
-        }
-    }
-
-    // [추가] 인자 자동완성을 위해 필요한 보조 함수
-    private string GetFullSuggestionFromMatch(string match)
-    {
-        string[] parts = currentInput.ToString().Split(' ');
-        if (parts.Length > 1)
-        {
-            return parts[0] + " " + match;
-        }
-        return match;
-    }
-
-    private void UpdateSuggestion()
-    {
-        suggestionMatches.Clear();
-        suggestionIndex = -1;
-
-        string fullInput = currentInput.ToString();
-        if (string.IsNullOrEmpty(fullInput)) return;
-
-        string[] parts = fullInput.Split(' ');
-
-        if (parts.Length == 1)
-        {
-            string partialCommand = parts[0].ToUpper();
-            if (string.IsNullOrEmpty(partialCommand)) return;
-            List<string> allCommands = CommandManager.instance.GetAllCommandNames();
-            suggestionMatches = allCommands.Where(cmd => cmd.StartsWith(partialCommand)).ToList();
-        }
-        else if (parts.Length == 2 && (parts[0].ToUpper() == "READ" || parts[0].ToUpper() == "ASK"))
-        {
-            string partialLogName = parts[1].ToUpper();
-            if (string.IsNullOrEmpty(partialLogName)) return;
-            List<string> allLogs = TerminalManager.instance.GetOwnedLogTitles();
-            suggestionMatches = allLogs.Where(log => log.ToUpper().StartsWith(partialLogName)).ToList();
-        }
-
-        // 일치하는 항목이 있으면, 첫 번째(0번)를 기본 선택으로 지정
-        if (suggestionMatches.Count > 0)
-        {
-            suggestionIndex = 0;
-        }
-    }
-
-    private void ApplySuggestion()
-    {
-        // 선택된 추천 항목이 있을 때만
-        if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
-        {
-            string match = suggestionMatches[suggestionIndex];
-            string fullSuggestion = GetFullSuggestionFromMatch(match);
-            currentInput.Clear().Append(fullSuggestion);
-        }
-    }
-
     private void HandleMouseScroll()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
             scrollOffset -= (int)Mathf.Sign(scroll) * 3;
-            scrollOffset = Mathf.Clamp(scrollOffset, 0, Mathf.Max(0, CurrentDisplayLines.Count - 5));
+            scrollOffset = Mathf.Clamp(scrollOffset, 0, Mathf.Max(0, CurrentDisplayLines.Count - 25));
         }
-    }
-
-    private void ProcessCommand()
-    {
-        string command = currentInput.ToString().Trim();
-        string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
-
-        CurrentDisplayLines.Add(prompt + command);
-
-        if (!string.IsNullOrEmpty(command))
-        {
-            commandHistory.Add(command);
-            historyIndex = commandHistory.Count;
-
-            if (command.ToUpper() == "CLS")
-            {
-                ClearTerminal();
-                var infoCommand = new InfoCommand();
-                CurrentDisplayLines.AddRange(infoCommand.Execute(new string[0]));
-            }
-            else
-            {
-                string results = CommandManager.instance.ProcessInput(command);
-                if (!string.IsNullOrEmpty(results))
-                {
-                    StartTyping(results);
-                }
-            }
-        }
-        currentInput.Clear();
-        UpdateSuggestion(); // 명령어 실행 후 추천 단어 초기화
-        scrollOffset = 0;
     }
 
     private void NavigateHistory(int direction)
@@ -329,12 +342,7 @@ public class CRTController : MonoBehaviour
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeWriterEffect(message));
     }
-    public void PrintMessageToCurrentTab(string message)
-    {
-        if (isTyping) return;
-        CurrentDisplayLines.Add(" "); // 메시지 출력 전 한 줄 띄우기
-        StartTyping(message);
-    }
+
     private IEnumerator TypeWriterEffect(string message)
     {
         isTyping = true;
@@ -369,76 +377,81 @@ public class CRTController : MonoBehaviour
         scrollOffset = 0;
     }
 
-    private void UpdateCommandDisplay()
+    private void UpdateSuggestion()
     {
-        var targetTextComponent = CommandManager.instance.state == CommandManager.TabState.ROOT ? rootTerminalText : dialogTerminalText;
-        if (targetTextComponent == null) return;
+        suggestionMatches.Clear();
+        suggestionIndex = -1;
+        currentSuggestion = "";
 
-        // ... (이전 sb 코드들은 동일) ...
-        var currentLines = CurrentDisplayLines;
-        int visibleLineCount = Mathf.FloorToInt(targetTextComponent.rectTransform.rect.height / targetTextComponent.font.faceInfo.lineHeight);
-        var sb = new StringBuilder();
-        int startLine = Mathf.Max(0, currentLines.Count - visibleLineCount - scrollOffset);
-        int endLine = Mathf.Min(currentLines.Count, startLine + visibleLineCount);
+        string fullInput = currentInput.ToString();
+        if (string.IsNullOrEmpty(fullInput)) return;
 
-        for (int i = startLine; i < endLine; i++)
+        string[] parts = fullInput.Split(' ');
+
+        if (parts.Length == 1)
         {
-            sb.AppendLine(currentLines[i]);
+            string partialCommand = parts[0].ToUpper();
+            if (string.IsNullOrEmpty(partialCommand)) return;
+            List<string> allCommands = CommandManager.instance.GetAllCommandNames();
+            suggestionMatches = allCommands.Where(cmd => cmd.StartsWith(partialCommand)).ToList();
+        }
+        else if (parts.Length == 2 && (parts[0].ToUpper() == "READ" || parts[0].ToUpper() == "ASK"))
+        {
+            string partialLogName = parts[1].ToUpper();
+            if (string.IsNullOrEmpty(partialLogName)) return;
+            List<string> allLogs = TerminalManager.instance.GetOwnedLogTitles();
+            suggestionMatches = allLogs.Where(log => log.ToUpper().StartsWith(partialLogName)).ToList();
         }
 
-
-        if (!isTyping)
+        if (suggestionMatches.Count > 0)
         {
-            string prompt = CommandManager.instance.state == CommandManager.TabState.ROOT ? PROMPT_ROOT : PROMPT_DIALOG;
-            sb.Append(prompt);
-
-            string userInput = currentInput.ToString();
-            sb.Append(userInput);
-
-            // --- [수정된 부분] ---
-            // 현재 선택된 추천 항목이 있다면 (suggestionIndex != -1)
-            if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
-            {
-                string match = suggestionMatches[suggestionIndex];
-                string fullSuggestion = GetFullSuggestionFromMatch(match);
-
-                // 추천 단어가 사용자 입력보다 길 때만 뒷부분을 회색으로 표시
-                if (fullSuggestion.Length > userInput.Length)
-                {
-                    string ghostText = fullSuggestion.Substring(userInput.Length);
-                    sb.Append($"<color=#787777>{ghostText}</color>");
-                }
-            }
-            // --- [수정 끝] ---
-
-            if (Time.time % 1f < 0.5f) { sb.Append("_"); }
+            suggestionIndex = 0;
         }
-        targetTextComponent.text = sb.ToString();
     }
 
-    public void ToggleTab()
+    private void ApplySuggestion()
+    {
+        if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
+        {
+            string match = suggestionMatches[suggestionIndex];
+            string fullSuggestion = GetFullSuggestionFromMatch(match);
+            currentInput.Clear().Append(fullSuggestion);
+        }
+    }
+
+    private string GetFullSuggestionFromMatch(string match)
+    {
+        string[] parts = currentInput.ToString().Split(' ');
+        if (parts.Length > 1)
+        {
+            return parts[0] + " " + match;
+        }
+        return match;
+    }
+
+    /*public void ToggleTab()
     {
         var cm = CommandManager.instance;
         cm.state = (cm.state == CommandManager.TabState.ROOT) ? CommandManager.TabState.DIALOG : CommandManager.TabState.ROOT;
         UpdateTerminalUI();
         scrollOffset = 0;
 
-        if (!first)
+        if (!firstDialogEntry)
         {
             if (cm.state == CommandManager.TabState.DIALOG && dialogLines.Count == 0)
             {
                 cm.DisplayIntroLogForCurrentCharacter();
-                first = true;
+                firstDialogEntry = true;
             }
         }
-    }
+    }*/
 
-    private void UpdateTerminalUI()
+    /*private void UpdateTerminalUI()
     {
-        var isRoot = CommandManager.instance.state == CommandManager.TabState.ROOT;
+        //var isRoot = CommandManager.instance.state == CommandManager.TabState.ROOT;
         rootTerminalText.gameObject.SetActive(isRoot);
         dialogTerminalText.gameObject.SetActive(!isRoot);
-    }
+    }*/
 
     public void ClearTerminal()
     {
@@ -450,5 +463,94 @@ public class CRTController : MonoBehaviour
     {
         rootLines.Add(" ");
         rootLines.Add(message);
+    }
+
+    public void PrintMessageToCurrentTab(string message)
+    {
+        if (isTyping) return;
+        CurrentDisplayLines.Add(" ");
+        StartTyping(message);
+    }
+    #endregion
+
+
+    public void StartExeExecution(FileSystemNode fileNode)
+    {
+        StartCoroutine(ExecuteExeFile(fileNode));
+    }
+
+    /// <summary>
+    /// .exe 파일 실행의 전체 과정을 처리하는 코루틴입니다.
+    /// </summary>
+    private IEnumerator ExecuteExeFile(FileSystemNode fileNode)
+    {
+        isTyping = true;
+        ClearTerminal();
+
+        yield return StartCoroutine(AnimateLoadingLine("파일 준비 중…"));
+        CurrentDisplayLines.Add($"[{fileNode.Name}] 파일 실행 준비 완료");
+        CurrentDisplayLines.Add("SYSTEM > 실행하겠습니까? (Y/N)");
+
+        char inputChar = ' ';
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Y)) { inputChar = 'Y'; break; }
+            if (Input.GetKeyDown(KeyCode.N)) { inputChar = 'N'; break; }
+            yield return null;
+        }
+
+        if (inputChar == 'Y')
+        {
+            CurrentDisplayLines.Add("Y");
+            yield return StartCoroutine(AnimateLoadingLine("파일 실행 중…"));
+
+            // [수정] 저장된 씬 이름이 있는지 확인하고 해당 씬을 로드
+            if (!string.IsNullOrEmpty(fileNode.sceneNameToLoad))
+            {
+                SceneManager.LoadScene(fileNode.sceneNameToLoad);
+            }
+            else
+            {
+                CurrentDisplayLines.Add("SYSTEM > 실행 가능한 씬이 지정되지 않았습니다.");
+                CurrentDisplayLines.Add("SYSTEM > 파일 닫음");
+                isTyping = false;
+            }
+        }
+        else // 'N'
+        {
+            CurrentDisplayLines.Add("N");
+            CurrentDisplayLines.Add("SYSTEM > 실행이 취소되었습니다.");
+            CurrentDisplayLines.Add("SYSTEM > 파일 닫음");
+            isTyping = false;
+        }
+    }
+
+
+
+
+    //yield return StartCoroutine(AnimateLoadingLine("원하는 텍스트"));   0~100%
+    private IEnumerator AnimateLoadingLine(string baseText, float duration = 1.0f)
+    {
+        // 새 줄을 추가하고, 그 줄의 인덱스를 기억
+        CurrentDisplayLines.Add(baseText + " 0%");
+        int lineIndex = CurrentDisplayLines.Count - 1;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            // 진행률(0.0 ~ 1.0)을 계산
+            float progress = Mathf.Clamp01(elapsedTime / duration);
+            // 진행률을 퍼센트(0 ~ 100)로 변환
+            int percentage = (int)(progress * 100);
+
+            // 해당 줄의 내용을 계속해서 업데이트
+            CurrentDisplayLines[lineIndex] = baseText + $" {percentage}%";
+
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        // 애니메이션이 끝나면 100%로 확실하게 맞춰줌
+        CurrentDisplayLines[lineIndex] = baseText + " 100%";
     }
 }

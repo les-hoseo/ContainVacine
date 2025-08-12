@@ -1,6 +1,4 @@
-﻿// 파일명: CommandManager.cs
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,9 +28,6 @@ public class CommandManager : MonoBehaviour
 
     // 명령어 이름과 실제 명령어 클래스를 매핑하는 딕셔너리
     private readonly Dictionary<string, ICommand> commands = new();
-
-    public enum TabState { ROOT, DIALOG }
-    public TabState state = TabState.ROOT;
 
     private void Awake()
     {
@@ -104,7 +99,7 @@ public class CommandManager : MonoBehaviour
         if (parts.Length == 0) return "";
 
         string commandName = parts[0].ToUpper();
-        List<string> allowedCommands = GetAllowedCommandsForState(state);
+        List<string> allowedCommands = GetAllowedCommandsForState();
 
         if (commands.TryGetValue(commandName, out ICommand command) && allowedCommands.Contains(command.Name))
         {
@@ -124,16 +119,9 @@ public class CommandManager : MonoBehaviour
     }
 
     // 현재 탭 상태에서 허용되는 명령어 목록을 반환
-    private List<string> GetAllowedCommandsForState(TabState currentState)
+    private List<string> GetAllowedCommandsForState()
     {
-        if (currentState == TabState.DIALOG)
-        {
-            return new List<string> { "ASK" };
-        }
-        else // ROOT 탭
-        {
-            return commands.Values.Select(c => c.Name).Where(name => name != "ASK").Distinct().ToList();
-        }
+        return commands.Values.Select(c => c.Name).Where(name => name != "ASK").Distinct().ToList();
     }
 
     /// <summary>

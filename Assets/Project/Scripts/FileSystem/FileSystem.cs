@@ -74,6 +74,7 @@ public class FileSystem
     public string AddNode(string path, NodeType type)
     {
         string nodeName = path.Split('/').Last();
+
         if (string.IsNullOrEmpty(nodeName))
         {
             return "SYSTEM > 잘못된 이름입니다.";
@@ -104,7 +105,7 @@ public class FileSystem
         FileSystemNode newNode = new FileSystemNode(nodeName, type, parentNode);
         parentNode.Children.Add(newNode);
 
-        string typeString = type == NodeType.Folder ? "디렉토리" : "로그 파일";
+        string typeString = type == NodeType.Folder ? "디렉토리" : "파일";
         return $"SYSTEM > {typeString} 생성됨 : {path}";
     }
 

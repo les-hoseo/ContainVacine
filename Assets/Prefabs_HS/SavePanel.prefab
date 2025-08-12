@@ -2032,6 +2032,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6417872953151459516}
     m_Modifications:
+    - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
     - target: {fileID: 5686000330647553246, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
       propertyPath: m_Name
       value: SAVE (3)
@@ -2132,6 +2136,18 @@ PrefabInstance:
       propertyPath: m_Transition
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2150,6 +2166,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6417872953151459516}
     m_Modifications:
+    - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
     - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -2262,6 +2282,18 @@ PrefabInstance:
       propertyPath: m_Transition
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2280,6 +2312,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6417872953151459516}
     m_Modifications:
+    - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
     - target: {fileID: 5686000330647553246, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
       propertyPath: m_Name
       value: SAVE (5)
@@ -2380,6 +2416,18 @@ PrefabInstance:
       propertyPath: m_Transition
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2398,6 +2446,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6417872953151459516}
     m_Modifications:
+    - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
     - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -2514,6 +2566,18 @@ PrefabInstance:
       propertyPath: m_Transition
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2726,6 +2790,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6417872953151459516}
     m_Modifications:
+    - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
     - target: {fileID: 5686000330647553246, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
       propertyPath: m_Name
       value: SAVE (4)
@@ -2826,6 +2894,18 @@ PrefabInstance:
       propertyPath: m_Transition
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2844,6 +2924,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6417872953151459516}
     m_Modifications:
+    - target: {fileID: 5246538439571368807, guid: f7fa8f366743b6642bb3f029611d5ba4, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 3741774109913685207, guid: d8a62f26e610f974abcb98df20741304, type: 3}
+    - target: {fileID: 5246538439571368807, guid: f7fa8f366743b6642bb3f029611d5ba4, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 4846372726128063549, guid: 86fa13735c2bfbd4288baca704dcc0d8, type: 3}
+    - target: {fileID: 5246538439571368807, guid: f7fa8f366743b6642bb3f029611d5ba4, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 4846372726128063549, guid: 86fa13735c2bfbd4288baca704dcc0d8, type: 3}
+    - target: {fileID: 7030831863104460817, guid: f7fa8f366743b6642bb3f029611d5ba4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3741774109913685207, guid: d8a62f26e610f974abcb98df20741304, type: 3}
     - target: {fileID: 7266576359956072981, guid: f7fa8f366743b6642bb3f029611d5ba4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2958,6 +3054,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6417872953151459516}
     m_Modifications:
+    - target: {fileID: 179830467633020241, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
     - target: {fileID: 5686000330647553246, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
       propertyPath: m_Name
       value: SAVE (6)
@@ -3058,6 +3158,18 @@ PrefabInstance:
       propertyPath: m_Transition
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 7301254735259951347, guid: fc480c84f2c612746bbb43035c0b19c7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
+    - target: {fileID: 6804543796968008019, guid: 2dd6521738ed5c54e85c5fde785559cc, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: -4312651624920452456, guid: 59bd24a167ee87348adc99d62af1ade7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
