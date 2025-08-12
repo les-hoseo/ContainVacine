@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 59bd24a167ee87348adc99d62af1ade7
+guid: c620559d007552144be56c303ac78a59
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4312651624920452456
-    second: SAVELOAD_FILE_1_1_0
+      213: -2955720979821921526
+    second: "\uADF8\uB9BC2_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,43 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SAVELOAD_FILE_1_1_0
+      name: "\uADF8\uB9BC2_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 729
-        height: 133
+        width: 172
+        height: 171
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 892fa9052326624c0800000000000000
-      internalID: -4312651624920452456
+      spriteID: a0b7b8ecd6b2bf6d0800000000000000
+      internalID: -2955720979821921526
       vertices: []
       indices: 
       edges: []
@@ -173,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      SAVELOAD_FILE_1_1_0: -4312651624920452456
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

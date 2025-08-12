@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UI_Behind
+    uniqueID: 4094019139
+    locked: 0
+  - name: StorySlot
+    uniqueID: 2889145349
+    locked: 0
   - name: UI
     uniqueID: 2675466529
     locked: 0
