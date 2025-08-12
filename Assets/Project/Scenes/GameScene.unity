@@ -394,7 +394,6 @@ MonoBehaviour:
   logDatabase: {fileID: 0}
   rachelGimmickManager: {fileID: 0}
   CurChar: {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
-  state: 0
 --- !u!4 &61967746
 Transform:
   m_ObjectHideFlags: 0
@@ -1099,7 +1098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1391792365056194568, guid: dea947244a6543445a89179cfdc87f40, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2009546950645480201, guid: dea947244a6543445a89179cfdc87f40, type: 3}
       propertyPath: m_Sprite
@@ -3258,7 +3257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e377751c6ed07f8449a8264a2eff407c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandManager: {fileID: 61967745}
   rootTerminal: {fileID: 2011308621}
   dialogTerminal: {fileID: 1381616919}
   crtController: {fileID: 2011308622}
