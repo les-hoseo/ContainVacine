@@ -75,8 +75,4 @@ public class FlowManager : MonoBehaviour
         CurrentExamType = type;
         Debug.Log($"현재 검진 : {type}");
     }
-    public void ReturnToGameplay()
-    {
-        SetState(GameState.Gameplay);
-    }
 }
