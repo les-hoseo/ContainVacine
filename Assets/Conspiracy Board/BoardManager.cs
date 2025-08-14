@@ -151,15 +151,25 @@ public class BoardManager : MonoBehaviour
     }
     public void OnBoardClicked()
     {
-        if (slotWasClickedThisFrame) return;
-
-        if (confirmedSlot != null)
+        // 슬롯이 아닌 보드를 클릭했는지 확인 (클릭 통과 방지)
+        if (slotWasClickedThisFrame)
         {
-            if (!confirmedSlot.IsPlaced())
-                confirmedSlot.SetState(StorySlotController.SlotState.Normal);
+            return;
         }
 
-        confirmedSlot = null;
+        // 1. 'Selected' 상태인 슬롯이 있을 경우
+        if (confirmedSlot != null)
+        {
+            // 배치된 슬롯이 아니라면 상태를 'Normal'로 변경
+            if (!confirmedSlot.IsPlaced())
+            {
+                confirmedSlot.SetState(StorySlotController.SlotState.Normal);
+            }
+            // 선택 상태 해제
+            confirmedSlot = null;
+        }
+
+        // 2. 'Hover' 상태를 포함한 모든 시각 효과를 초기화
         ResetAllSlotsAndUI();
     }
     // 모든 슬롯과 UI를 리셋하는 공용 함수
@@ -167,12 +177,14 @@ public class BoardManager : MonoBehaviour
     {
         foreach (var slot in storySlots)
         {
-            slot.Restore();
-            slot.SetInteractable(true);
+            slot.Restore(); // 모든 슬롯의 Sorting Layer를 원래대로 복원
+            slot.SetInteractable(true); // 모든 슬롯을 다시 선택 가능하도록 활성화
         }
 
         if (slotInfoUI != null)
-            slotInfoUI.Hide();
+        {
+            slotInfoUI.Hide(); // 정보 UI(툴팁) 비활성화
+        }
     }
     private void ConfirmSlot(StorySlotController slot)
     {

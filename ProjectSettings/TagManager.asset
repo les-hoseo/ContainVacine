@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UI_Behind
   - Water
   - UI
-  - 
-  - 
+  - StorySlot
+  - Board
   - 
   - 
   - 
