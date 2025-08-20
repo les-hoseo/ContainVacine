@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3288e45d9b8705447886e9287646d4a6, type: 3}
+  m_Name: StoryData_ EVIL
+  m_EditorClassIdentifier: 
+  Story:
+  - Name: 
+    Content: 
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 4349915267927364619, guid: 716d35d89f611074b8438b5ea6d819c8, type: 3}
+    effect: 3
+  - Name: 
+    Content: "\uD5C9... \uD5C9... \uD5C9... "
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    Sprite: {fileID: 4349915267927364619, guid: 716d35d89f611074b8438b5ea6d819c8, type: 3}
+    effect: 0
+  - Name: 
+    Content: "\uC5ED\uC2DC \uBBF8\uCCE4\uC5B4. \uC774\uACF3\uC740 \uC0C1\uC2DD\uC774
+      \uD1B5\uD558\uC9C0 \uC54A\uB294 \uC9C0\uC625\uB3C4... \n\uAD73\uC774 \uACE0\uCCD0
+      \uB9D0\uD558\uBA74 \uBB34\uAC04\uC9C0\uC625 \uCBE4\uC774\uACA0\uC5B4."
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    Sprite: {fileID: 4349915267927364619, guid: 716d35d89f611074b8438b5ea6d819c8, type: 3}
+    effect: 0
+  - Name: 
+    Content: "\uC0AC\uB78C\uBCF4\uB2E4 \uAD34\uBB3C\uC774, \uAD34\uBB3C\uBCF4\uB2E4
+      \uC2DC\uCCB4\uAC00 \uB9CE\uC740 \uBC30 \uC548\uC5D0\uC11C, \uC0AC\uB78C\uC774
+      \uB9CC\uB4E0 \uC9C0\uC625\uC774 \uD3BC\uCCD0\uC9C0\uACE0 \uC788\uC5C8\uB2E4."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 0}
+    effect: 0
