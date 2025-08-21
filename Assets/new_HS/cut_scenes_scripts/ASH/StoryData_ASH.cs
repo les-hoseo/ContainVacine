@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StoryData_FEAR", menuName = "Scriptable Objects/StoryData_FEAR")]
-public class StoryData_FEAR : ScriptableObject
+[CreateAssetMenu(fileName = "StoryData_ASH", menuName = "Scriptable Objects/StoryData_ASH")]
+public class StoryData_ASH : ScriptableObject
 {
-    public List<Data_FEAR> Story = new List<Data_FEAR>();
+    public List<Data_ASH> Story = new List<Data_ASH>();
 }
 
 [System.Serializable]
-public class Data_FEAR
+public class Data_ASH
 {
     public string Name;
     [TextArea(3, 5)]
@@ -21,8 +21,4 @@ public class Data_FEAR
     public Sprite Sprite;
     [Tooltip("이 대사에서 적용할 일러스트 효과")]
     public IllustrationEffect effect;
-
-    // --- ✨추가된 부분 ---
-    [Tooltip("이 대사에서 재생할 애니메이션의 Trigger 이름")]
-    public string animationTrigger;
 }

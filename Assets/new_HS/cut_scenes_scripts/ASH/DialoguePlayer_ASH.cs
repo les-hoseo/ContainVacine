@@ -3,18 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DialoguePlayer_FEAR : MonoBehaviour
+// 클래스 이름을 DialoguePlayer_ASH로 변경했습니다.
+public class DialoguePlayer_ASH : MonoBehaviour
 {
     [Header("UI 요소 연결")]
     public TextMeshProUGUI contentText;
     public GameObject dialoguePanel;
     public Image illustrationImage;
     public Transform nameplateParent;
-    [Tooltip("애니메이션을 재생할 Animator 컴포넌트")]
-    public Animator targetAnimator;
-    // --- ✨ 1. 수정된 부분: 배경 이미지 변수 추가 ---
-    [Tooltip("애니메이션 재생 시 숨길 배경 이미지 오브젝트")]
-    public GameObject backgroundImage;
 
     [Header("대화 데이터")]
     public StoryData_ch storyToPlay;
@@ -23,7 +19,6 @@ public class DialoguePlayer_FEAR : MonoBehaviour
     public float typingSpeed = 0.05f;
     public float fadeDuration = 0.5f;
 
-    // --- 내부 변수들 ---
     private GameObject currentNameplate;
     private int lineIndex;
     private Coroutine typingCoroutine;
@@ -110,9 +105,10 @@ public class DialoguePlayer_FEAR : MonoBehaviour
                     {
                         illustrationCanvasGroup.alpha = 0f;
                         illustrationImage.sprite = line.Sprite;
-                        StartFade(1f);
+                        StartFade(1f); // 페이드인
                     }
                     break;
+
                 case IllustrationEffect.Show:
                     if (line.Sprite != null)
                     {
@@ -121,33 +117,15 @@ public class DialoguePlayer_FEAR : MonoBehaviour
                         illustrationCanvasGroup.alpha = 1f;
                     }
                     break;
+
                 case IllustrationEffect.FadeOut:
-                    StartFade(0f);
+                    StartFade(0f); // 페이드아웃
                     break;
+
                 case IllustrationEffect.None:
                     break;
             }
         }
-
-        // --- ✨ 2. 수정된 부분: 애니메이션 재생 및 배경 이미지 제어 로직 ---
-        if (targetAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
-        {
-            // 애니메이션 트리거가 있으면 배경 이미지를 끈다.
-            if (backgroundImage != null)
-            {
-                backgroundImage.SetActive(false);
-            }
-            targetAnimator.SetTrigger(line.animationTrigger);
-        }
-        else
-        {
-            // 애니메이션 트리거가 없으면 배경 이미지를 다시 켠다.
-            if (backgroundImage != null)
-            {
-                backgroundImage.SetActive(true);
-            }
-        }
-        // --- 여기까지 ---
 
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.Content));
@@ -173,7 +151,10 @@ public class DialoguePlayer_FEAR : MonoBehaviour
     private void StartFade(float targetAlpha)
     {
         if (illustrationImage == null) return;
-        if (illustrationFadeCoroutine != null) StopCoroutine(illustrationFadeCoroutine);
+        if (illustrationFadeCoroutine != null)
+        {
+            StopCoroutine(illustrationFadeCoroutine);
+        }
         illustrationFadeCoroutine = StartCoroutine(FadeRoutine(targetAlpha));
     }
 
@@ -181,6 +162,7 @@ public class DialoguePlayer_FEAR : MonoBehaviour
     {
         float startAlpha = illustrationCanvasGroup.alpha;
         float elapsedTime = 0f;
+
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
@@ -195,6 +177,7 @@ public class DialoguePlayer_FEAR : MonoBehaviour
         isTyping = true;
         contentText.text = "";
         int charIndex = 0;
+
         while (charIndex < text.Length)
         {
             if (text[charIndex] == '<')
@@ -208,10 +191,12 @@ public class DialoguePlayer_FEAR : MonoBehaviour
                     continue;
                 }
             }
+
             contentText.text += text[charIndex];
             charIndex++;
             yield return new WaitForSeconds(typingSpeed);
         }
+
         isTyping = false;
     }
 }

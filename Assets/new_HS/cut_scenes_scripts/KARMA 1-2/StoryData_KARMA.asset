@@ -16,44 +16,52 @@ MonoBehaviour:
   - Name: 
     Content: 
     nameplatePanel: {fileID: 0}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 1
+    animationTrigger: 
   - Name: 
     Content: "\uBFCC\uB9AC\uCCE4\uB2E4!"
     nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 0
+    animationTrigger: 
   - Name: 
     Content: "\uC7A0\uC2DC\uB9CC...!"
     nameplatePanel: {fileID: 3634126072714967170, guid: ea1afbf4fabf5df4a86b7476c97c32a0, type: 3}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 0
+    animationTrigger: 
   - Name: 
     Content: "\uB098\uB294 \uB4A4\uB3C4 \uB3CC\uC544\uBCF4\uC9C0 \uC54A\uACE0 \uB3C4\uB9DD\uCCE4\uB2E4.
       \uB530\uB77C\uC624\uB294 \uBC1C\uAC78\uC74C\uC774 \uBCBD\uC744\uD0C0\uACE0
       \uBBF8\uCE5C\uB4EF\uC774 \uC6B8\uB824\uC628\uB2E4."
     nameplatePanel: {fileID: 0}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 0
+    animationTrigger: 
   - Name: 
     Content: "\uC0AC\uB78C\uC744 \uBCF4\uACE0\uC11C \uC774\uC815\uB3C4\uB85C \uACF5\uD3EC\uC5D0
       \uD729\uC2F8\uC778 \uC801\uC774 \uC788\uC5C8\uC744\uAE4C?"
     nameplatePanel: {fileID: 0}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 0
+    animationTrigger: 
   - Name: 
     Content: "\uB098\uB294 \uC26C\uC9C0\uC54A\uACE0 \uBCF5\uB3C4\uB97C \uB6F0\uC5C8\uB2E4."
     nameplatePanel: {fileID: 0}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 0
+    animationTrigger: 
   - Name: 
     Content: "\uB3C4\uB300\uCCB4 \uC774 \uBC30 \uC548\uC5D0\uC11C \uBB34\uC2A8 \uC77C\uC774
       \uC77C\uC5B4\uB098\uACE0 \uC788\uB294\uAC70\uC57C?!"
     nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 0
+    animationTrigger: 
   - Name: 
     Content: 
     nameplatePanel: {fileID: 0}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 2
+    animationTrigger: 

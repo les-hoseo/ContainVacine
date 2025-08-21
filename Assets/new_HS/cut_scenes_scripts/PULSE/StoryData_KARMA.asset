@@ -96,8 +96,8 @@ MonoBehaviour:
     Sprite: {fileID: 1636318925241012259, guid: 430d73dc07bd1874b94d15680e31b2e7, type: 3}
     effect: 0
   - Name: 
-    Content: "\uC81C\uBC1C...\n         \uB098\uB3C4 \uB354\uC774\uC0C1 \uC774\uB7EC\uACE0
-      \uC2F6\uC9C0 \uC54A\uC73C\uB2C8\uAE4C...\n         \uADF8\uB7EC\uB2C8\uAE4C..."
+    Content: "\uC81C\uBC1C...\n\uB098\uB3C4 \uB354\uC774\uC0C1 \uC774\uB7EC\uACE0
+      \uC2F6\uC9C0 \uC54A\uC73C\uB2C8\uAE4C...\n \uADF8\uB7EC\uB2C8\uAE4C..."
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     Sprite: {fileID: 1636318925241012259, guid: 430d73dc07bd1874b94d15680e31b2e7, type: 3}
     effect: 0

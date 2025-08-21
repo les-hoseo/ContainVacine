@@ -31,9 +31,50 @@ MonoBehaviour:
     Sprite: {fileID: 4349915267927364619, guid: 716d35d89f611074b8438b5ea6d819c8, type: 3}
     effect: 0
   - Name: 
-    Content: "\uC0AC\uB78C\uBCF4\uB2E4 \uAD34\uBB3C\uC774, \uAD34\uBB3C\uBCF4\uB2E4
-      \uC2DC\uCCB4\uAC00 \uB9CE\uC740 \uBC30 \uC548\uC5D0\uC11C, \uC0AC\uB78C\uC774
-      \uB9CC\uB4E0 \uC9C0\uC625\uC774 \uD3BC\uCCD0\uC9C0\uACE0 \uC788\uC5C8\uB2E4."
+    Content: "\uB098\uB294 \uADF8\uB300\uB85C \uB3C4\uB9DD\uCCE4\uB2E4. \uB208\uC5D0
+      \uBCF4\uC774\uB294 \uAC83 \uC5C6\uC774 \uAC00\uB2A5\uD55C \uBA40\uB9AC, \uC774
+      \uCC38\uC0C1\uC774 \uD37C\uC9C0\uC9C0 \uC54A\uC558\uC744 \uACF3\uAE4C\uC9C0."
     nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 0}
+    effect: 0
+  - Name: 
+    Content: "\uD558\uC9C0\uB9CC \uC774 \uC9C0\uC625 \uC18D\uC5D0\uC11C \uC548\uC2DD\uC774\uB780
+      \uC5C6\uC5C8\uB2E4."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 0}
+    effect: 0
+  - Name: 
+    Content: "\uADF8\uB140\uC11D\uC740 \uB3C4\uB300\uCCB4 \uC5B4\uB51C \uAC04\uAC70\uC57C!
+      \uBC29\uC548\uC5D0 \uD2C0\uC5B4\uBC15\uD78C\uB2E4\uACE0 \uB9D0\uD55C\uAC8C\n10\uBD84\uB3C4
+      \uC548 \uC9C0\uB0AC\uB294\uB370 \uB3C4\uB300\uCCB4 \uC5B4\uB514\uB85C..."
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    Sprite: {fileID: 0}
+    effect: 0
+  - Name: 
+    Content: "\uBD88\uD604\uB4EF \uC88B\uC9C0\uC54A\uC740 \uC0DD\uAC01\uC774 \uC2A4\uCCE4\uB2E4."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 0}
+    effect: 0
+  - Name: 
+    Content: "\uC774\uBBF8 \uCC3E\uC744 \uC218\uB3C4, \uB3CC\uC544\uC62C \uC218\uB3C4
+      \uC5C6\uB294 \uC0C1\uD0DC\uAC00 \uB418\uC5B4\uBC84\uB9B0 \uAC74 \uC544\uB2D0\uAE4C?\n\uC11C\uB298\uD558\uACE0
+      \uC544\uB9BF\uD55C \uAC10\uAC01\uC774 \uB4E4\uC790 \uAE08\uBC29 \uBA38\uB9AC\uC18D\uC740
+      \uC5C9\uB9DD\uC774 \uB418\uC5B4\uBC84\uB838\uB2E4."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 0}
+    effect: 0
+  - Name: 
+    Content: "\uB4A4, \uB3CC\uC544."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 0}
+    effect: 0
+  - Name: 
+    Content: "\uC5EC\uAE30\uB97C, \uBD10."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: 0}
+    effect: 0
+  - Name: 
+    Content: ...?
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
     Sprite: {fileID: 0}
     effect: 0

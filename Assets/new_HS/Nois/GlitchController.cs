@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(Image))]
+[RequireComponent(typeof(RawImage))] // RawImage를 사용하는 것이 더 안정적입니다.
 public class GlitchController : MonoBehaviour
 {
     [Header("노이즈 설정")]
@@ -18,33 +18,56 @@ public class GlitchController : MonoBehaviour
     [Tooltip("화면이 깨지는 빈도")]
     public float glitchSpeed = 5f;
 
-    [Header("전체 투명도")] // ✨전체 투명도 조절 변수 추가
+    [Header("전체 투명도")]
     [Tooltip("효과 전체의 투명도를 조절합니다.")]
     [Range(0, 1)]
     public float masterAlpha = 1.0f;
 
-    private Image image;
+    private RawImage rawImage;
     private Material materialInstance;
 
-    private void OnValidate() { UpdateMaterialProperties(); }
-    void Awake() { UpdateMaterialProperties(); }
+    // --- ✨수정된 부분: Awake()에서 초기화 ---
+    void Awake()
+    {
+        // 컴포넌트와 머티리얼을 한 번만 찾아둡니다.
+        rawImage = GetComponent<RawImage>();
+        if (rawImage != null && rawImage.material != null)
+        {
+            materialInstance = new Material(rawImage.material);
+            rawImage.material = materialInstance;
+        }
+    }
+
+    // --- ✨수정된 부분: Update()에서 매 프레임 속성 업데이트 ---
+    void Update()
+    {
+        // 게임이 실행 중일 때만 작동하도록 할 수 있습니다 (선택 사항)
+        // if (!Application.isPlaying) return;
+
+        UpdateMaterialProperties();
+    }
 
     void UpdateMaterialProperties()
     {
-        if (image == null) image = GetComponent<Image>();
-        if (image.material == null || image.material.shader.name != "Unlit/GlitchNoiseShader") return;
         if (materialInstance == null)
         {
-            materialInstance = new Material(image.material);
-            image.material = materialInstance;
+            // Awake에서 초기화 실패 시 다시 시도
+            if (rawImage != null && rawImage.material != null && rawImage.material.shader.name == "Unlit/GlitchNoiseShader")
+            {
+                materialInstance = new Material(rawImage.material);
+                rawImage.material = materialInstance;
+            }
+            else
+            {
+                return;
+            }
         }
-        if (materialInstance == null) return;
 
         materialInstance.SetColor("_NoiseColor", noiseColor);
         materialInstance.SetFloat("_NoiseScale", noiseScale);
         materialInstance.SetFloat("_NoiseSpeed", noiseSpeed);
         materialInstance.SetFloat("_GlitchAmount", glitchAmount);
         materialInstance.SetFloat("_GlitchSpeed", glitchSpeed);
-        materialInstance.SetFloat("_MasterAlpha", masterAlpha); // ✨셰이더로 Master Alpha 값 전달
+        materialInstance.SetFloat("_MasterAlpha", masterAlpha);
     }
 }
