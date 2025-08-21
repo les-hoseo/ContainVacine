@@ -47,6 +47,7 @@ public class CRTController : MonoBehaviour
     private const string PROMPT_ROOT = "\\\\CRT\\> ";
     private const string PROMPT_DIALOG = "\\\\DIALOG> ";
 
+
     private void Awake()
     {
         instance = this;
@@ -234,6 +235,8 @@ public class CRTController : MonoBehaviour
         UpdateSuggestion();
         scrollOffset = 0;
     }
+
+
     #endregion
 
     #region Edit Mode
@@ -307,7 +310,62 @@ public class CRTController : MonoBehaviour
         isTyping = false;
     }
     #endregion
+    //#endregion // << 기존 Helper Functions 바로 위에 추가하면 좋습니다.
 
+    #region System Execution
+
+    // RebootCommand에서 이 함수를 호출하여 재부팅 절차를 시작합니다.
+    public void StartRebootProcess()
+    {
+        StartCoroutine(ExecuteRebootSequence());
+    }
+
+    private IEnumerator ExecuteRebootSequence()
+    {
+        isTyping = true; // 사용자 입력 잠금
+        ClearTerminal();
+
+        // 기획서에 명시된 REBOOT 메시지를 출력합니다.
+        string rebootMessage = "===================================================\n" +
+                               "C.R.T. REBOOT PROTOCOL\n" +
+                               "===================================================\n" +
+                               "이 절차를 진행할 시 과거 탐색에 대한 모든 진척이 초기화됩니다.\n" +
+                               "수집한 사건 기록과 작성한 노트 기록은 유지됩니다.\n" +
+                               "SYSTEM > 초기화를 진행하시겠습니까? (Y/N)";
+
+        // 타이핑 효과 없이 즉시 출력
+        CurrentDisplayLines.AddRange(rebootMessage.Split('\n'));
+        scrollOffset = 0;
+
+        // 사용자 입력을 기다립니다.
+        char inputChar = ' ';
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Y)) { inputChar = 'Y'; break; }
+            if (Input.GetKeyDown(KeyCode.N)) { inputChar = 'N'; break; }
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        if (inputChar == 'Y')
+        {
+            CurrentDisplayLines.Add("Y");
+            yield return StartCoroutine(AnimateLoadingLine("초기화 진행 중…"));
+
+            // TODO: GameManager에 실제 초기화 함수를 호출하는 로직 필요
+            // 예: GameManager.instance.RebootZoneProgress();
+
+            CurrentDisplayLines.Add("SYSTEM > 초기화 완료.");
+        }
+        else // 'N'을 입력했을 경우
+        {
+            CurrentDisplayLines.Add("N");
+            CurrentDisplayLines.Add("SYSTEM > 초기화 취소됨.");
+        }
+
+        isTyping = false; // 사용자 입력 잠금 해제
+    }
+
+    #endregion
     #region Helper Functions
     private IEnumerator ShowWelcomeMessage()
     {
@@ -553,4 +611,6 @@ public class CRTController : MonoBehaviour
         // 애니메이션이 끝나면 100%로 확실하게 맞춰줌
         CurrentDisplayLines[lineIndex] = baseText + " 100%";
     }
+
+
 }

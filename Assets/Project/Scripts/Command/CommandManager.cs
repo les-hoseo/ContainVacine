@@ -67,10 +67,12 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new CrtLinkCommand());
         // RegisterCommand(new CrtFlashCommand());
 
+        RegisterCommand(new InteractCommand()); // << 이 라인 추가
+        RegisterCommand(new RebootCommand());
 
         // 메모
         RegisterCommand(new RootCommand(fileSystem));
-        RegisterCommand(new DirCommand(fileSystem));
+        //RegisterCommand(new DirCommand(fileSystem));
         RegisterCommand(new OpenCommand(fileSystem));
         RegisterCommand(new EditCommand(fileSystem));
     }
@@ -95,6 +97,17 @@ public class CommandManager : MonoBehaviour
     /// </summary>
     public string ProcessInput(string fullInput)
     {
+        // --- 여기부터 추가 ---
+        // 사용자가 "ROOT\NOTE"를 입력했는지 최우선으로 확인합니다.
+        // 대소문자 구분을 하지 않도록 ToUpper()를 사용하고, 역슬래시를 문자로 인식하도록 @를 붙입니다.
+        if (fullInput.Trim().ToUpper() == @"ROOT\NOTE")
+        {
+            // FileSystem에 있는 메모장 노드를 찾아 편집 모드로 전환합니다.
+            CRTController.instance.EnterEditMode(fileSystem.MemoNode);
+            // 이 명령어는 타이핑 효과 없이 즉시 실행되므로 빈 문자열을 반환합니다.
+            return "";
+        }
+
         string[] parts = fullInput.Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 0) return "";
 

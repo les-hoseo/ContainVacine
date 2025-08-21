@@ -17,24 +17,49 @@ public class OpenCommand : ICommand
         FileSystemNode fileNode = fileSystem.FindNodeByPath(path);
 
         if (fileNode == null)
-        {
             return new List<string> { "SYSTEM > 경로를 찾을 수 없습니다." };
-        }
         if (fileNode.Type != NodeType.File)
-        {
             return new List<string> { "SYSTEM > 지정된 경로는 파일이 아닙니다." };
-        }
 
+        // 파일 확장자에 따라 다른 동작 수행
         if (path.EndsWith(".log", System.StringComparison.OrdinalIgnoreCase))
         {
+            // .log 파일은 편집 모드로 진입
             CRTController.instance.EnterEditMode(fileNode);
             return new List<string>();
         }
         else if (path.EndsWith(".exe", System.StringComparison.OrdinalIgnoreCase))
         {
-            // [수정] CRTController에게 .exe 파일 실행을 요청
+            // .exe 파일은 실행 코루틴 호출
             CRTController.instance.StartExeExecution(fileNode);
-            return new List<string>(); // 실행은 코루틴이 담당하므로, 여기서는 빈 메시지 반환
+            return new List<string>();
+        }
+        else if (path.EndsWith(".dat", System.StringComparison.OrdinalIgnoreCase))
+        {
+            // --- .dat 파일 처리 로직 (새로 추가) ---
+            var lines = new List<string>();
+            lines.Add("파일 여는 중… 100%");
+            lines.Add($"[{fileNode.Name}] 자료 리스트업");
+            lines.Add("───────────────────────────");
+
+            // .dat 파일의 자식 노드(아이템, 오브젝트)들을 리스트업
+            if (fileNode.Children.Count > 0)
+            {
+                for (int i = 0; i < fileNode.Children.Count; i++)
+                {
+                    var child = fileNode.Children[i];
+                    bool isLast = (i == fileNode.Children.Count - 1);
+                    string prefix = isLast ? "└─ " : "├─ ";
+                    lines.Add(prefix + child.Name);
+                }
+            }
+            else
+            {
+                lines.Add("[내용 없음]");
+            }
+
+            lines.Add("───────────────────────────");
+            return lines;
         }
         else
         {

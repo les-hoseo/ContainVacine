@@ -6,11 +6,35 @@ using System.Diagnostics;
 
 public class FileSystem
 {
-    private FileSystemNode root; // NoteNode -> FileSystemNode
+    private FileSystemNode root;
+    public FileSystemNode MemoNode { get; private set; } // << 추가: 메모장 전용 노드
 
     public FileSystem()
     {
-        root = new FileSystemNode("ROOT", NodeType.Folder); // NoteNode -> FileSystemNode
+        root = new FileSystemNode("ROOT", NodeType.Folder);
+
+        // --- 여기부터 추가 ---
+        // 메모장 노드를 생성하고 초기 내용을 설정합니다.
+        // 이 노드는 ROOT의 자식으로 들어가지 않는, 독립적인 노드입니다.
+        MemoNode = new FileSystemNode("NOTE_MEMO", NodeType.File);
+        MemoNode.Content = "[여기에 메모를 작성하세요. ESC 키를 눌러 저장하고 나갈 수 있습니다.]";
+        // --- 여기까지 추가 ---
+
+
+        var zoneDir = new FileSystemNode("ZONE", NodeType.Folder, root);
+        var corridorADir = new FileSystemNode("복도_A", NodeType.Folder, zoneDir);
+        var roomA1Dat = new FileSystemNode("객실_A1.dat", NodeType.File, corridorADir);
+
+        // .dat 파일 내의 아이템과 오브젝트를 자식 노드로 추가합니다.
+        roomA1Dat.Children.Add(new FileSystemNode("십자드라이버.item", NodeType.File, roomA1Dat));
+        roomA1Dat.Children.Add(new FileSystemNode("열쇠구멍.object", NodeType.File, roomA1Dat));
+        roomA1Dat.Children.Add(new FileSystemNode("방문.object", NodeType.File, roomA1Dat));
+        roomA1Dat.Children.Add(new FileSystemNode("환풍구.object", NodeType.File, roomA1Dat));
+
+        // 생성한 디렉토리와 파일을 실제 파일 시스템에 등록합니다.
+        root.Children.Add(zoneDir);
+        zoneDir.Children.Add(corridorADir);
+        corridorADir.Children.Add(roomA1Dat);
     }
 
     // NoteNode -> FileSystemNode 로 변경
@@ -192,6 +216,19 @@ public class FileSystem
         }
 
         return node.Content;
+    }
+
+    public List<string> GetTreeAsList(string path)
+    {
+        FileSystemNode startNode = FindNodeByPath(path);
+        if (startNode == null)
+        {
+            return new List<string> { "SYSTEM > 해당 경로를 찾을 수 없습니다." };
+        }
+
+        var treeLines = new List<string> { startNode.Name + (startNode.Type == NodeType.Folder ? "/" : "") };
+        GenerateTreeRecursive(startNode.Children, "", treeLines);
+        return treeLines;
     }
 
 }
