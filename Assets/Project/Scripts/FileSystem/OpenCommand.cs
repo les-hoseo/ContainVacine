@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class OpenCommand : ICommand
 {
     public string Name => "OPEN";
-    private readonly FileSystem fileSystem;
+    
 
-    public OpenCommand(FileSystem fs) { this.fileSystem = fs; }
+   
 
     public List<string> Execute(string[] args)
     {
@@ -14,7 +14,7 @@ public class OpenCommand : ICommand
             return new List<string> { "SYSTEM > 열어볼 파일의 경로를 입력하세요." };
 
         string path = args[1];
-        FileSystemNode fileNode = fileSystem.FindNodeByPath(path);
+        FileSystemNode fileNode = FileSystem.instance.FindNodeByPath(path);
 
         if (fileNode == null)
             return new List<string> { "SYSTEM > 경로를 찾을 수 없습니다." };
@@ -36,6 +36,7 @@ public class OpenCommand : ICommand
         }
         else if (path.EndsWith(".dat", System.StringComparison.OrdinalIgnoreCase))
         {
+            GameManager.instance.currentLocation = fileNode;
             // --- .dat 파일 처리 로직 (새로 추가) ---
             var lines = new List<string>();
             lines.Add("파일 여는 중… 100%");
@@ -61,9 +62,20 @@ public class OpenCommand : ICommand
             lines.Add("───────────────────────────");
             return lines;
         }
+        if (path.EndsWith(".log", System.StringComparison.OrdinalIgnoreCase))
+        {
+            // --- [추가] 파일 열기 이벤트를 확인하도록 FileEventManager에 알림 ---
+            FileEventManager.instance.CheckForFileOpenEvent(fileNode.Name);
+            // ----------------------------------------------------------------
+
+            // .log 파일은 편집 모드로 진입
+            CRTController.instance.EnterEditMode(fileNode);
+            return new List<string>();
+        }
         else
         {
             return new List<string> { "SYSTEM > 지원하지 않는 파일 형식입니다." };
         }
     }
+
 }

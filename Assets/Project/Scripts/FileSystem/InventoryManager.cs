@@ -7,15 +7,16 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
 
-    // [수정] 카테고리별 아이템 저장을 위해 Dictionary 사용
+    // 카테고리별 아이템 저장을 위해 Dictionary 사용
     private Dictionary<string, List<string>> categorizedItems = new Dictionary<string, List<string>>();
 
     private void Awake()
     {
+        // 싱글톤 패턴 설정
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 파괴되지 않도록 설정
         }
         else
         {
@@ -49,6 +50,23 @@ public class InventoryManager : MonoBehaviour
     {
         // Dictionary의 모든 값(아이템 리스트)을 순회하며 아이템 존재 확인
         return categorizedItems.Values.Any(itemList => itemList.Contains(itemName));
+    }
+
+    /// <summary>
+    /// 인벤토리에서 특정 아이템을 제거합니다.
+    /// </summary>
+    public void RemoveItem(string itemName)
+    {
+        foreach (var category in categorizedItems.Keys)
+        {
+            if (categorizedItems[category].Contains(itemName))
+            {
+                categorizedItems[category].Remove(itemName);
+                Debug.Log($"아이템 소모: {itemName}");
+                // 아이템을 찾았으면 루프 종료
+                return;
+            }
+        }
     }
 
     /// <summary>

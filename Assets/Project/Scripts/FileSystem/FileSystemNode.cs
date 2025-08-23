@@ -1,6 +1,5 @@
 // 파일명: FileSystemNode.cs
 using System.Collections.Generic;
-using UnityEngine;
 
 public enum NodeType { Folder, File }
 
@@ -13,9 +12,11 @@ public class FileSystemNode
     public FileSystemNode Parent;
     public List<FileSystemNode> Children = new List<FileSystemNode>();
 
-    // [수정] .exe 파일이 실행할 씬의 이름을 저장할 변수
+    // .exe 파일이 실행할 씬의 이름을 저장할 변수
     public string sceneNameToLoad;
 
+
+    public string acquisitionMessage;
     public FileSystemNode(string name, NodeType type, FileSystemNode parent = null)
     {
         this.Name = name;

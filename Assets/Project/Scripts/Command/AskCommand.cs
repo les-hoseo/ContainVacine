@@ -1,4 +1,4 @@
-﻿// 파일명: AskCommand.cs
+﻿/*// 파일명: AskCommand.cs
 
 using System;
 using System.Collections.Generic;
@@ -87,4 +87,4 @@ public class AskCommand : ICommand
 
         return lines;
     }
-}
+}*/

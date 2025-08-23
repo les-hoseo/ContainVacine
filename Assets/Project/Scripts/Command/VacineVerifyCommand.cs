@@ -1,4 +1,4 @@
-// 파일명: VacineVerifyCommand.cs
+/*// 파일명: VacineVerifyCommand.cs
 
 using System.Collections.Generic;
 using System.Linq;
@@ -83,4 +83,4 @@ public class VacineVerifyCommand : ICommand
         }
         return lines;
     }
-}
+}*/

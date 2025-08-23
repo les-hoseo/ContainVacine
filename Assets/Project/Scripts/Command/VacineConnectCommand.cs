@@ -1,4 +1,4 @@
-// 파일명: VacineConnectCommand.cs
+/*// 파일명: VacineConnectCommand.cs
 
 using System.Collections.Generic;
 
@@ -68,3 +68,4 @@ public class VacineConnectCommand : ICommand
         return lines;
     }
 }
+*/

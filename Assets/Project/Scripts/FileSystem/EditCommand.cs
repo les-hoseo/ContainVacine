@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class EditCommand : ICommand
 {
     public string Name => "EDIT";
-    private readonly FileSystem fileSystem;
+    
 
-    public EditCommand(FileSystem fs) { this.fileSystem = fs; }
+
 
     public List<string> Execute(string[] args)
     {
@@ -14,7 +14,7 @@ public class EditCommand : ICommand
             return new List<string> { "SYSTEM > 수정할 로그 파일의 경로를 입력하세요." };
 
         string path = args[1];
-        FileSystemNode fileNode = fileSystem.FindNodeByPath(path);
+        FileSystemNode fileNode = FileSystem.instance.FindNodeByPath(path);
 
         if (fileNode == null)
         {

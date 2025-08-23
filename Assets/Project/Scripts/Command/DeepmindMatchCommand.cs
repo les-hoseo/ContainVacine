@@ -1,4 +1,4 @@
-﻿// 파일명: DeepmindMatchCommand.cs
+﻿/*// 파일명: DeepmindMatchCommand.cs
 
 using System.Collections.Generic;
 using System.Linq;
@@ -92,4 +92,4 @@ public class DeepmindMatchCommand : ICommand
 
         return null; // 매칭 실패
     }
-}
+}*/

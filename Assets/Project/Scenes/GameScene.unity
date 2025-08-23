@@ -390,9 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b885c2a008b2bb469b04ebbd66af2a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terminalManager: {fileID: 1078788700}
-  logDatabase: {fileID: 0}
-  rachelGimmickManager: {fileID: 0}
   CurChar: {fileID: 11400000, guid: b68eed7781932ff42a0efb6649ca5da1, type: 2}
 --- !u!4 &61967746
 Transform:
@@ -5818,6 +5815,8 @@ GameObject:
   - component: {fileID: 2121614287}
   - component: {fileID: 2121614288}
   - component: {fileID: 2121614289}
+  - component: {fileID: 2121614291}
+  - component: {fileID: 2121614290}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5884,6 +5883,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a623cf8b1c8e99429a7041f20a552af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLocation:
+    Name: 
+    Type: 0
+    Content: 
+    Children: []
+    sceneNameToLoad: 
+    acquisitionMessage: 
   CrtTemp: 0
   Day: 1
   Week: 1
@@ -5945,6 +5951,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 025b34178f6e4944e8fc2f489a7daa5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2121614290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121614282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99b5215794a10f449a5783d89b7f9b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2121614291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121614282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83d57241b8b8ab498230cf445dad3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2135768797

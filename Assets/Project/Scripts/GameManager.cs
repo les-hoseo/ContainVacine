@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    public FileSystemNode currentLocation;
+
     public static GameManager instance;
     [Header("CRT ป๓ลย")]
     public float CrtTemp = 0;

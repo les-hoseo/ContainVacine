@@ -4,12 +4,7 @@ using System.Collections.Generic;
 public class RootCommand : ICommand
 {
     public string Name => "ROOT";
-    private readonly FileSystem fileSystem;
-
-    public RootCommand(FileSystem fs)
-    {
-        this.fileSystem = fs;
-    }
+    
 
     public List<string> Execute(string[] args)
     {
@@ -62,6 +57,6 @@ public class RootCommand : ICommand
         }
 
         // 3. 그 외 다른 경로가 입력된 경우 (예: "ROOT ZONE")
-        return fileSystem.GetTreeAsList(targetPath);
+        return FileSystem.instance.GetTreeAsList(targetPath);
     }
 }

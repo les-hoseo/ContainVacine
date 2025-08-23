@@ -1,4 +1,4 @@
-// 파일명: DirCommand.cs
+/*// 파일명: DirCommand.cs
 using System.Collections.Generic;
 using System.Linq;
 
@@ -77,4 +77,4 @@ public class DirCommand : ICommand
                 return new List<string> { $"SYSTEM > 알 수 없는 DIR 명령어: {subCommand}" };
         }
     }
-}
+}*/

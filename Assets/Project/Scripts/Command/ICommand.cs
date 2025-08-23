@@ -1,5 +1,4 @@
 // ÆÄÀÏ¸í: ICommand.cs
-
 using System.Collections.Generic;
 
 /// <summary>
