@@ -1,6 +1,4 @@
-﻿// 파일명: CRTController.cs
-
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;

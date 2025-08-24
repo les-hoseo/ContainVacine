@@ -31,12 +31,6 @@ public class StorySlotController : MonoBehaviour
         originalSortingLayer = mainSprite.sortingLayerName;
         originalSprite = mainSprite.sprite;
         deployedSpriteRenderer = GetComponent<SpriteRenderer>();
-        // 게임 시작 시, 두 시각적 요소를 모두 끈 상태로 초기화
-        /*selectObject.SetActive(false);
-        if (deployedSpriteRenderer != null)
-        {
-            deployedSpriteRenderer.enabled = false;
-        }*/
     }
 
     public StoryItemData GetPlacedStoryData()
@@ -97,11 +91,7 @@ public class StorySlotController : MonoBehaviour
                 break;
         }
     }
-    public void SetInteractable(bool value)
-    {
-        isInteractable = value;
-    }
-
+    public void SetInteractable(bool value) { isInteractable = value; }
     // --- 단서 데이터 관련 함수 ---
     public bool IsPlaced() { return placedStory != null; }
     public void PlaceStory(StoryItemData story)

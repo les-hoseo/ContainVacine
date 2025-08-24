@@ -12,10 +12,7 @@ public class CameraMove : MonoBehaviour
     // 카메라가 움직일 수 있는 유효 범위를 저장할 변수
     private Bounds cameraBounds;
 
-    void Awake()
-    {
-        mainCamera = Camera.main;
-    }
+    void Awake() { mainCamera = Camera.main; }
 
     void Start()
     {

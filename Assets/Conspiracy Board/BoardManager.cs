@@ -10,22 +10,37 @@ public class BoardManager : MonoBehaviour
     public List<StorySlotController> storySlots;
     public Transform storyInventoryPanel;
     public GameObject storyUIPrefab;
+
     [Header("UI 연결")]
     public SlotInfoUI slotInfoUI;
+    public GameObject reviewButton; // [추가] '검토 요청' 버튼
+
+    // [추가] 외부 클래스 참조
+    [Header("매니저 연결")]
+    public ReviewUIManager reviewUIManager;
+    public PlayerStats playerStats;
+
+    [Header("노드 관리")]
+    public List<NodeConnection> nodeConnections; // [추가] 모든 노드 목록
+
     [Header("디버그 및 테스트")]
     public List<StoryItemData> startingStories;
+
     [Header("툴팁 상세 설정")]
     public Vector2 tooltipOffset;
+
     [Header("상태 관리")]
     private StorySlotController confirmedSlot = null;
     private Dictionary<int, GameObject> activeStoryUIs = new Dictionary<int, GameObject>();
     private bool slotWasClickedThisFrame = false;
+
     [Header("더블클릭 설정")]
     public float doubleClickThreshold = 0.3f;
     private StorySlotController lastClickedSlot = null;
     private float lastClickTime = 0f;
 
     void Awake() { instance = this; }
+
     void Start()
     {
         foreach (var story in startingStories)
@@ -33,6 +48,7 @@ public class BoardManager : MonoBehaviour
             AddCollectedStory(story);
         }
     }
+
     private void LateUpdate() { slotWasClickedThisFrame = false; }
 
     public void OnStoryUIClicked(StoryItemData storyData, GameObject storyUIObject)
@@ -49,7 +65,56 @@ public class BoardManager : MonoBehaviour
             confirmedSlot = null;
             ResetAllSlotsAndUI();
             UnconfirmCurrentSlot();
+            // [수정 ] 아이템이 배치된 후, 노드 상태를 업데이트하도록 함.
+            UpdateNodeConnections();
         }
+    }
+    // [추가] 모든 노드의 상태를 현재 슬롯 상황에 맞춰 업데이트하는 함수
+    public void UpdateNodeConnections()
+    {
+        foreach (var node in nodeConnections)
+        {
+            node.UpdateState();
+        }
+        UpdateReviewButtonState();
+    }
+    // [추가] 검토되지 않은 노트가 1개 이상일 때만 '검토 요청' 버튼이 활성화 되도록 하는 함수
+    private void UpdateReviewButtonState()
+    {
+        // nodeConnections 리스트에서 Unreviewed 상태인 노드가 하나라도 있는지 검사.
+        bool isReviewable = nodeConnections.Any(node => node.curState == NodeConnection.NodeState.Unreviewed);
+        reviewButton.SetActive(isReviewable);
+    }
+    // [추가] '검토 요청' 버튼이 클릭되면 호출될 함수.
+    public void StartReview()
+    {
+        // 검토가능한 첫 번째 노드 탐색.
+        NodeConnection nodeToReview = nodeConnections.FirstOrDefault(node => node.curState == NodeConnection.NodeState.Unreviewed);
+
+        if (nodeToReview != null)
+        {
+            // 검토 UI 매니저에게 검토 프로세스 시작 요청.
+            reviewUIManager.StartReviewProcess(nodeToReview);
+        }
+    }
+    // [추가] ReviewUIManager가 검토를 마친 루 호출할 함수.
+    public void ProcessReviewResult(NodeConnection reviewedNode, bool isCorrect)
+    {
+        if (isCorrect)
+        {
+            Debug.Log("검토 결과: 일치");
+            playerStats.AdjustSanity(5); // 정신력 5 회복
+            reviewedNode.SetState(NodeConnection.NodeState.Correct);
+        }
+        else
+        {
+            Debug.Log("검토 결과: 불일치");
+            playerStats.AdjustSanity(-25); // 정신력 25 소모
+            reviewedNode.SetState(NodeConnection.NodeState.Incorrect);
+        }
+
+        // 남은 노드가 있는지 다시 확인하여 검토 버튼 상태를 업데이트.
+        UpdateReviewButtonState();
     }
     // 스토리 획득 시 UI 생성 및 정렬
     public void AddCollectedStory(StoryItemData newStory)
@@ -80,6 +145,15 @@ public class BoardManager : MonoBehaviour
     // (이하 다른 함수들은 이전과 동일)
     public void OnSlotHoverEnter(StorySlotController hoveredSlot)
     {
+        // [디버그] 함수가 호출되었고, 어떤 슬롯을 받았는지 기록합니다.
+        Debug.Log("--- [단계 2] OnSlotHoverEnter() 호출됨 ---");
+        Debug.Log("전달받은 슬롯: '" + hoveredSlot.gameObject.name + "'");
+
+
+        // [디버그] 이 슬롯의 배치 상태(IsPlaced)가 무엇인지 확인합니다. 이것이 가장 중요한 단서입니다.
+        bool isPlacedStatus = hoveredSlot.IsPlaced();
+        Debug.Log("=> 확인된 슬롯의 IsPlaced() 상태: " + isPlacedStatus);
+
         if (slotInfoUI != null)
         {
             Vector3 basePos = hoveredSlot.infoUIPos.position;
@@ -88,9 +162,34 @@ public class BoardManager : MonoBehaviour
             slotInfoUI.Show(hoveredSlot);
         }
 
-        if (hoveredSlot.IsPlaced()) return;
+        if (hoveredSlot.IsPlaced())
+        {
+            Debug.Log("=> 로직 중단: 다른 슬롯이 이미 선택된 상태이므로 호버 효과를 표시하지 않습니다.");
+            return;
+        }
 
-        if (confirmedSlot == null)
+        // 3. 슬롯의 상태와 관계없이 항상 'Hover' 상태로 변경하여 Select 이미지를 켭니다.
+        Debug.Log("=> 실행: SetState(Hover)를 호출하여 Select 이미지를 켭니다.");
+        hoveredSlot.SetState(StorySlotController.SlotState.Hover);
+
+        // [수정]
+        // 슬롯의 상태와 관계 없이 항상 'Hover' 상태로 변경
+        hoveredSlot.SetState(StorySlotController.SlotState.Hover);
+
+        // 단, 비어있는 슬롯에 마우스를 올렸을 때만 UI 효과 적용
+        if (!hoveredSlot.IsPlaced())
+        {
+            Debug.Log("=> 실행: 슬롯이 비어있으므로, 주변 슬롯을 흐리게 만듭니다.");
+            foreach (var slot in storySlots)
+            {
+                if (slot != hoveredSlot) slot.Dim();
+            }
+        }
+        else Debug.Log("=> 건너뜀: 슬롯에 아이템이 배치되어 있으므로, 주변 슬롯을 흐리게 만들지 않습니다.");
+        // [수정 끝]
+
+        // [기존 기능] (수정된 기능이 오류 발생이 백업)
+        /*if (confirmedSlot == null)
         {
             hoveredSlot.SetState(StorySlotController.SlotState.Hover);
             foreach (var slot in storySlots)
@@ -100,12 +199,32 @@ public class BoardManager : MonoBehaviour
                     slot.Dim();
                 }
             }
-        }
+        }*/
     }
     // OnSlotHoverExit 함수가 새로운 공용 함수를 호출하도록 변경
     public void OnSlotHoverExit(StorySlotController hoveredSlot)
     {
-        if (slotInfoUI != null)
+        // [수정]
+        // 1. 툴팁 숨기기는 항상 실행
+        if (slotInfoUI != null) slotInfoUI.Hide();
+
+        // 2. 다른 슬롯이 이미 'Selected' 상태라면 아무것도 반영 하지 않음.
+        if (confirmedSlot != null) return;
+
+        // 3. 호버가 끝났을 때, 슬록의 원래 상태로 되돌림.
+        if (hoveredSlot.IsPlaced()) hoveredSlot.SetState(StorySlotController.SlotState.Deployed);
+
+        // 4. 주변 슬롯들은 항상 원래 레이어로 복원함.
+        else hoveredSlot.SetState(StorySlotController.SlotState.Normal);
+
+        foreach (var slot in storySlots)
+        {
+            slot.Restore();
+        }
+        // [수정 끝]
+
+        // [기존 기능] (수정된 기능이 오류 발생이 백업)
+        /*if (slotInfoUI != null)
             slotInfoUI.Hide();
 
         if (hoveredSlot.IsPlaced()) return;
@@ -115,7 +234,7 @@ public class BoardManager : MonoBehaviour
             hoveredSlot.SetState(StorySlotController.SlotState.Normal);
             foreach (var slot in storySlots)
                 slot.Restore();
-        }
+        }*/
     }
     public void OnSlotClicked(StorySlotController clickedSlot)
     {
@@ -151,11 +270,7 @@ public class BoardManager : MonoBehaviour
     }
     public void OnBoardClicked()
     {
-        // 슬롯이 아닌 보드를 클릭했는지 확인 (클릭 통과 방지)
-        if (slotWasClickedThisFrame)
-        {
-            return;
-        }
+        if (slotWasClickedThisFrame) return;
 
         // 1. 'Selected' 상태인 슬롯이 있을 경우
         if (confirmedSlot != null)

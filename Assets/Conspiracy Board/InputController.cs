@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class InputController : MonoBehaviour
 {
@@ -8,53 +9,48 @@ public class InputController : MonoBehaviour
     public CameraMove cameraMove;
 
     [Header("레이어 설정")]
-    public LayerMask storySlotLayer; // 스토리 슬롯 레이어
-    public LayerMask boardLayer;     // 보드 레이어
+    public LayerMask storySlotLayer;
+    public LayerMask boardLayer;
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("--- InputController: Mouse Down Detected ---");
-
-            // 1. UI 블로커 확인
+            // 1순위: UI 클릭 확인
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                Debug.LogError("InputController EXIT: A UI element is blocking the click. Check for invisible panels with 'Raycast Target' enabled.");
+                // [디버그 추가] 어떤 UI 오브젝트가 클릭을 막았는지 확인하는 코드
+                PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                pointerData.position = Input.mousePosition;
+
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerData, results);
+
+                // RaycastAll 결과가 하나 이상 있다면, 가장 위에 있는 오브젝트(범인)의 이름을 출력
+                if (results.Count > 0)
+                {
+                    //Debug.LogError("InputController: UI 클릭이 '" + results[0].gameObject.name + "' 오브젝트에 의해 감지되었습니다. 월드 클릭을 무시합니다.", results[0].gameObject);
+                }
+
                 return;
             }
 
-            // 2. 레이캐스트 발사
+            // --- 2순위: 2D 월드 오브젝트 클릭 확인 ---
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, storySlotLayer | boardLayer);
 
-            // 3. 레이캐스트 결과 확인
-            if (hit.collider == null)
+            if (hit.collider != null)
             {
-                Debug.LogWarning("InputController EXIT: Raycast did not hit any object on the 'StorySlot' or 'Board' layers.");
-                return;
-            }
+                int hitLayer = hit.collider.gameObject.layer;
 
-            // 위 두 관문을 모두 통과해야만 아래 로직이 실행됩니다.
-            Debug.Log("InputController: Raycast HIT object: '" + hit.collider.name + "'");
-
-            int hitLayer = hit.collider.gameObject.layer;
-
-            if (storySlotLayer == (storySlotLayer | (1 << hitLayer)))
-            {
-                hit.collider.GetComponent<StorySlotController>().MouseDown();
-                return;
-            }
-
-            if (boardLayer == (boardLayer | (1 << hitLayer)))
-            {
-                if (boardManager == null || cameraMove == null)
+                if (storySlotLayer == (storySlotLayer | (1 << hitLayer)))
                 {
-                    Debug.LogError("InputController EXIT: BoardManager or CameraMove reference is not set in the Inspector!");
-                    return;
+                    hit.collider.GetComponent<StorySlotController>().MouseDown();
                 }
-                boardManager.OnBoardClicked();
-                cameraMove.StartDrag();
-                return;
+                else if (boardLayer == (boardLayer | (1 << hitLayer)))
+                {
+                    boardManager.OnBoardClicked();
+                    cameraMove.StartDrag();
+                }
             }
         }
     }
