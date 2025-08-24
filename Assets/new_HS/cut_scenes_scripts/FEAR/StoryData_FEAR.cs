@@ -4,11 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StoryData_FEAR", menuName = "Scriptable Objects/StoryData_FEAR")]
 public class StoryData_FEAR : ScriptableObject
 {
+    // 사용하는 리스트의 타입을 Data_FEAR로 지정
     public List<Data_FEAR> Story = new List<Data_FEAR>();
 }
 
 [System.Serializable]
-public class Data_FEAR
+public class Data_FEAR // 클래스 이름을 Data_FEAR로 통일
 {
     public string Name;
     [TextArea(3, 5)]
@@ -22,7 +23,6 @@ public class Data_FEAR
     [Tooltip("이 대사에서 적용할 일러스트 효과")]
     public IllustrationEffect effect;
 
-    // --- ✨추가된 부분 ---
     [Tooltip("이 대사에서 재생할 애니메이션의 Trigger 이름")]
     public string animationTrigger;
 }

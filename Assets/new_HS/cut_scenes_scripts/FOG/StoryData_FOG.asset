@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3288e45d9b8705447886e9287646d4a6, type: 3}
+  m_Name: StoryData_FOG
+  m_EditorClassIdentifier: 
+  Story:
+  - Name: 
+    Content: 
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 1
+    animationTrigger: 
+  - Name: 
+    Content: "\uC5B8\uB73B \uBCF4\uBA74 \uB098\uB294 \uC774 \uBC14\uB2E4\uB97C \uAC74\uB108\uB294
+      \uC2DC\uAC04\uC774 \uADF8\uC800 \uC9C0\uB8E8\uD558\uB2E4\uB294 \uB4EF \uBCF4\uC77C
+      \uC218 \uC788\uC9C0\uB9CC,"
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: "\uADF8 \uC18D\uC5D0\uB294 \uAE30\uB300\uC640 \uB4E4\uB738, \uD765\uBBF8\uAC00
+      \uAC00\uB4DD\uD558\uB2E4. \uADF8\uB807\uAE30\uC5D0 \uC774 \uC2DC\uAC04\uC5D0\uB3C4
+      \uC7A0\uC774 \uC624\uC9C0 \uC54A\uC544 \uAC78\uC74C\uC744 \uD558\uB294 \uAC83\uC774\uACA0\uC9C0."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: ...
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: "\uC544\uBB34\uB9AC \uBC16\uC774 \uC774\uB807\uAC8C \uC5B4\uB461\uB2E4\uACE0\uB294
+      \uD558\uC9C0\uB9CC \uB108\uBB34\uB098 \uC870\uC6A9\uD55C\uAC8C \uC2AC\uC2AC
+      \uC2E0\uACBD\uC4F0\uC778\uB2E4."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: "\uC544\uBB34\uB9AC \uADF8\uB798\uB3C4 \uADF8\uB807\uC9C0, \uC548\uC774
+      \uC774\uB807\uAC8C \uC870\uC6A9\uD55C\uAC8C \uB9D0\uC774 \uB418\uB098?"
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: "\uBD84\uBA85 \uC544\uAE4C\uB9CC \uD574\uB3C4 \uC544\uB798\uC5D0\uC11C
+      \uCFF5\uCFF5\uD558\uB294 \uC18C\uB9AC\uAC00 \uB4E4\uB838\uB358 \uAC83 \uAC19\uC740\uB370..."
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: "\uC0DD\uAC01\uD574\uBCF4\uB2C8 \uC774 \uAC11\uD310\uC740 \uC870\uD0C0\uC2E4\uB85C
+      \uC774\uC5B4\uC9C0\uB294 \uAE38\uC774 \uC788\uC5C8\uB2E4."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: "\uC870\uD0C0\uC2E4 \uC7A0\uAE50 \uBD10\uB3C4... \uBB38\uC81C \uC5C6\uACA0\uC9C0?"
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: "\uD638\uAE30\uC2EC\uC774 \uACE0\uC591\uC774\uB97C \uC8FD\uC778\uB2E4\uB358\uAC00."
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 0
+    animationTrigger: 
+  - Name: 
+    Content: 
+    nameplatePanel: {fileID: 0}
+    Sprite: {fileID: -5750353039905602045, guid: 706d8b41783411543b6b98bc83efb3c9, type: 3}
+    effect: 2
+    animationTrigger: 
