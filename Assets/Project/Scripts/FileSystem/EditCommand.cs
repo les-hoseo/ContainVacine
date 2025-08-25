@@ -1,4 +1,4 @@
-// 파일명: EditCommand.cs
+/*// 파일명: EditCommand.cs
 using System.Collections.Generic;
 
 public class EditCommand : ICommand
@@ -31,4 +31,4 @@ public class EditCommand : ICommand
         // 편집 모드로 진입한다는 메시지를 반환
         return new List<string>(); // 별도의 메시지 없이 바로 편집 화면으로 전환
     }
-}
+}*/

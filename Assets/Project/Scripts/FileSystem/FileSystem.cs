@@ -44,11 +44,52 @@ public class FileSystem : MonoBehaviour
         var zoneDir = new FileSystemNode("ZONE", NodeType.Folder, root);
         root.Children.Add(zoneDir);
 
-        // 객실_A1.dat 관련 데이터
-        var corridorADir = new FileSystemNode("복도_A", NodeType.Folder, zoneDir);
+        // 1. '상갑판' 폴더를 생성합니다. 이 폴더의 부모는 'zoneDir' 입니다.
+        var upperDeckDir = new FileSystemNode("상갑판", NodeType.Folder, zoneDir);
+        // 'zoneDir'(ZONE)의 자식으로 '상갑판' 폴더를 추가합니다.
+        zoneDir.Children.Add(upperDeckDir);
+
+        var lowerDeckDir = new FileSystemNode("하갑판", NodeType.Folder, zoneDir);
+        zoneDir.Children.Add(lowerDeckDir);
+        var cafeteriaLoungeDir = new FileSystemNode("카페테리아_라운지", NodeType.Folder, zoneDir);
+        upperDeckDir.Children.Add(cafeteriaLoungeDir);
+        var corridorADir = new FileSystemNode("복도_A", NodeType.Folder, upperDeckDir);
+        upperDeckDir.Children.Add(corridorADir);
+        var corridorBDir = new FileSystemNode("복도_B", NodeType.Folder, upperDeckDir);
+        upperDeckDir.Children.Add(corridorBDir);
+        var engineDir = new FileSystemNode("엔진_구역", NodeType.Folder, upperDeckDir);
+        lowerDeckDir.Children.Add(engineDir);
+        var cargoCrewAreaDir = new FileSystemNode("화물_승무원_구역", NodeType.Folder, upperDeckDir);
+        lowerDeckDir.Children.Add(cargoCrewAreaDir);
+
+        // 2. '복도_A' 폴더를 생성합니다. 이번에는 부모를 'upperDeckDir'(상갑판)으로 지정합니다.
+       
+        // 'upperDeckDir'(상갑판)의 자식으로 '복도_A' 폴더를 추가합니다.
+
+        // 이제 '복도_A' 폴더 안에 '객실_A1.dat' 같은 파일을 추가할 수 있습니다.
+        // var roomA1Dat = new FileSystemNode("객실_A1.dat", NodeType.File, corridorADir);
+        // corridorADir.Children.Add(roomA1Dat);
+
+
+        var readOnlyLog = new FileSystemNode("복도_B.log", NodeType.File, corridorADir);
+        readOnlyLog.Content = "허가 없이는 엔진실에 출입하지 말 것.";
+        readOnlyLog.logType = LogType.ReadOnly; // 타입을 ReadOnly로 설정
+        upperDeckDir.Children.Add(readOnlyLog);
+        // 1. '경고문.log' 라는 이름으로 새 파일 노드를 만듭니다.
+        var warningLog = new FileSystemNode("경고문.log", NodeType.File, corridorADir);
+
+
+        // 2. 로그 파일의 내용을 설정합니다.
+        warningLog.Content = "이 구역의 전력 공급이 불안정하다.";
+        warningLog.logType = LogType.ReadOnly;
+        // 3. '복도_A' 폴더의 자식으로 로그를 추가합니다.
+        corridorADir.Children.Add(warningLog);
+
+        //객실_A1.dat 관련 데이터
+        var corridorADDir = new FileSystemNode("복도_A", NodeType.Folder, zoneDir);
         zoneDir.Children.Add(corridorADir);
         var roomA1Dat = new FileSystemNode("객실_A1.dat", NodeType.File, corridorADir);
-        corridorADir.Children.Add(roomA1Dat);
+        corridorADDir.Children.Add(roomA1Dat);
         roomA1Dat.Children.Add(new FileSystemNode("십자드라이버.item", NodeType.File, roomA1Dat));
         roomA1Dat.Children.Add(new FileSystemNode("열쇠구멍.object", NodeType.File, roomA1Dat));
         roomA1Dat.Children.Add(new FileSystemNode("방문.object", NodeType.File, roomA1Dat));
@@ -200,5 +241,27 @@ public class FileSystem : MonoBehaviour
 
         Debug.Log($"파일 업데이트 성공: {fullPath}");
         return null; // 성공
+    }
+
+    public List<FileSystemNode> FindNodesByName(string fileName)
+    {
+        var foundNodes = new List<FileSystemNode>();
+        FindNodesRecursive(root, fileName, foundNodes);
+        return foundNodes;
+    }
+
+    private void FindNodesRecursive(FileSystemNode currentNode, string fileName, List<FileSystemNode> foundNodes)
+    {
+        // 현재 노드의 이름이 일치하는지 확인 (파일/폴더 구분 없음)
+        if (currentNode.Name.Equals(fileName, System.StringComparison.OrdinalIgnoreCase))
+        {
+            foundNodes.Add(currentNode);
+        }
+
+        // 현재 노드의 모든 자식 노드를 대상으로 재귀 호출
+        foreach (var child in currentNode.Children)
+        {
+            FindNodesRecursive(child, fileName, foundNodes);
+        }
     }
 }

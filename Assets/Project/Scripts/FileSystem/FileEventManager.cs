@@ -10,6 +10,7 @@ public class FileEventRule
     public string triggerFileName;
     [Tooltip("새로 생성할 파일의 전체 경로")]
     public string newFilePathToCreate;
+    public List<string> datFileContents = new List<string>();
 }
 
 public class FileEventManager : MonoBehaviour
@@ -31,8 +32,8 @@ public class FileEventManager : MonoBehaviour
         // 기획서 규칙: 객실_A1.log를 열면 DATA_객실_A1.dat 파일 생성
         fileEventRules.Add(new FileEventRule
         {
-            triggerFileName = "객실_A1.log",
-            newFilePathToCreate = "ZONE/복도_A/DATA_객실_A1.dat"
+            triggerFileName = "복도_B.log",
+            newFilePathToCreate = "ZONE/DATA_객실_A1.dat"
         });
 
         // TODO: 여기에 다른 파일 열기 이벤트 규칙들을 추가...
