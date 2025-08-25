@@ -10,25 +10,26 @@ public class SlotInfoUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemDescText;
 
     private void Awake() { gameObject.SetActive(false); }
+
     public void Show(StorySlotController slot)
     {
+        gameObject.SetActive(true);
         itemInfoGroup.SetActive(true);
         if (slot.IsPlaced())
         {
             StoryItemData storyData = slot.GetPlacedStoryData();
-            if (storyData! != null)
+            if (storyData != null)
             {
-                itemNameText.text = storyData.name;
+                itemNameText.text = storyData.storyName;
                 itemDescText.text = storyData.description;
             }
         }
         else
         {
             itemNameText.text = "Empty Slot";
-            itemDescText.text = "Empry Slot";
+            itemDescText.text = "아이템을 배치하여 단서를 확인하세요.";
         }
-
-        gameObject.SetActive(true);
     }
+
     public void Hide() { gameObject.SetActive(false); }
 }

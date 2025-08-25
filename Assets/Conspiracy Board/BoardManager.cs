@@ -47,6 +47,7 @@ public class BoardManager : MonoBehaviour
         {
             AddCollectedStory(story);
         }
+        reviewButton.SetActive(false);
     }
 
     private void LateUpdate() { slotWasClickedThisFrame = false; }
@@ -63,7 +64,7 @@ public class BoardManager : MonoBehaviour
             Destroy(storyUIObject);
 
             confirmedSlot = null;
-            ResetAllSlotsAndUI();
+            ResetAllSlotsAndUI(null);
             UnconfirmCurrentSlot();
             // [수정 ] 아이템이 배치된 후, 노드 상태를 업데이트하도록 함.
             UpdateNodeConnections();
@@ -132,7 +133,6 @@ public class BoardManager : MonoBehaviour
     {
         // clueInventoryPanel의 자식들 중에서 ClueUI 컴포넌트를 가진 오브젝트들을 가져옴
         var storyUIList = storyInventoryPanel.GetComponentsInChildren<StoryUI>().ToList();
-
         // Story ID를 기준으로 오름차순 정렬
         var sortedList = storyUIList.OrderBy(story => story.storyID).ToList();
 
@@ -145,15 +145,6 @@ public class BoardManager : MonoBehaviour
     // (이하 다른 함수들은 이전과 동일)
     public void OnSlotHoverEnter(StorySlotController hoveredSlot)
     {
-        // [디버그] 함수가 호출되었고, 어떤 슬롯을 받았는지 기록합니다.
-        Debug.Log("--- [단계 2] OnSlotHoverEnter() 호출됨 ---");
-        Debug.Log("전달받은 슬롯: '" + hoveredSlot.gameObject.name + "'");
-
-
-        // [디버그] 이 슬롯의 배치 상태(IsPlaced)가 무엇인지 확인합니다. 이것이 가장 중요한 단서입니다.
-        bool isPlacedStatus = hoveredSlot.IsPlaced();
-        Debug.Log("=> 확인된 슬롯의 IsPlaced() 상태: " + isPlacedStatus);
-
         if (slotInfoUI != null)
         {
             Vector3 basePos = hoveredSlot.infoUIPos.position;
@@ -162,49 +153,21 @@ public class BoardManager : MonoBehaviour
             slotInfoUI.Show(hoveredSlot);
         }
 
-        if (hoveredSlot.IsPlaced())
-        {
-            Debug.Log("=> 로직 중단: 다른 슬롯이 이미 선택된 상태이므로 호버 효과를 표시하지 않습니다.");
-            return;
-        }
-
-        // 3. 슬롯의 상태와 관계없이 항상 'Hover' 상태로 변경하여 Select 이미지를 켭니다.
-        Debug.Log("=> 실행: SetState(Hover)를 호출하여 Select 이미지를 켭니다.");
-        hoveredSlot.SetState(StorySlotController.SlotState.Hover);
-
-        // [수정]
-        // 슬롯의 상태와 관계 없이 항상 'Hover' 상태로 변경
+        // [수정] 슬롯의 상태와 관계 없이 항상 'Hover' 상태로 변경
         hoveredSlot.SetState(StorySlotController.SlotState.Hover);
 
         // 단, 비어있는 슬롯에 마우스를 올렸을 때만 UI 효과 적용
-        if (!hoveredSlot.IsPlaced())
+        if (confirmedSlot == null)
         {
-            Debug.Log("=> 실행: 슬롯이 비어있으므로, 주변 슬롯을 흐리게 만듭니다.");
             foreach (var slot in storySlots)
             {
                 if (slot != hoveredSlot) slot.Dim();
             }
         }
-        else Debug.Log("=> 건너뜀: 슬롯에 아이템이 배치되어 있으므로, 주변 슬롯을 흐리게 만들지 않습니다.");
-        // [수정 끝]
-
-        // [기존 기능] (수정된 기능이 오류 발생이 백업)
-        /*if (confirmedSlot == null)
-        {
-            hoveredSlot.SetState(StorySlotController.SlotState.Hover);
-            foreach (var slot in storySlots)
-            {
-                if (slot != hoveredSlot)
-                {
-                    slot.Dim();
-                }
-            }
-        }*/
     }
     // OnSlotHoverExit 함수가 새로운 공용 함수를 호출하도록 변경
     public void OnSlotHoverExit(StorySlotController hoveredSlot)
     {
-        // [수정]
         // 1. 툴팁 숨기기는 항상 실행
         if (slotInfoUI != null) slotInfoUI.Hide();
 
@@ -213,28 +176,16 @@ public class BoardManager : MonoBehaviour
 
         // 3. 호버가 끝났을 때, 슬록의 원래 상태로 되돌림.
         if (hoveredSlot.IsPlaced()) hoveredSlot.SetState(StorySlotController.SlotState.Deployed);
-
         // 4. 주변 슬롯들은 항상 원래 레이어로 복원함.
         else hoveredSlot.SetState(StorySlotController.SlotState.Normal);
 
-        foreach (var slot in storySlots)
-        {
-            slot.Restore();
-        }
-        // [수정 끝]
-
-        // [기존 기능] (수정된 기능이 오류 발생이 백업)
-        /*if (slotInfoUI != null)
-            slotInfoUI.Hide();
-
-        if (hoveredSlot.IsPlaced()) return;
-
         if (confirmedSlot == null)
         {
-            hoveredSlot.SetState(StorySlotController.SlotState.Normal);
             foreach (var slot in storySlots)
+            {
                 slot.Restore();
-        }*/
+            }
+        }
     }
     public void OnSlotClicked(StorySlotController clickedSlot)
     {
@@ -247,6 +198,7 @@ public class BoardManager : MonoBehaviour
             // 더블클릭된 슬롯에 아이템이 배치되어 있을 경우에만 취소 로직 실행
             if (clickedSlot.IsPlaced())
             {
+                if (slotInfoUI != null) slotInfoUI.Hide();
                 clickedSlot.CancelPlacement();
             }
 
@@ -285,21 +237,23 @@ public class BoardManager : MonoBehaviour
         }
 
         // 2. 'Hover' 상태를 포함한 모든 시각 효과를 초기화
-        ResetAllSlotsAndUI();
+        ResetAllSlotsAndUI(null);
     }
     // 모든 슬롯과 UI를 리셋하는 공용 함수
-    private void ResetAllSlotsAndUI()
+    private void ResetAllSlotsAndUI(StorySlotController excludeSlot)
     {
         foreach (var slot in storySlots)
         {
+            if (slot == excludeSlot) continue;
             slot.Restore(); // 모든 슬롯의 Sorting Layer를 원래대로 복원
             slot.SetInteractable(true); // 모든 슬롯을 다시 선택 가능하도록 활성화
+            if (slot.IsPlaced() == false)
+            {
+                slot.SetState(StorySlotController.SlotState.Normal);
+            }
         }
-
-        if (slotInfoUI != null)
-        {
-            slotInfoUI.Hide(); // 정보 UI(툴팁) 비활성화
-        }
+        // 정보 UI(툴팁) 비활성화
+        if (slotInfoUI != null) { slotInfoUI.Hide(); }
     }
     private void ConfirmSlot(StorySlotController slot)
     {

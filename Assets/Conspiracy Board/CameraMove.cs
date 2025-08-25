@@ -14,11 +14,7 @@ public class CameraMove : MonoBehaviour
 
     void Awake() { mainCamera = Camera.main; }
 
-    void Start()
-    {
-        // 카메라가 움직일 수 있는 경계를 미리 계산
-        CalculateCameraBounds();
-    }
+    void Start() { CalculateCameraBounds(); }
 
     void Update()
     {

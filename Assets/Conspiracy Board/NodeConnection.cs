@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -20,7 +19,7 @@ public class NodeConnection : MonoBehaviour
     public Color incorrectColor = new Color(0.83f, 0f, 0f); // #d40000
     public Color corruptedColor = new Color(0.82f, 0.81f, 0f); // #d3cf00
 
-    public enum NodeState { Inactive, Unreviewed, Correct, Incorrect, Corruptred, }
+    public enum NodeState { Inactive, Unreviewed, Correct, Incorrect, Corrupted }
     public NodeState curState;
 
     private LineRenderer lineRenderer;
@@ -45,7 +44,17 @@ public class NodeConnection : MonoBehaviour
             SetState(NodeState.Inactive);
             return;
         }
-        SetState(NodeState.Unreviewed);
+
+        StoryItemData itemA = slotA.GetPlacedStoryData();
+        StoryItemData itemB = slotB.GetPlacedStoryData();
+        if (itemA.fileState == StoryItemData.FileState.Corrupted || itemB.fileState == StoryItemData.FileState.Corrupted)
+        {
+            SetState(NodeState.Corrupted);
+        }
+        else
+        {
+            SetState(NodeState.Unreviewed);
+        }
     }
     public void SetState(NodeState newState)
     {
@@ -74,7 +83,7 @@ public class NodeConnection : MonoBehaviour
             case NodeState.Incorrect:
                 lineRenderer.startColor = lineRenderer.endColor = incorrectColor;
                 break;
-            case NodeState.Corruptred:
+            case NodeState.Corrupted:
                 lineRenderer.startColor = lineRenderer.endColor - correctColor;
                 break;
             default:

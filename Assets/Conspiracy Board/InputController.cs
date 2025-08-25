@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class InputController : MonoBehaviour
 {
+    // [기존 기능]
     [Header("필수 연결")]
     public BoardManager boardManager;
     public CameraMove cameraMove;
@@ -19,7 +20,6 @@ public class InputController : MonoBehaviour
             // 1순위: UI 클릭 확인
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                // [디버그 추가] 어떤 UI 오브젝트가 클릭을 막았는지 확인하는 코드
                 PointerEventData pointerData = new PointerEventData(EventSystem.current);
                 pointerData.position = Input.mousePosition;
 

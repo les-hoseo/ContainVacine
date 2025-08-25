@@ -1,28 +1,42 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats instance;
 
-    [Header("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Å·ï¿½")]
-    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å·ï¿½")]
+    [Header("ÇÃ·¹ÀÌ¾î Á¤½Å·Â")]
+    [Tooltip("ÇöÀç Á¤½Å·Â")]
     [Range(0, 100)]
     public int curSanity = 100;
     private const int MAX_SANITY = 100;
 
+    [Header("º¸µå È¯°¢ È¿°ú ½ºÇÁ¶óÀÌÆ®")]
+    public List<TMP_SpriteAnimator> boardHallucinations;
+
+    [Header("È­¸é È¯°¢ È¿°ú")]
+    public List<Image> eyeHallucinationImages;
+    public Vector2 eyeEffectDurationRange = new Vector2(0.1f, 0.3f);
+    public Color eyeEffectFlashColor = Color.white;
+
+    private Coroutine eyeHallucinationCoroutine;
+
     private void Awake() { instance = this; }
 
-    // ï¿½ï¿½ï¿½Å·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+    // Á¤½Å·Â Á¶Àý ÇÔ¼ö
     public void AdjustSanity(int amount)
     {
         curSanity += amount;
 
-        // ï¿½ï¿½ï¿½Å·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // Á¤½Å·ÂÀÌ ¹üÀ§¸¦ ÃÊ°úÇÏÁö ¾Êµµ·Ï Á¦ÇÑ
         curSanity = Mathf.Clamp(curSanity, 0, MAX_SANITY);
 
-        Debug.Log($"ï¿½ï¿½ï¿½Å·ï¿½ ï¿½ï¿½ï¿½ï¿½: {amount}. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å·ï¿½: {curSanity}");
+        Debug.Log($"Á¤½Å·Â º¯°æ: {amount}. ÇöÀç Á¤½Å·Â: {curSanity}");
 
-        // ï¿½ï¿½ï¿½Å·ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È¿ï¿½ï¿½
+        // Á¤½Å·Â ¼öÄ¡¿¡ µû¸¥ ½Ã°¢È¿°ú
         UpdateVisuakEffects();
     }
 
@@ -56,31 +70,120 @@ public class PlayerStats : MonoBehaviour
         }
         else if(1 > curSanity)
         {
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // °ÔÀÓ ¿À¹ö ÇÔ¼ö¿Í Á¡ÇÁ ½ºÄù¾î
         }
     }
 
-    // [ï¿½ß°ï¿½] È­ï¿½ï¿½ È¯ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½
-    // ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ì¹ï¿½ï¿½ï¿½ È°ï¿½ï¿½)
+    // [Ãß°¡] È­¸é È¯°¢ È¿°ú ÇÔ¼öµé
+    // º¸µå¿¡ »ý±â´Â È¯°¢ Áõ»ó (ÀÌ¹ÌÁö È°¿ë)
     public void ShowBoardHallucinationEffect()
     {
-        // ï¿½ï¿½ï¿½Å·Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        int activeCount = 0;
+        if (curSanity < 60 && curSanity >= 20) activeCount = 1;
+        else if (curSanity < 20) activeCount = 2;
+
+        for (int i = 0; i < boardHallucinations.Count; i++)
+        {
+            boardHallucinations[i].gameObject.SetActive(i < activeCount);
+        }
     }
 
-    // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ì¹ï¿½ï¿½ï¿½ È°ï¿½ï¿½)
+    // Ä«¸Þ¶ó¿¡ »ý±â´Â È¯°¢ Áõ»ó (ÀÌ¹ÌÁö È°¿ë)
     public void ShowEyeHallucinationEffect()
     {
-    // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½Æ¼ URP È°ï¿½ï¿½)
+        if (curSanity < 60 && eyeHallucinationCoroutine == null)
+        {
+            eyeHallucinationCoroutine = StartCoroutine(EyeHallucinationLoop());
+        }
+        else if (curSanity >= 60 && eyeHallucinationCoroutine != null)
+        {
+            StopCoroutine(eyeHallucinationCoroutine);
+            eyeHallucinationCoroutine = null;
+            foreach (var img in eyeHallucinationImages) img.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator EyeHallucinationLoop()
+    {
+        while (true)
+        {
+            float intensity = 1 - Mathf.InverseLerp(0, 60, curSanity);
+            float spawnInterval = Mathf.Lerp(2.0f, 0.5f, intensity);
+            int spawnCount = Mathf.RoundToInt(Mathf.Lerp(1, 3, intensity));
+
+            for (int i = 0; i < spawnCount; i++)
+            {
+                Image targetImage = GetRandomInactiveImage();
+                if (targetImage != null)
+                {
+                    StartCoroutine(FlashImage(targetImage));
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+    }
+
+    private Image GetRandomInactiveImage()
+    {
+        List<Image> inactiveImages = new List<Image>();
+        foreach (var img in eyeHallucinationImages)
+        {
+            if (!img.gameObject.activeSelf)
+            {
+                inactiveImages.Add(img);
+            }
+        }
+        if (inactiveImages.Count > 0)
+        {
+            return inactiveImages[Random.Range(0, inactiveImages.Count)];
+        }
+        return null;
+    }
+
+    private IEnumerator FlashImage(Image image)
+    {
+        RectTransform canvasRect = image.canvas.GetComponent<RectTransform>();
+        image.rectTransform.anchoredPosition = new Vector2(
+            Random.Range(-canvasRect.sizeDelta.x / 2, canvasRect.sizeDelta.x / 2),
+            Random.Range(-canvasRect.sizeDelta.y / 2, canvasRect.sizeDelta.y / 2)
+        );
+        image.gameObject.SetActive(true);
+
+        Color originalColor = image.color;
+        yield return new WaitForSeconds(0.2f);
+        image.color = eyeEffectFlashColor;
+
+        float duration = Random.Range(eyeEffectDurationRange.x, eyeEffectDurationRange.y);
+        yield return new WaitForSeconds(duration);
+
+        image.color = originalColor;
+        image.gameObject.SetActive(false);
+    }
+
+    // ºñ³×Æ® È¿°ú
+    public void VignetteEffect()
+    {
+
+    }
+
+    // ±Û¸®Ä¡ È¿°ú (À¯´ÏÆ¼ URP È°¿ë)
+    public void GlitchEffect()
+    {
+
+    }
+
+    // Ä«¸Þ¶ó¿¡ »ý±â´Â È¯°¢ Áõ°­ (À¯´ÏÆ¼ URP È°¿ë)
     public void llucinationEffect()
     {
 
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½Æ¼ URP È°ï¿½ï¿½)
+    // »ö¼öÂ÷ (À¯´ÏÆ¼ URP È°¿ë)
     public void ChromaticAberrationEffect()
     {
 
     }
 
-    // TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´Ù¸ï¿½ ï¿½Ø´ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // TODO : Á¡ÇÁ ½ºÄù¾î ÇÔ¼ö Á¦ÀÛ, ¸¸¾à °ÔÀÓ¿À¹ö¸¦ ÇØ´ç ½ºÅ©¸³Æ®¿¡¼­ °ü¸®ÇÑ´Ù¸é ÇØ´ç ÇÔ¼öµµ Á¦ÀÛ
 }

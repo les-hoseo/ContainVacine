@@ -17,5 +17,4 @@ public class StoryItemData : ScriptableObject
     public enum FileState { Nomal, Corrupted }
     [Tooltip("파일의 상태가 정상인지, 손상/오염되었늦지 설정합니다.")]
     public FileState fileState = FileState.Nomal;
-
 }

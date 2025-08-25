@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8619681365818044185}
   - component: {fileID: 3751311881490212470}
   - component: {fileID: 7236073770477540082}
-  - component: {fileID: 3626883861970328621}
   - component: {fileID: 8492620722387910041}
+  - component: {fileID: -3039987862672361061}
   m_Layer: 6
   m_Name: Story Item
   m_TagString: Untagged
@@ -77,21 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3626883861970328621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5647655610694799721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260d7e36cc904d7489849e4a7577f636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StoryImage: {fileID: 7236073770477540082}
-  hoverOffsetY: 20
-  animationSpeed: 10
 --- !u!114 &8492620722387910041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +94,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3626883861970328621}
+        - m_Target: {fileID: -3039987862672361061}
           m_TargetAssemblyTypeName: StoryUI, Assembly-CSharp
           m_MethodName: Click
           m_Mode: 1
@@ -125,7 +110,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3626883861970328621}
+        - m_Target: {fileID: -3039987862672361061}
           m_TargetAssemblyTypeName: StoryUI, Assembly-CSharp
           m_MethodName: AnimateUpwards
           m_Mode: 1
@@ -141,7 +126,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3626883861970328621}
+        - m_Target: {fileID: -3039987862672361061}
           m_TargetAssemblyTypeName: StoryUI, Assembly-CSharp
           m_MethodName: AnimateDownwards
           m_Mode: 1
@@ -153,3 +138,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &-3039987862672361061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5647655610694799721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260d7e36cc904d7489849e4a7577f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StoryImage: {fileID: 7236073770477540082}
+  hoverOffsetY: 20
+  animationSpeed: 10

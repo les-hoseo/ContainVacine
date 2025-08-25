@@ -11,7 +11,8 @@ public class StorySlotController : MonoBehaviour
     public Transform infoUIPos;
     [Header("상태 색상")]
     public Color hoverColor = Color.yellow;
-    public Color SelectedColor = Color.green;
+    public Color selectedColor = Color.green;
+    public Color nomalColor = Color.white;
     [Header("메인 랜더러")]
     public SpriteRenderer mainSprite;
 
@@ -75,18 +76,16 @@ public class StorySlotController : MonoBehaviour
         switch (state)
         {
             case SlotState.Normal:
-                selectObject.SetActive(false);
+                selectObject.GetComponent<SpriteRenderer>().color = nomalColor;
                 break;
             case SlotState.Hover:
-                selectObject.SetActive(true);
                 selectObject.GetComponent<SpriteRenderer>().color = hoverColor;
                 break;
             case SlotState.Seleted:
-                selectObject.SetActive(true);
-                selectObject.GetComponent<SpriteRenderer>().color = SelectedColor;
+                selectObject.GetComponent<SpriteRenderer>().color = selectedColor;
                 break;
             case SlotState.Deployed:
-                selectObject.SetActive(false);
+                selectObject.GetComponent<SpriteRenderer>().color = nomalColor;
                 if (deployedSpriteRenderer != null) deployedSpriteRenderer.enabled = true;
                 break;
         }
@@ -99,19 +98,21 @@ public class StorySlotController : MonoBehaviour
         placedStory = story;
         if (deployedSpriteRenderer != null)
             deployedSpriteRenderer.sprite = story.storySprite;
+        BoardManager.instance.UpdateNodeConnections();
     }
     public void CancelPlacement()
     {
+
         if (placedStory != null)
         {
             if (deployedSpriteRenderer != null)
             {
                 deployedSpriteRenderer.sprite = originalSprite;
-                deployedSpriteRenderer.enabled = true;
+                SetState(SlotState.Normal);
             }
-
             BoardManager.instance.RestoreStoryToInventory(placedStory);
             placedStory = null;
+            BoardManager.instance.UpdateNodeConnections();
         }
     }
 }

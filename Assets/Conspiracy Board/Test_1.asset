@@ -16,3 +16,5 @@ MonoBehaviour:
   storyName: Test
   description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   storySprite: {fileID: 9145377508955870383, guid: 163931efa880b4740b10fbce76168230, type: 3}
+  succeedingPartnerID: 1
+  fileState: 0
