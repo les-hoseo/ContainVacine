@@ -1,13 +1,16 @@
 // 파일명: FileSystemNode.cs
 using System.Collections.Generic;
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
+
+/// <summary>
+/// 노드가 폴더인지 파일인지 구분하는 열거형입니다.
+/// </summary>
+public enum NodeType { Folder, File }
 
 /// <summary>
 /// 로그 파일의 동작 방식을 정의하는 열거형입니다.
 /// </summary>
 public enum LogType { ReadOnly, Cutscene }
-public enum NodeType { Folder, File }
 
 /// <summary>
 /// 파일 시스템의 모든 파일과 폴더를 표현하는 데이터 클래스입니다.
@@ -31,7 +34,7 @@ public class FileSystemNode
     public string acquisitionMessage;
 
     [Tooltip("로그 파일의 종류 (읽기 전용, 컷씬)")]
-    public LogType logType = LogType.ReadOnly; // 기본값을 ReadOnly로 변경
+    public LogType logType = LogType.ReadOnly;
 
     /// <summary>
     /// FileSystemNode의 생성자입니다.

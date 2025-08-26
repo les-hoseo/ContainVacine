@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public interface ICommand
 {
     /// <summary>
-    /// 명령어의 공식적인 이름입니다. (예: "HELP", "READ")
+    /// 명령어의 공식적인 이름입니다. (예: "HELP", "OPEN")
     /// </summary>
     string Name { get; }
 

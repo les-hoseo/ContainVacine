@@ -14,9 +14,8 @@ public class CommandManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
-
+        if (instance == null) { instance = this; DontDestroyOnLoad(gameObject); }
+        else { Destroy(gameObject); }
         InitializeCommands();
     }
 
@@ -29,7 +28,6 @@ public class CommandManager : MonoBehaviour
         RegisterCommand(new RebootCommand());
         RegisterCommand(new RootCommand());
         RegisterCommand(new OpenCommand());
-        // RegisterCommand(new EditCommand()); // EditCommand는 더 이상 사용하지 않습니다.
         RegisterCommand(new InteractCommand());
     }
 
@@ -42,9 +40,7 @@ public class CommandManager : MonoBehaviour
     {
         string[] parts = fullInput.Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 0) return "";
-
         string commandName = parts[0].ToUpper();
-
         if (commands.TryGetValue(commandName, out ICommand command))
         {
             List<string> resultLines = command.Execute(parts);

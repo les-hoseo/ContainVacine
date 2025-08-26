@@ -17,6 +17,7 @@ public class CRTController : MonoBehaviour
     [Header("타이핑 효과")]
     public float typingSpeed = 0.02f;
 
+    // --- 내부 데이터 변수 ---
     private readonly List<string> rootLines = new();
     private List<string> CurrentDisplayLines => rootLines;
     private readonly List<string> commandHistory = new();
@@ -26,6 +27,7 @@ public class CRTController : MonoBehaviour
     public bool isTyping = false;
     private int scrollOffset = 0;
 
+    // --- 자동완성 변수 ---
     private List<string> suggestionMatches = new List<string>();
     private int suggestionIndex = -1;
 
@@ -185,7 +187,6 @@ public class CRTController : MonoBehaviour
         StartCoroutine(ReadOnlyDisplayRoutine(logNode));
     }
 
-
     private IEnumerator ReadOnlyDisplayRoutine(FileSystemNode logNode)
     {
         isTyping = true;
@@ -193,10 +194,8 @@ public class CRTController : MonoBehaviour
         var historyBackup = new List<string>(CurrentDisplayLines);
         ClearTerminal();
 
-        // 넘겨받은 logNode에서 이름과 내용을 꺼내 사용합니다.
         string title = logNode.Name;
         string content = logNode.Content;
-
         var contentLines = content.Split('\n');
         CurrentDisplayLines.Add($"--- {title} (읽기 전용) ---");
         CurrentDisplayLines.Add("");
@@ -213,19 +212,14 @@ public class CRTController : MonoBehaviour
             {
                 enterPressed = true;
             }
-            if (Input.inputString.Length > 0) { }
+            if (Input.inputString.Length > 0) { /* 입력 무시 */ }
             yield return null;
         }
 
-        // --- [추가] Enter를 누른 직후, 파일 생성 이벤트를 여기서 호출합니다. ---
         FileEventManager.instance.CheckForFileOpenEvent(logNode.Name);
-        // --------------------------------------------------------------------
-
         CurrentDisplayLines.Clear();
         CurrentDisplayLines.AddRange(historyBackup);
-
         yield return null;
-
         isTyping = false;
     }
 
@@ -261,6 +255,7 @@ public class CRTController : MonoBehaviour
         {
             CurrentDisplayLines.Add("Y");
             yield return StartCoroutine(AnimateLoadingLine("초기화 진행 중…"));
+            GameManager.instance.RebootSystem();
             CurrentDisplayLines.Add("SYSTEM > 초기화 완료.");
         }
         else
@@ -279,8 +274,6 @@ public class CRTController : MonoBehaviour
         string welcomeMessage = string.Join("\n", infoCommand.Execute(new string[0]));
         StartTyping(welcomeMessage);
     }
-
-
 
     private void HandleMouseScroll()
     {
@@ -338,6 +331,16 @@ public class CRTController : MonoBehaviour
     {
         CurrentDisplayLines.Clear();
         scrollOffset = 0;
+    }
+
+    /// <summary>
+    /// 외부 시스템(기믹 등)이 현재 탭에 강제로 메시지를 출력하게 합니다.
+    /// </summary>
+    public void PrintMessageToCurrentTab(string message)
+    {
+        if (isTyping) return;
+        CurrentDisplayLines.Add(" ");
+        StartTyping(message);
     }
 
     public void StartExeExecution(FileSystemNode fileNode)
