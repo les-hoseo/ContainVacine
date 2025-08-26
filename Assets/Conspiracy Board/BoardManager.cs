@@ -285,5 +285,5 @@ public class BoardManager : MonoBehaviour
             s.SetInteractable(true);
         }
     }
-    private void CheckLineConnections() { Debug.Log("선 연결 상태를 업데이트합니다. (구현 필요)"); }
+    //private void CheckLineConnections() { Debug.Log("선 연결 상태를 업데이트합니다. (구현 필요)"); }
 }

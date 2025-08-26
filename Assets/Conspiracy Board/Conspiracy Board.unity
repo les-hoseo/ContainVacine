@@ -310,7 +310,7 @@ MonoBehaviour:
   - {fileID: 494276205}
   - {fileID: 155242077}
   storyInventoryPanel: {fileID: 1777222449}
-  storyUIPrefab: {fileID: 5647655610694799721, guid: 51b9d4ccde35c4a40b4e84dd04a20f97, type: 3}
+  storyUIPrefab: {fileID: 3584671004244491061, guid: 51b9d4ccde35c4a40b4e84dd04a20f97, type: 3}
   slotInfoUI: {fileID: 2111306045}
   reviewButton: {fileID: 57338373}
   reviewUIManager: {fileID: 426961087}
@@ -398,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8267840928633043544, guid: b4a2e6bdb6b1a6547aff0c71b29df004, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.1580043
+      value: -7.64
       objectReference: {fileID: 0}
     - target: {fileID: 8267840928633043544, guid: b4a2e6bdb6b1a6547aff0c71b29df004, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1167,11 +1167,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8267840928633043544, guid: b4a2e6bdb6b1a6547aff0c71b29df004, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.647306
+      value: -10.28
       objectReference: {fileID: 0}
     - target: {fileID: 8267840928633043544, guid: b4a2e6bdb6b1a6547aff0c71b29df004, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5098388
+      value: 5.48
       objectReference: {fileID: 0}
     - target: {fileID: 8267840928633043544, guid: b4a2e6bdb6b1a6547aff0c71b29df004, type: 3}
       propertyPath: m_LocalPosition.z
