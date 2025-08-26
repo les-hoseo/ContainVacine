@@ -35,6 +35,12 @@ public class FileSystem : MonoBehaviour
         };
         InitializeZone();
 
+        
+
+
+    }
+    private void InitializeZone()
+    {
         // --- ZONE 구역 기본 구조 생성 ---
         var zoneDir = new FileSystemNode("ZONE", NodeType.Folder, root);
         root.Children.Add(zoneDir);
@@ -65,32 +71,6 @@ public class FileSystem : MonoBehaviour
         roomA1Log.Content = "이곳은 객실 A1이다.\n인기척은 느껴지지 않는다.";
         roomA1Log.logType = LogType.ReadOnly; // 읽기 전용으로 설정
         corridorADir.Children.Add(roomA1Log);
-
-
-    }
-    private void InitializeZone()
-    {
-        // 기존 ZONE 관련 생성 코드를 이곳으로 옮깁니다.
-        var zoneDir = new FileSystemNode("ZONE", NodeType.Folder, root);
-        root.Children.Add(zoneDir);
-
-        // 상갑판 폴더 생성
-        var upperDeckDir = new FileSystemNode("상갑판", NodeType.Folder, zoneDir);
-        zoneDir.Children.Add(upperDeckDir);
-
-        // 복도_A 폴더 생성
-        var corridorADir = new FileSystemNode("복도_A", NodeType.Folder, upperDeckDir);
-        upperDeckDir.Children.Add(corridorADir);
-
-        // 객실_A1.log 파일 생성
-        var roomA1Log = new FileSystemNode("객실_A1.log", NodeType.File, corridorADir);
-        roomA1Log.Content = "이곳은 객실 A1이다.\n인기척은 느껴지지 않는다.";
-        roomA1Log.logType = LogType.ReadOnly;
-        corridorADir.Children.Add(roomA1Log);
-
-        // 하갑판 폴더 생성 (이전에 없었다면 추가)
-        var lowerDeckDir = new FileSystemNode("하갑판", NodeType.Folder, zoneDir);
-        zoneDir.Children.Add(lowerDeckDir);
     }
     public void ResetZone()
     {
