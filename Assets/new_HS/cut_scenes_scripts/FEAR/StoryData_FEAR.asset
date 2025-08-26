@@ -59,7 +59,7 @@ MonoBehaviour:
       \uCD5C\uB300\uD55C \uC18C\uB9AC\uB97C \uB0B4\uC9C0 \uC54A\uC73C\uB824 \uB178\uB825\uD558\uBA70\n\uB098\uB294
       \uC190\uC744 \uB354\uB4EC\uB354\uB4EC \uBED7\uC5B4\uAC14\uB2E4."
     nameplatePanel: {fileID: 0}
-    Sprite: {fileID: -5387562833892707887, guid: 3390370fa8fa1c3408602f1c426d7aeb, type: 3}
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
     effect: 0
     animationTrigger: 
   - Name: 

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be14eaa6289315640be043c451719410, type: 3}
+  m_Name: StoryData_Choice2
+  m_EditorClassIdentifier: 
+  Story:
+  - lineType: 0
+    Name: 
+    Content: "\uB098\uB294 \uAE09\uD558\uAC8C \uC774 \uAE30\uB85D\uC744 \uD6D4\uCCD0
+      \uB2EC\uC544\uB0AC\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 703237655207243699, guid: e3188c90b5340e3428e86f86fa7413f2, type: 3}
+    effect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Name: 
+    Content: "\uC904\uACE7 \uCAD2\uAE30\uB294 \uC785\uC7A5\uC774 \uB418\uC5B4 \uB3C4\uB9DD\uCE58\uBA74\uC11C\uB3C4
+      \uD544\uC0AC\uC801\uC73C\uB85C \uC774 \uAE30\uB85D\uC744 \uACF5\uC720\uD588\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 703237655207243699, guid: e3188c90b5340e3428e86f86fa7413f2, type: 3}
+    effect: 0
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Name: 
+    Content: "\uD0C4\uC555\uC73C\uB85C \uBC14\uB85C \uC0AC\uB77C\uC9C0\uAE30 \uC77C\uC218\uC600\uC9C0\uB9CC,
+      \uC0AC\uB78C\uB4E4\uC740 \uC774\uC81C \uC218\uADFC\uB300\uBA70 \uACF5\uD3EC\uC5D0
+      \uB5A4\uB2E4.\n"
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 703237655207243699, guid: e3188c90b5340e3428e86f86fa7413f2, type: 3}
+    effect: 0
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Name: 
+    Content: "\uC544\uBB34\uB3C4 \uB9D0\uD558\uC9C0\uB294 \uBABB\uD558\uC9C0\uB9CC
+      \uD655\uC2E4\uD788 \uC54C\uACE0\uC788\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 703237655207243699, guid: e3188c90b5340e3428e86f86fa7413f2, type: 3}
+    effect: 0
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []

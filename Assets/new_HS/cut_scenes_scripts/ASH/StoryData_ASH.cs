@@ -1,24 +1,91 @@
-ï»¿using System.Collections.Generic;
+using System.Collections.Generic;
+
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StoryData_ASH", menuName = "Scriptable Objects/StoryData_ASH")]
-public class StoryData_ASH : ScriptableObject
-{
-    public List<Data_ASH> Story = new List<Data_ASH>();
-}
+
+
+// ÀÌ ÆÄÀÏÀº DialoguePlayer_ASH ½ºÅ©¸³Æ®°¡ »ç¿ëÇÒ ¸ğµç µ¥ÀÌÅÍ ±¸Á¶¸¦ Á¤ÀÇÇÕ´Ï´Ù.
+
+
 
 [System.Serializable]
-public class Data_ASH
+
+public class Choice_ASH
+
 {
+
+    [Tooltip("¼±ÅÃÁö ¹öÆ°¿¡ Ç¥½ÃµÉ ÅØ½ºÆ®")]
+
+    public string choiceText;
+
+    [Tooltip("ÀÌ ¼±ÅÃÁö¸¦ °ñ¶úÀ» ¶§ ÀÌ¾îÁú ½ºÅä¸® µ¥ÀÌÅÍ ÆÄÀÏ")]
+
+    public StoryData_ASH nextStory;
+
+}
+
+
+
+[CreateAssetMenu(fileName = "StoryData_ASH", menuName = "Scriptable Objects/StoryData_ASH")]
+
+public class StoryData_ASH : ScriptableObject
+
+{
+
+    public List<Data_ASH> Story = new List<Data_ASH>();
+
+}
+
+
+
+[System.Serializable]
+
+public class Data_ASH
+
+{
+
+    [Tooltip("ÀÌ ¶óÀÎÀÇ Å¸ÀÔÀ» 'Dialogue'(´ë»ç) ¶Ç´Â 'Choice'(¼±ÅÃÁö)·Î ¼³Á¤ÇÕ´Ï´Ù.")]
+
+    public LineType lineType = LineType.Dialogue;
+
+
+
+    [Header("´ë»ç ³»¿ë (Dialogue Type)")]
+
     public string Name;
+
     [TextArea(3, 5)]
+
     public string Content;
 
-    [Tooltip("ì´ ëŒ€ì‚¬ì—ì„œ í™œì„±í™”í•  ì´ë¦„í‘œ UI íŒ¨ë„ í”„ë¦¬íŒ¹")]
     public GameObject nameplatePanel;
 
-    [Tooltip("FadeIn ë˜ëŠ” Show íš¨ê³¼ë¥¼ ì¤„ ë•Œ ì‚¬ìš©í•  ì´ë¯¸ì§€")]
+    public string animationTrigger;
+
+
+
+    [Header("¹è°æ ÀÏ·¯½ºÆ®")]
+
     public Sprite Sprite;
-    [Tooltip("ì´ ëŒ€ì‚¬ì—ì„œ ì ìš©í•  ì¼ëŸ¬ìŠ¤íŠ¸ íš¨ê³¼")]
+
     public IllustrationEffect effect;
+
+
+
+    [Header("Ä³¸¯ÅÍ ÀÌ¹ÌÁö")]
+
+    public Sprite characterSprite;
+
+    public IllustrationEffect characterEffect;
+
+
+
+    [Header("¼±ÅÃÁö ¸ñ·Ï (Choice Type)")]
+
+    public List<Choice_ASH> choices = new List<Choice_ASH>();
+
 }
+
+
+
+// ¾Æ·¡ EnumµéÀº ÀÌ ÆÄÀÏ ¶Ç´Â º°µµ ÆÄÀÏ¿¡ ¹İµå½Ã Á¸ÀçÇØ¾ß ÇÕ´Ï´Ù.

@@ -1,5 +1,16 @@
-ï»¿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+
+// ÀÌ ÆÄÀÏÀº DialoguePlayer_IMPULSE ½ºÅ©¸³Æ®°¡ »ç¿ëÇÒ ¸ğµç µ¥ÀÌÅÍ ±¸Á¶¸¦ Á¤ÀÇÇÕ´Ï´Ù.
+
+[System.Serializable]
+public class Choice_IMPULSE
+{
+    [Tooltip("¼±ÅÃÁö ¹öÆ°¿¡ Ç¥½ÃµÉ ÅØ½ºÆ®")]
+    public string choiceText;
+    [Tooltip("ÀÌ ¼±ÅÃÁö¸¦ °ñ¶úÀ» ¶§ ÀÌ¾îÁú ½ºÅä¸® µ¥ÀÌÅÍ ÆÄÀÏ")]
+    public StoryData_IMPULSE nextStory;
+}
 
 [CreateAssetMenu(fileName = "StoryData_IMPULSE", menuName = "Scriptable Objects/StoryData_IMPULSE")]
 public class StoryData_IMPULSE : ScriptableObject
@@ -10,15 +21,24 @@ public class StoryData_IMPULSE : ScriptableObject
 [System.Serializable]
 public class Data_IMPULSE
 {
+    [Tooltip("ÀÌ ¶óÀÎÀÇ Å¸ÀÔÀ» 'Dialogue'(´ë»ç) ¶Ç´Â 'Choice'(¼±ÅÃÁö)·Î ¼³Á¤ÇÕ´Ï´Ù.")]
+    public LineType lineType = LineType.Dialogue;
+
+    [Header("´ë»ç ³»¿ë (Dialogue Type)")]
     public string Name;
     [TextArea(3, 5)]
     public string Content;
-
-    [Tooltip("ì´ ëŒ€ì‚¬ì—ì„œ í™œì„±í™”í•  ì´ë¦„í‘œ UI íŒ¨ë„ í”„ë¦¬íŒ¹")]
     public GameObject nameplatePanel;
+    public string animationTrigger;
 
-    [Tooltip("FadeIn ë˜ëŠ” Show íš¨ê³¼ë¥¼ ì¤„ ë•Œ ì‚¬ìš©í•  ì´ë¯¸ì§€")]
+    [Header("¹è°æ ÀÏ·¯½ºÆ®")]
     public Sprite Sprite;
-    [Tooltip("ì´ ëŒ€ì‚¬ì—ì„œ ì ìš©í•  ì¼ëŸ¬ìŠ¤íŠ¸ íš¨ê³¼")]
     public IllustrationEffect effect;
+
+    [Header("Ä³¸¯ÅÍ ÀÌ¹ÌÁö")]
+    public Sprite characterSprite;
+    public IllustrationEffect characterEffect;
+
+    [Header("¼±ÅÃÁö ¸ñ·Ï (Choice Type)")]
+    public List<Choice_IMPULSE> choices = new List<Choice_IMPULSE>();
 }

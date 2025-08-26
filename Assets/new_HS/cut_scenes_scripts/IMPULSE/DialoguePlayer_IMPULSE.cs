@@ -1,71 +1,79 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// 클래스 이름을 DialoguePlayer_IMPULSE로 변경했습니다.
-public class DialoguePlayer_IMPULSE : MonoBehaviour
+public class DialoguePlayer_IMPULSE : MonoBehaviour // 클래스 이름 변경
 {
     [Header("UI 요소 연결")]
     public TextMeshProUGUI contentText;
     public GameObject dialoguePanel;
     public Image illustrationImage;
+    public Image characterImage;
     public Transform nameplateParent;
 
+    [Header("선택지 UI 연결")]
+    [Tooltip("선택지 버튼들이 생성될 부모 패널 (Vertical Layout Group 필요)")]
+    public GameObject choicePanel;
+    [Tooltip("선택지 버튼으로 사용할 프리팹")]
+    public GameObject choiceButtonPrefab;
+
     [Header("대화 데이터")]
-    public StoryData_ch storyToPlay;
+    public StoryData_IMPULSE storyToPlay; // 데이터 타입 변경
 
     [Header("효과 설정")]
     public float typingSpeed = 0.05f;
     public float fadeDuration = 0.5f;
 
-    private GameObject currentNameplate;
+    // 내부 변수들
     private int lineIndex;
+    private bool isTyping;
     private Coroutine typingCoroutine;
     private Coroutine illustrationFadeCoroutine;
-    private bool isTyping = false;
+    private Coroutine characterFadeCoroutine;
     private CanvasGroup illustrationCanvasGroup;
+    private CanvasGroup characterCanvasGroup;
+    private List<GameObject> spawnedChoiceButtons = new List<GameObject>();
 
     void Awake()
     {
+        // CanvasGroup 컴포넌트 초기화
         if (illustrationImage != null)
         {
-            illustrationCanvasGroup = illustrationImage.GetComponent<CanvasGroup>();
-            if (illustrationCanvasGroup == null)
-            {
-                illustrationCanvasGroup = illustrationImage.gameObject.AddComponent<CanvasGroup>();
-            }
+            illustrationCanvasGroup = illustrationImage.gameObject.GetComponent<CanvasGroup>() ?? illustrationImage.gameObject.AddComponent<CanvasGroup>();
+        }
+        if (characterImage != null)
+        {
+            characterCanvasGroup = characterImage.gameObject.GetComponent<CanvasGroup>() ?? characterImage.gameObject.AddComponent<CanvasGroup>();
         }
     }
 
     void Start()
     {
-        StartDialogue();
+        StartDialogue(storyToPlay);
     }
 
-    public void StartDialogue()
+    public void StartDialogue(StoryData_IMPULSE story) // 데이터 타입 변경
     {
-        if (storyToPlay == null || storyToPlay.Story.Count == 0) return;
-
-        if (illustrationImage != null)
-        {
-            illustrationImage.gameObject.SetActive(true);
-            illustrationCanvasGroup.alpha = 0f;
-        }
-        if (currentNameplate != null)
-        {
-            Destroy(currentNameplate);
-            currentNameplate = null;
-        }
-
+        storyToPlay = story;
         lineIndex = 0;
-        dialoguePanel.SetActive(true);
+
+        // UI 초기화
+        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
+        if (characterCanvasGroup != null) characterCanvasGroup.alpha = 0;
+
+        ClearChoices();
+        if (choicePanel != null) choicePanel.SetActive(false);
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+
         ShowLine(lineIndex);
     }
 
     void Update()
     {
-        if (dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
+        // 마우스 클릭으로 대화 진행
+        if (choicePanel.activeSelf == false && dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
         {
             if (isTyping)
             {
@@ -88,52 +96,147 @@ public class DialoguePlayer_IMPULSE : MonoBehaviour
 
     private void ShowLine(int index)
     {
-        Data_ch line = storyToPlay.Story[index];
+        Data_IMPULSE line = storyToPlay.Story[index]; // 데이터 타입 변경
 
-        if (currentNameplate != null) Destroy(currentNameplate);
-        if (line.nameplatePanel != null)
+        if (line.lineType == LineType.Dialogue)
         {
-            currentNameplate = Instantiate(line.nameplatePanel, nameplateParent);
+            // 일반 대사 처리
+            dialoguePanel.SetActive(true);
+            choicePanel.SetActive(false);
+            ProcessDialogue(line);
         }
-
-        if (illustrationImage != null)
+        else if (line.lineType == LineType.Choice)
         {
-            switch (line.effect)
+            // --- ✨ 수정된 선택지 처리 로직 ---
+            // 1. 대사창과 선택지창을 둘 다 켭니다.
+            dialoguePanel.SetActive(true);
+            choicePanel.SetActive(true);
+
+            // 2. StoryData의 Content 필드에 내용이 있다면, 대사창에 바로 표시합니다.
+            if (!string.IsNullOrEmpty(line.Content))
             {
-                case IllustrationEffect.FadeIn:
-                    if (line.Sprite != null)
-                    {
-                        illustrationCanvasGroup.alpha = 0f;
-                        illustrationImage.sprite = line.Sprite;
-                        StartFade(1f); // 페이드인
-                    }
-                    break;
-
-                case IllustrationEffect.Show:
-                    if (line.Sprite != null)
-                    {
-                        if (illustrationFadeCoroutine != null) StopCoroutine(illustrationFadeCoroutine);
-                        illustrationImage.sprite = line.Sprite;
-                        illustrationCanvasGroup.alpha = 1f;
-                    }
-                    break;
-
-                case IllustrationEffect.FadeOut:
-                    StartFade(0f); // 페이드아웃
-                    break;
-
-                case IllustrationEffect.None:
-                    break;
+                if (isTyping) // 혹시 모르니 타이핑 코루틴 중지
+                {
+                    StopCoroutine(typingCoroutine);
+                    isTyping = false;
+                }
+                contentText.text = line.Content; // 타이핑 효과 없이 바로 텍스트 설정
             }
-        }
+            else
+            {
+                contentText.text = ""; // 내용이 없으면 비워줍니다.
+            }
 
+            ProcessChoices(line); // 버튼 생성 로직은 그대로 호출
+        }
+    }
+
+    private void ProcessDialogue(Data_IMPULSE line) // 데이터 타입 변경
+    {
+        // 이미지 및 효과 처리
+        ProcessEffect(illustrationCanvasGroup, illustrationImage, line.Sprite, line.effect, ref illustrationFadeCoroutine);
+        ProcessEffect(characterCanvasGroup, characterImage, line.characterSprite, line.characterEffect, ref characterFadeCoroutine);
+
+        // 텍스트 타이핑
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.Content));
     }
 
+    private void ProcessChoices(Data_IMPULSE line) // 데이터 타입 변경
+    {
+        ClearChoices(); // 이전 선택지 버튼들 삭제
+
+        // 새로운 선택지 버튼 생성
+        foreach (Choice_IMPULSE choice in line.choices) // 데이터 타입 변경
+        {
+            GameObject buttonGO = Instantiate(choiceButtonPrefab, choicePanel.transform);
+            buttonGO.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
+
+            // 각 버튼에 클릭 이벤트 연결
+            Button button = buttonGO.GetComponent<Button>();
+            button.onClick.AddListener(() => {
+                MakeChoice(choice);
+            });
+            spawnedChoiceButtons.Add(buttonGO);
+        }
+    }
+
+    public void MakeChoice(Choice_IMPULSE choice) // 데이터 타입 변경
+    {
+        if (choice.nextStory != null)
+        {
+            StartDialogue(choice.nextStory);
+        }
+        else
+        {
+            Debug.LogWarning("선택지에 연결된 다음 스토리가 없습니다. 대화를 종료합니다.");
+            EndDialogue();
+        }
+    }
+
+    private void ClearChoices()
+    {
+        foreach (GameObject button in spawnedChoiceButtons)
+        {
+            Destroy(button);
+        }
+        spawnedChoiceButtons.Clear();
+    }
+
+    private void EndDialogue()
+    {
+        dialoguePanel.SetActive(false);
+        choicePanel.SetActive(false);
+        Debug.Log("대화가 종료되었습니다.");
+    }
+
+    private void ProcessEffect(CanvasGroup canvas, Image image, Sprite sprite, IllustrationEffect effect, ref Coroutine fadeCoroutine)
+    {
+        if (canvas == null) return;
+        switch (effect)
+        {
+            case IllustrationEffect.Show:
+                if (sprite != null)
+                {
+                    if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+                    image.sprite = sprite; canvas.alpha = 1f;
+                }
+                break;
+            case IllustrationEffect.FadeIn:
+                if (sprite != null)
+                {
+                    image.sprite = sprite;
+                    StartFade(canvas, 1f, ref fadeCoroutine);
+                }
+                break;
+            case IllustrationEffect.FadeOut:
+                StartFade(canvas, 0f, ref fadeCoroutine);
+                break;
+        }
+    }
+
+    private void StartFade(CanvasGroup canvas, float targetAlpha, ref Coroutine fadeCoroutine)
+    {
+        if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+        fadeCoroutine = StartCoroutine(FadeRoutine(canvas, targetAlpha));
+    }
+
+    private IEnumerator FadeRoutine(CanvasGroup canvas, float targetAlpha)
+    {
+        float startAlpha = canvas.alpha;
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            canvas.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeDuration);
+            yield return null;
+        }
+        canvas.alpha = targetAlpha;
+    }
+
     private void CompleteLine()
     {
-        if (isTyping && typingCoroutine != null)
+        if (isTyping)
         {
             StopCoroutine(typingCoroutine);
             contentText.text = storyToPlay.Story[lineIndex].Content;
@@ -141,62 +244,15 @@ public class DialoguePlayer_IMPULSE : MonoBehaviour
         }
     }
 
-    private void EndDialogue()
-    {
-        if (currentNameplate != null) Destroy(currentNameplate);
-        StartFade(0f);
-        dialoguePanel.SetActive(false);
-    }
-
-    private void StartFade(float targetAlpha)
-    {
-        if (illustrationImage == null) return;
-        if (illustrationFadeCoroutine != null)
-        {
-            StopCoroutine(illustrationFadeCoroutine);
-        }
-        illustrationFadeCoroutine = StartCoroutine(FadeRoutine(targetAlpha));
-    }
-
-    private IEnumerator FadeRoutine(float targetAlpha)
-    {
-        float startAlpha = illustrationCanvasGroup.alpha;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < fadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            illustrationCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeDuration);
-            yield return null;
-        }
-        illustrationCanvasGroup.alpha = targetAlpha;
-    }
-
     private IEnumerator TypeText(string text)
     {
         isTyping = true;
         contentText.text = "";
-        int charIndex = 0;
-
-        while (charIndex < text.Length)
+        foreach (char c in text)
         {
-            if (text[charIndex] == '<')
-            {
-                int tagEndIndex = text.IndexOf('>', charIndex);
-                if (tagEndIndex != -1)
-                {
-                    string tag = text.Substring(charIndex, tagEndIndex - charIndex + 1);
-                    contentText.text += tag;
-                    charIndex = tagEndIndex + 1;
-                    continue;
-                }
-            }
-
-            contentText.text += text[charIndex];
-            charIndex++;
+            contentText.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
-
         isTyping = false;
     }
 }
