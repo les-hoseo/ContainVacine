@@ -14,69 +14,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Story:
   - lineType: 0
-    Name: 
     Content: "\uD5C9... \uD5C9... \uC5EC\uAE30\uB294 \uC5B4\uB514\uC9C0?"
     nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
     animationTrigger: 
-    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
+    characterSprite: {fileID: 21300000, guid: 009dcdb5d4a14d94eb60645c272dcd80, type: 3}
     characterEffect: 2
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uC815\uC2E0\uC5C6\uC774 \uB2EC\uB9B0 \uADF8 \uB05D\uC5D0 \uB098\uB294
       \uD558\uAC11\uD310\uC5D0 \uC774\uB974\uB800\uB2E4."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
-    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
     effect: 1
     characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
     characterEffect: 1
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uBCBD\uC5D0\uC788\uB294 \uC9C0\uB3C4\uC5D0 \uC758\uD558\uBA74 \uB09C
       \uC9C0\uAE08 \uC5D4\uC9C4\uC2E4\uC758 \uADFC\uCC98\uC5D0 \uC788\uB098\uBCF4\uB2E4."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
-    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
     effect: 1
     characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
     characterEffect: 1
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uC5D4\uC9C4\uC2E4... \uC9C0\uAE08 \uC791\uB3D9\uD558\uB824\uB098?"
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
-    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
     effect: 1
     characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
     characterEffect: 1
     choices: []
   - lineType: 0
-    Name: 
     Content: 
     nameplatePanel: {fileID: 0}
     animationTrigger: 
-    Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
-    effect: 2
-    characterSprite: {fileID: 0}
-    characterEffect: 0
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
+    characterEffect: 3
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uC800\uAC74...!"
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 2
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uD640\uB9B0\uB4EF \uB4E4\uC5B4\uAC04 \uC5D4\uC9C4\uC2E4\uC5D0\uC11C
       \uAE30\uB2E4\uB9AC\uACE0 \uC788\uB358 \uAC83\uC740 \uC5D4\uC9C4 \uC8FC\uC704\uB97C
       \uBC30\uD68C\uD558\uB294 \uAD34\uBB3C\uC774\uC600\uB2E4."
@@ -84,21 +77,19 @@ MonoBehaviour:
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uC774, \uC77C\uB2E8 \uBAB8\uC744 \uC228\uACA8\uC57C\uACA0\uC5B4."
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uAD6C\uC11D\uC5D0 \uBAB8\uC744 \uC228\uAE30\uACE0 \uC228\uC744 \uC8FD\uC774\uBA70
       \uCC9C\uCC9C\uD788 \uAD34\uBB3C\uC774 \uC8FC\uBCC0\uC744 \uB5A0\uB098\uAE38
       \uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5C8\uB2E4."
@@ -106,113 +97,260 @@ MonoBehaviour:
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uADF8\uB7EC\uB098..."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uAC11\uC790\uAE30 \uC9C4\uB3D9\uC774?!"
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uC774\uAC74 \uC5D4\uC9C4\uC774 \uB2E4\uC2DC \uC6C0\uC9C1\uC774\uB294
       \uAC74\uAC00?"
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uB204\uAD6C\uC77C\uAE4C? \uC544\uAE4C \uBD24\uB358 \uC0AC\uB78C? \uC0B4\uC544\uC788\uB294
       \uC2B9\uBB34\uC6D0? \uC54C \uC218 \uC5C6\uC5C8\uB2E4."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
-    characterEffect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uB0B4\uAC00 \uB9DD\uC124\uC774\uB294 \uCC30\uB098 \uAD34\uBB3C\uC774
       \uC5D4\uC9C4\uC758 \uC18C\uC74C\uC5D0 \uC774\uB04C\uB824 \uB0B4\uB824\uCE58\uB294
       \uAC83\uC774 \uBCF4\uC778\uB2E4."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
-    effect: 2
+    effect: 1
     characterSprite: {fileID: 0}
     characterEffect: 0
     choices: []
   - lineType: 0
-    Name: 
+    Content: 
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
+    effect: 3
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
     Content: "\uC774\uB300\uB85C \uAC00\uBA74 \uC5D4\uC9C4\uC774...!"
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
-    Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
-    effect: 2
-    characterSprite: {fileID: 0}
-    characterEffect: 0
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: e6f70396b5417564d85d819d7121c065, type: 3}
+    characterEffect: 2
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uBB34\uC5B8\uAC00 \uD574\uC57C\uD55C\uB2E4\uB294 \uC0DD\uAC01\uC774
       \uB4E4\uC9C0\uB9CC, \uB3D9\uC2DC\uC5D0 \uC544\uBB34\uAC83\uB3C4 \uD560 \uC218
       \uC5C6\uC744 \uAC83 \uAC19\uB2E4."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
-    Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
-    effect: 2
-    characterSprite: {fileID: 0}
-    characterEffect: 0
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: e6f70396b5417564d85d819d7121c065, type: 3}
+    characterEffect: 1
     choices: []
   - lineType: 0
-    Name: 
     Content: "...\uC544\uAE4C\uCC98\uB7FC \uC2F8\uC6B8 \uC218 \uC788\uC744\uAE4C?"
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
-    Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
-    effect: 2
-    characterSprite: {fileID: 0}
-    characterEffect: 0
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: e6f70396b5417564d85d819d7121c065, type: 3}
+    characterEffect: 1
     choices: []
   - lineType: 0
-    Name: 
     Content: "\uADF8\uB7EC\uB354\uB2C8 \uC5D4\uC9C4 \uADFC\uCC98\uC758 \uD30C\uC774\uD504\uC5D0\uC11C
       \uC99D\uAE30\uAC00 \uC0C8\uC5B4\uB098\uC624\uBA70 \uAD34\uBB3C\uC774 \uB3C4\uB9DD\uCCE4\uB2E4."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
-    Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
+    characterSprite: {fileID: 21300000, guid: e6f70396b5417564d85d819d7121c065, type: 3}
     characterEffect: 1
     choices: []
   - lineType: 0
-    Name: 
-    Content: "\uC800\uAC70\uB77C\uBA74!"
+    Content: "\uC800\uAC70\uB77C\uBA74..."
     nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
     animationTrigger: 
-    Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
     effect: 1
-    characterSprite: {fileID: 5193671876954028978, guid: 1d2d2ca46e842cb4c8af292677000eda, type: 3}
+    characterSprite: {fileID: 21300000, guid: e6f70396b5417564d85d819d7121c065, type: 3}
     characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uC131\uACF5\uD55C\uAC74\uAC00? \uC800 \uAD34\uBB3C\uC744... \uC81C\uB300\uB85C
+      \uB9C9\uC544\uB0B8\uAC74\uAC00?"
+    nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: e6f70396b5417564d85d819d7121c065, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uAD34\uBB3C\uC740 \uC774\uC81C \uC5D4\uC9C4\uC5D0\uB294 \uD765\uBBF8\uAC00
+      \uC5C6\uB2E4\uB294 \uB4EF, \uC790\uB9AC\uB97C \uB5A0\uB09C\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: e6f70396b5417564d85d819d7121c065, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uD5C9... \uD5C9... \uB9D0\uB3C4 \uC548\uB418\uB294 \uC77C\uC774\uC5C8\uC5B4.
+      \uC5D4\uC9C4\uC774 \uB2E4\uC2DC \uB3CC\uC544\uAC00\uB2C8\uAE4C, \uBC30\uB3C4
+      \uACE7 \uC6C0\uC9C1\uC77C\uAC70\uC57C..."
+    nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 8e4ad340a21eda64fade0d5a7622b533, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uC7A0\uC2DC \uC548\uB3C4\uAC10\uC774 \uBAB0\uB824\uC654\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 8e4ad340a21eda64fade0d5a7622b533, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uC774\uC81C \uC0B4 \uC218 \uC788\uC744 \uAC83\uC774\uB780 \uC548\uB3C4\uAC10,
+      \uC774 \uC9C0\uC625\uC744 \uBC97\uC5B4\uB0A0 \uC218 \uC788\uB2E4\uB294 \uC554\uB3C4\uAC10\uC774."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 8e4ad340a21eda64fade0d5a7622b533, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uADF8\uB7EC\uB098 \uD76C\uB9DD\uC740 \uC624\uB798\uAC00\uC9C0 \uBABB\uD588\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 8e4ad340a21eda64fade0d5a7622b533, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uC774 \uCFF5\uCFF5\uAC70\uB9AC\uB294 \uC18C\uB9AC\uB294 \uC5B4\uB514\uC11C
+      \uB098\uB294\uAC70\uC9C0?"
+    nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 658e6da2c68dcfc4c91330c04ec8d044, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uC544\uC9C1 \uADFC\uCC98\uC5D0 \uBB50\uAC00 \uB354 \uC788\uB294\uAC74\uAC00?"
+    nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 658e6da2c68dcfc4c91330c04ec8d044, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: "\uADF8\uB7EC\uB098 \uB0B4 \uCD94\uCE21\uC740 \uD2C0\uB838\uB2E4. \uC18C\uB9AC\uB294
+      \uBCBD \uB4A4\uB098 \uC704\uAC00 \uC544\uB2C8\uB77C \uBC14\uB85C \uC606\uC5D0\uC11C
+      \uB098\uACE0 \uC788\uC5C8\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 658e6da2c68dcfc4c91330c04ec8d044, type: 3}
+    characterEffect: 1
+    choices: []
+  - lineType: 0
+    Content: 
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 658e6da2c68dcfc4c91330c04ec8d044, type: 3}
+    characterEffect: 3
+    choices: []
+  - lineType: 0
+    Content: "\uC5D4\uC9C4\uC740 \uD655\uC2E4\uD788 \uC7AC\uAC00\uB3D9\uD588\uB2E4.
+      \uD558\uC9C0\uB9CC \uC774 \uBC14\uB2E4\uB294 \uC544\uC9C1 \uADF8\uB4E4\uC744
+      \uB194\uC904 \uC0DD\uAC01\uC774 \uC5C6\uC5C8\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 5f2567ea45c641448bbf53a986d091d1, type: 3}
+    effect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Content: "\uAC15\uD558\uAC8C \uBAB0\uC544\uCE58\uB294 \uBC14\uB78C\uACFC \uBC30\uB97C
+      \uB04C\uC5B4\uB2F9\uAE30\uB294 \uBB3C\uC0B4\uC5D0, \uBC30\uB294 \uC6C0\uC9C1\uC774\uC9C0\uB3C4
+      \uBABB\uD588\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 5f2567ea45c641448bbf53a986d091d1, type: 3}
+    effect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Content: "\uC5D4\uC9C4\uC5D0 \uAC00\uD574\uC9C0\uB294 \uBD80\uD558\uAC00 \uC810\uC810
+      \uCEE4\uC9C0\uBA70 \uC784\uACC4\uC810\uC5D0 \uB2EC\uD558\uC790 \uACB0\uAD6D..."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 5f2567ea45c641448bbf53a986d091d1, type: 3}
+    effect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Content: 
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: 37c8aae85a5f34e438bdc1a903d3a312, type: 3}
+    effect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Content: 
+    nameplatePanel: {fileID: 0}
+    animationTrigger: ASH
+    Sprite: {fileID: 0}
+    effect: 0
+    characterSprite: {fileID: 0}
+    characterEffect: 0
     choices: []
