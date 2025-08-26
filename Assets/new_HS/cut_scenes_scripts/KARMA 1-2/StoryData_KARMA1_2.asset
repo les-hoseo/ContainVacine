@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d778807f1ee4ff43824279946a4dcd2, type: 3}
+  m_Name: StoryData_KARMA1_2
+  m_EditorClassIdentifier: 
+  Story:
+  - lineType: 0
+    Content: "\uBFCC\uB9AC\uCCE4\uB2E4!"
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    animationTrigger: 
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
+    effect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Content: "\uC7A0\uC2DC\uB9CC...!"
+    nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
+    animationTrigger: 
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
+    effect: 1
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Content: "\uB4A4\uB3C4 \uB3CC\uC544\uBCF4\uC9C0 \uC54A\uACE0 \uB3C4\uB9DD\uCCD0\uBC84\uB838\uB2E4."
+    nameplatePanel: {fileID: 0}
+    animationTrigger: 
+    Sprite: {fileID: 1034968330699063316, guid: d45963ff5a88c3c4aaa191cb3c2ff0d0, type: 3}
+    effect: 0
+    characterSprite: {fileID: 0}
+    characterEffect: 0
+    choices: []
+  - lineType: 0
+    Content: "\uB3C4\uB300\uCCB4 \uC774 \uBC30 \uC548\uC5D0\uC11C \uBB34\uC2A8 \uC77C\uC774
+      \uC77C\uC5B4\uB098\uACE0 \uC788\uB294\uAC70\uC57C?!"
+    nameplatePanel: {fileID: 4421309645432676817, guid: a9124a67417eaaa4b9dd93ff863af348, type: 3}
+    animationTrigger: 
+    Sprite: {fileID: 21300000, guid: d88ab1568a8d9df4988b6c5f5583a605, type: 3}
+    effect: 1
+    characterSprite: {fileID: 21300000, guid: 0c15c588b4e6f104b8cfae237ac82327, type: 3}
+    characterEffect: 2
+    choices: []

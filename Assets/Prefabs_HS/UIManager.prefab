@@ -9,9 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8227428800780790848}
-  - component: {fileID: 7487329649278008414}
-  - component: {fileID: 8366712546407612355}
-  - component: {fileID: 6275152920795447589}
   - component: {fileID: 256030792088809203}
   - component: {fileID: 7457134271791622271}
   - component: {fileID: 6624076891721829323}
@@ -41,48 +38,6 @@ RectTransform:
   m_AnchoredPosition: {x: -1.2673621, y: -0.5839489}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7487329649278008414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 300646082069318629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ce7dfb570000f84fab6de83ed1d6d2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settingPanel: {fileID: 0}
-  GameStart: {fileID: 0}
-  Interface: {fileID: 0}
-  Save: {fileID: 0}
-  gameOver: {fileID: 0}
---- !u!114 &8366712546407612355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 300646082069318629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a40bea6e5ce0c1449feb4befeb39f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetInterface: {fileID: 0}
---- !u!114 &6275152920795447589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 300646082069318629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1025e740a0732f74f990e5a32c0ac295, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &256030792088809203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,9 +68,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveButton: {fileID: 0}
+  loadButton: {fileID: 0}
+  exitButton: {fileID: 0}
   buttonText: {fileID: 0}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   savedTextColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  allSlots: []
 --- !u!114 &6624076891721829323
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &841707997202892612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8420038052323511859}
+  - component: {fileID: 2959785443884334892}
+  - component: {fileID: 4183023842049653025}
+  - component: {fileID: 4759919020871837330}
+  - component: {fileID: 927581543273208884}
+  - component: {fileID: 8372942519866967742}
+  - component: {fileID: 6535983076177358116}
+  - component: {fileID: 7530320404708909978}
+  - component: {fileID: 5048014258286874320}
+  - component: {fileID: 1062502727121528551}
+  m_Layer: 5
+  m_Name: CutScenesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8420038052323511859
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.00925926, y: 0.00925926, z: 0.00925926}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2959785443884334892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd9cd05490f5304dba03624dcc14814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: 79ace9a0ac42ee149be731d071cbe387, type: 2}
+  typingSpeed: 0.02
+  fadeDuration: 0.5
+--- !u!114 &4183023842049653025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ef955ba35f44946ac75a7b10ebda62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  targetAnimator: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: 6349a2eac9768b94e9fa51ac11df22eb, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &4759919020871837330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f90f5be041b49d643b64f6f62cdb199e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: ec30100566ce92a46a4d73e8676f3589, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &927581543273208884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f113ac2315ef3924fbb11a981ebcc77d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: 547ecbffba9e9144886bfff3926a5182, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &8372942519866967742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83363e1f1bca86b40823e6332b0fca0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: d2c0462e19bd6374d9c5c3d33768c7c6, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &6535983076177358116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c3197b48c769941963f97a894c87cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: fc54e7f4eeb31314f81e1fbad92b8f2f, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &7530320404708909978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504d8f7d442baf347a62c69247688388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: ed4357afcaf6bd7418ac8628ad93e184, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &5048014258286874320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e636d0e3fc6484d9061eb285c14ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: b8e2e1651fa5d8f4984042c0ce382618, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &1062502727121528551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841707997202892612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2575871256ece94f8a7bcc21b140904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  targetAnimator: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  storyToPlay: {fileID: 11400000, guid: 32721caa7ae7f5b48a4abc9be79aa038, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
