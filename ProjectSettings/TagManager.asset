@@ -2,17 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UI_Behind
   - Water
   - UI
-  - 
-  - 
+  - StorySlot
+  - Board
   - 
   - 
   - 
@@ -41,3 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UI_Behind
+    uniqueID: 4094019139
+    locked: 0
+  - name: StorySlot
+    uniqueID: 2889145349
+    locked: 0
+  - name: UI
+    uniqueID: 2675466529
+    locked: 0
+  - name: 
+    uniqueID: 2046349619
+    locked: 0
+  m_RenderingLayers:
+  - Default
