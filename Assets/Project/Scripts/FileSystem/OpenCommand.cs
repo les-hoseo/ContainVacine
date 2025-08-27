@@ -42,6 +42,11 @@ public class OpenCommand : ICommand
         }
         else if (path.EndsWith(".dat", StringComparison.OrdinalIgnoreCase))
         {
+            // 만약 열린 파일이 메인 엔진 데이터 파일이라면, 몬스터 기믹을 시작합니다.
+            if (fileNode.Name.Equals("DATA_메인_엔진.dat", StringComparison.OrdinalIgnoreCase))
+            {
+                MainEngineGimmick.instance.StartGimmick();
+            }
             GameManager.instance.currentLocation = fileNode;
             var lines = new List<string>();
             lines.Add("파일 여는 중… 100%");

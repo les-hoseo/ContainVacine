@@ -18,6 +18,7 @@ public class InteractionRule
     [TextArea]
     public string newFileContent; // 생성되는 파일(들)에 공통으로 들어갈 내용
     public List<string> filesToCreate = new List<string>(); // 여러 파일 생성용
+    public Dictionary<string, string> fileContents = new Dictionary<string, string>(); // 파일별 개별 내용
 }
 
 public class InteractionManager : MonoBehaviour
@@ -41,7 +42,7 @@ public class InteractionManager : MonoBehaviour
             itemName = "십자드라이버.item",
             successMessage = "[환풍구.object]에 [십자드라이버.item] 사용 완료.\n신규 구역 확장, ZONE 디렉토리에 추가됨.",
             fileToCreate = "ZONE/상갑판/복도_A/객실_A2.log",
-            newFileContent = "객실 A2의 기록이다. 문이 부서져있다."
+            newFileContent = "복도로부터 큰 소음 발생 (강한 충격음) 문 파편 흩어짐. 황급한 움직임 패턴 감지. 날카로운 쇳소리 잔류."
         });
 
         // === 객실 A2 ===
@@ -51,7 +52,7 @@ public class InteractionManager : MonoBehaviour
             itemName = "", // 아이템 없이 상호작용
             successMessage = "[부서진_출입문.object] 상호작용 완료.\n신규 구역 확장, ZONE 디렉토리에 추가됨.",
             fileToCreate = "ZONE/상갑판/의무실.log",
-            newFileContent = "의무실의 기록이다. 약품들이 선반에 가지런히 정리되어 있다."
+            newFileContent = "의무실 문 강제 개방, 급박한 행동 패턴 감지. (종이가 찢어지는 소리) 불규칙한 뛰는 소리 감지.\r\n하갑판 정보 일부 유실.."
         });
 
         // === 의무실 ===
@@ -106,15 +107,37 @@ public class InteractionManager : MonoBehaviour
             itemName = "",
             successMessage = "[핏자국.object] 상호작용 완료.\n신규 구역 확장, ZONE 디렉토리에 추가됨.",
             filesToCreate = new List<string>
-            {
-                "ZONE/하갑판/카페테리아_주방.log",
-                "ZONE/하갑판/엔진_구역/제어실.log",
-                "ZONE/하갑판/엔진_구역/메인_엔진.log",
-                "ZONE/하갑판/화물_승무원_구역/승무원_숙소.log",
-                "ZONE/상갑판/복도_B/객실복도_B.log"
-            },
-            newFileContent = "새로운 기록이 발견되었다."
+    {
+        "ZONE/하갑판/카페테리아_주방.log",
+        "ZONE/하갑판/엔진_구역/제어실.log",
+        "ZONE/하갑판/엔진_구역/메인_엔진.log",
+        "ZONE/하갑판/화물_승무원_구역/승무원_숙소.log",
+        "ZONE/상갑판/복도_B/객실복도_B.log",
+        "ZONE/하갑판/화물_승무원_구역/화물창고.log"
+    },
+            newFileContent = "새로운 기록이 발견되었다.", // 기본 공통 내용
+            fileContents = new Dictionary<string, string>
+    {
+        { "ZONE/하갑판/카페테리아_주방.log",
+          "주방의 기록이다. 조리대에 피 묻은 칼이 남겨져 있다.\n셰프용 직원 키 인식 로그 감지됨. 보안 문 잠금 해제." },
+
+        { "ZONE/하갑판/엔진_구역/제어실.log",
+          "제어실 기록이다. 불규칙한 전력 공급으로 인해 경고등이 점등된다.\n엔진 구역 보안 장치 해제 로그 확인됨." },
+
+        { "ZONE/하갑판/엔진_구역/메인_엔진.log",
+          "메인 엔진 기록이다. 연료 탱크 연결부가 비어있음.\n새로운 연료통 투입 필요. 재보급 준비 대기 상태." },
+
+        { "ZONE/하갑판/화물_승무원_구역/승무원_숙소.log",
+          "승무원 숙소의 기록이다. 침대와 사물함이 어지럽혀져 있다.\n급박히 탈출한 흔적이 남아있다." },
+
+        { "ZONE/상갑판/복도_B/객실복도_B.log",
+          "객실 복도 B의 기록이다. 벽면에 긁힌 자국이 보인다.\n복도 끝에 잠긴 문이 탐지됨." },
+
+        { "ZONE/하갑판/화물_승무원_구역/화물창고.log",
+          "화물창고의 기록이다. 연료 탱크가 다수 적재되어 있음.\n연료 확보 가능. (문이 열리는 소리)" }
+    }
         });
+
 
         // === 카페테리아 주방 ===
         interactionRules.Add(new InteractionRule
@@ -207,7 +230,15 @@ public class InteractionManager : MonoBehaviour
                 {
                     foreach (var filePath in rule.filesToCreate)
                     {
-                        FileSystemNode createdNode = FileSystem.instance.CreateFileNodeByPath(filePath, rule.newFileContent);
+                        string content = rule.newFileContent; // 기본 공통 내용
+
+                        // 만약 개별 내용이 있다면 덮어쓰기
+                        if (rule.fileContents != null && rule.fileContents.ContainsKey(filePath))
+                        {
+                            content = rule.fileContents[filePath];
+                        }
+
+                        FileSystemNode createdNode = FileSystem.instance.CreateFileNodeByPath(filePath, content);
                         if (createdNode == null) { message += $"\nSYSTEM > {filePath} 파일 생성에 실패했습니다."; }
                     }
                 }

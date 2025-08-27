@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public FileSystemNode currentLocation;
+    
 
     [Header("게임 진행 상태 변수")]
     [Range(0, 100)]

@@ -26,6 +26,22 @@ public class FileSystem : MonoBehaviour
         InitializeFileSystem();
     }
 
+    public void GetAllNodeNames(FileSystemNode startNode, List<string> names)
+    {
+        if (startNode == null) return;
+
+        // 자기 자신의 이름을 추가 (단, 최상위 ROOT는 제외)
+        if (startNode != root)
+        {
+            names.Add(startNode.Name);
+        }
+
+        // 모든 자식 노드에 대해 재귀적으로 함수 호출
+        foreach (var child in startNode.Children)
+        {
+            GetAllNodeNames(child, names);
+        }
+    }
     private void InitializeFileSystem()
     {
         root = new FileSystemNode("ROOT", NodeType.Folder);
@@ -68,7 +84,7 @@ public class FileSystem : MonoBehaviour
 
         // 객실_A1.log 파일 생성 (복도_A의 하위 파일)
         var roomA1Log = new FileSystemNode("객실_A1.log", NodeType.File, corridorADir);
-        roomA1Log.Content = "이곳은 객실 A1이다.\n인기척은 느껴지지 않는다.";
+        roomA1Log.Content = "";
         roomA1Log.logType = LogType.ReadOnly; // 읽기 전용으로 설정
         corridorADir.Children.Add(roomA1Log);
     }

@@ -71,14 +71,42 @@ public class CRTController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ApplySuggestion();
-            inputChanged = true;
+            inputChanged = true; // Tab을 누르면 input이 바뀌므로 true
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) NavigateHistory(-1);
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) NavigateHistory(1);
+        // ▼▼▼ 방향키 입력 처리 로직 수정 ▼▼▼
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            // 자동완성 추천 목록이 있을 경우, 목록 내에서 이동
+            if (suggestionMatches.Count > 0)
+            {
+                suggestionIndex--;
+                if (suggestionIndex < 0) { suggestionIndex = suggestionMatches.Count - 1; } // 순환
+            }
+            else // 추천 목록이 없을 경우, 히스토리 탐색
+            {
+                NavigateHistory(-1);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            // 자동완성 추천 목록이 있을 경우, 목록 내에서 이동
+            if (suggestionMatches.Count > 0)
+            {
+                suggestionIndex++;
+                if (suggestionIndex >= suggestionMatches.Count) { suggestionIndex = 0; } // 순환
+            }
+            else // 추천 목록이 없을 경우, 히스토리 탐색
+            {
+                NavigateHistory(1);
+            }
+        }
+        // ▲▲▲ 수정 완료 ▲▲▲
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
+            // Enter를 누르기 전에, 현재 보이는 추천 단어로 입력을 확정
+            ApplySuggestion();
             ProcessCommand();
             inputChanged = true;
         }
@@ -109,15 +137,24 @@ public class CRTController : MonoBehaviour
             string userInput = currentInput.ToString();
             sb.Append(userInput);
 
+            // ▼▼▼ 문제의 로직 수정 ▼▼▼
             if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
             {
                 string match = suggestionMatches[suggestionIndex];
-                if (match.Length > userInput.Length)
+
+                // 현재 입력 중인 마지막 단어(인자)를 가져옵니다.
+                string[] parts = userInput.Split(' ');
+                string partialArg = parts.Length > 0 ? parts[parts.Length - 1] : "";
+
+                // 추천 단어가 현재 입력 중인 단어보다 길 때만 회색 텍스트를 표시합니다.
+                if (!string.IsNullOrEmpty(partialArg) && match.Length > partialArg.Length)
                 {
-                    string ghostText = match.Substring(userInput.Length);
+                    // 추천 단어에서 이미 입력한 부분을 제외하고 나머지를 가져옵니다.
+                    string ghostText = match.Substring(partialArg.Length);
                     sb.Append($"<color=#787777>{ghostText}</color>");
                 }
             }
+            // ▲▲▲ 수정 완료 ▲▲▲
 
             if (Time.time % 1f < 0.5f) { sb.Append("_"); }
         }
@@ -157,14 +194,75 @@ public class CRTController : MonoBehaviour
         if (string.IsNullOrEmpty(fullInput)) return;
 
         string[] parts = fullInput.Split(' ');
+        string command = parts[0].ToUpper();
 
         if (parts.Length == 1)
         {
-            string partialCommand = parts[0].ToUpper();
-            if (string.IsNullOrEmpty(partialCommand)) return;
-
+            // 명령어 자체에 대한 자동완성
             List<string> allCommands = CommandManager.instance.GetAllCommandNames();
-            suggestionMatches = allCommands.Where(cmd => cmd.StartsWith(partialCommand, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            suggestionMatches = allCommands.Where(cmd => cmd.StartsWith(command, System.StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+        else if (parts.Length >= 2) // 인자가 1개 이상일 경우
+        {
+            string partialArg = parts[parts.Length - 1];
+
+            switch (command)
+            {
+                case "ROOT":
+                    if (parts.Length == 2)
+                    {
+                        var rootSuggestions = new List<string> { "ZONE", "INVENTORY", "NOTE" };
+                        suggestionMatches = rootSuggestions.Where(name => name.StartsWith(partialArg, System.StringComparison.OrdinalIgnoreCase)).ToList();
+                    }
+                    break;
+
+                case "OPEN":
+                    if (parts.Length == 2)
+                    {
+                        List<string> allNodeNames = new List<string>();
+                        FileSystem.instance.GetAllNodeNames(FileSystem.instance.FindNodeByPath("ROOT"), allNodeNames);
+                        suggestionMatches = allNodeNames.Distinct().Where(name => name.StartsWith(partialArg, System.StringComparison.OrdinalIgnoreCase)).ToList();
+                    }
+                    break;
+
+                // ▼▼▼ INTERACT 명령어 자동완성 로직 추가 ▼▼▼
+                case "INTERACT":
+                    if (parts.Length == 2)
+                    {
+                        // 추천 대상: 현재 위치의 아이템/오브젝트 + 인벤토리의 모든 아이템
+                        var suggestions = new List<string>();
+
+                        // 1. 현재 위치(.dat)에 있는 모든 것들을 추가
+                        if (GameManager.instance.currentLocation != null)
+                        {
+                            var locationItems = new List<string>();
+                            FileSystem.instance.GetAllNodeNames(GameManager.instance.currentLocation, locationItems);
+                            suggestions.AddRange(locationItems);
+                        }
+
+                        // 2. 인벤토리에 있는 모든 아이템 추가
+                        var inventoryItems = InventoryManager.instance.GetCategorizedItems().Values.SelectMany(list => list);
+                        suggestions.AddRange(inventoryItems);
+
+                        suggestionMatches = suggestions.Distinct().Where(name => name.StartsWith(partialArg, System.StringComparison.OrdinalIgnoreCase)).ToList();
+                    }
+                    else if (parts.Length == 3)
+                    {
+                        // "with" 키워드 추천
+                        if ("with".StartsWith(partialArg, System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            suggestionMatches.Add("with");
+                        }
+                    }
+                    else if (parts.Length == 4 && parts[2].Equals("with", System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        // "with" 뒤에는 인벤토리 아이템만 추천
+                        var inventoryItems = InventoryManager.instance.GetCategorizedItems().Values.SelectMany(list => list);
+                        suggestionMatches = inventoryItems.Where(name => name.StartsWith(partialArg, System.StringComparison.OrdinalIgnoreCase)).ToList();
+                    }
+                    break;
+                    // ▲▲▲ 추가 완료 ▲▲▲
+            }
         }
 
         if (suggestionMatches.Count > 0)
@@ -177,7 +275,25 @@ public class CRTController : MonoBehaviour
     {
         if (suggestionIndex != -1 && suggestionMatches.Count > suggestionIndex)
         {
-            currentInput.Clear().Append(suggestionMatches[suggestionIndex]);
+            string completedSuggestion = suggestionMatches[suggestionIndex];
+            string currentText = currentInput.ToString();
+
+            // 마지막 공백의 위치를 찾습니다.
+            int lastSpaceIndex = currentText.LastIndexOf(' ');
+
+            if (lastSpaceIndex != -1)
+            {
+                // "명령어 + 공백" 부분만 남기고 뒤에 추천 단어를 붙입니다.
+                string baseCommand = currentText.Substring(0, lastSpaceIndex + 1);
+                currentInput.Clear().Append(baseCommand).Append(completedSuggestion);
+            }
+            else
+            {
+                // 혹시 공백이 없는 경우(명령어 자체 완성)를 대비
+                currentInput.Clear().Append(completedSuggestion);
+            }
+
+            // 추천 목록을 다시 업데이트합니다.
             UpdateSuggestion();
         }
     }
@@ -189,7 +305,14 @@ public class CRTController : MonoBehaviour
 
     private IEnumerator ReadOnlyDisplayRoutine(FileSystemNode logNode)
     {
-        isTyping = true;
+        FileEventManager.instance.CheckForFileOpenEvent(logNode.Name);
+
+        if (string.IsNullOrEmpty(logNode.Content))
+        {
+            yield break;
+        }
+
+        isTyping = true; // 여기서 isTyping을 true로 설정
 
         var historyBackup = new List<string>(CurrentDisplayLines);
         ClearTerminal();
@@ -199,7 +322,9 @@ public class CRTController : MonoBehaviour
         var contentLines = content.Split('\n');
         CurrentDisplayLines.Add($"--- {title} (읽기 전용) ---");
         CurrentDisplayLines.Add("");
-        yield return StartCoroutine(TypeWriterEffect(string.Join("\n", contentLines)));
+
+        // isTyping 플래그를 제어하지 않도록 false를 전달
+        yield return StartCoroutine(TypeWriterEffect(string.Join("\n", contentLines), false));
 
         CurrentDisplayLines.Add("");
         CurrentDisplayLines.Add("---------------------------------");
@@ -212,15 +337,14 @@ public class CRTController : MonoBehaviour
             {
                 enterPressed = true;
             }
-            if (Input.inputString.Length > 0) { /* 입력 무시 */ }
-            yield return null;
+            yield return null; // isTyping이 true인 상태로 대기
         }
 
-        FileEventManager.instance.CheckForFileOpenEvent(logNode.Name);
         CurrentDisplayLines.Clear();
         CurrentDisplayLines.AddRange(historyBackup);
         yield return null;
-        isTyping = false;
+
+        isTyping = false; // 모든 과정이 끝난 후 isTyping을 false로 복구
     }
 
     public void StartRebootProcess()
@@ -280,7 +404,10 @@ public class CRTController : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
-            scrollOffset -= (int)Mathf.Sign(scroll) * 3;
+            // ▼▼▼ '-'를 '+'로 변경 ▼▼▼
+            scrollOffset += (int)Mathf.Sign(scroll) * 3;
+            // ▲▲▲ 변경 완료 ▲▲▲
+
             scrollOffset = Mathf.Clamp(scrollOffset, 0, Mathf.Max(0, CurrentDisplayLines.Count - 25));
         }
     }
@@ -305,9 +432,10 @@ public class CRTController : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeWriterEffect(message));
     }
 
-    private IEnumerator TypeWriterEffect(string message)
+    private IEnumerator TypeWriterEffect(string message, bool manageTypingFlag = true)
     {
-        isTyping = true;
+        if (manageTypingFlag) isTyping = true;
+
         string[] lines = message.Split('\n');
 
         foreach (var line in lines)
@@ -323,8 +451,12 @@ public class CRTController : MonoBehaviour
                 yield return new WaitForSeconds(typingSpeed);
             }
         }
-        isTyping = false;
-        scrollOffset = 0;
+
+        if (manageTypingFlag)
+        {
+            isTyping = false;
+            scrollOffset = 0;
+        }
     }
 
     public void ClearTerminal()

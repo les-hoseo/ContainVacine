@@ -8,6 +8,7 @@ public class FileEventRule
     public string triggerFileName;
     public string newFilePathToCreate;
     public List<DatContentNode> datFileContents = new List<DatContentNode>();
+    public string cutsceneToPlay;
 }
 
 // .dat 파일의 계층 구조를 정의하기 위한 클래스
@@ -36,6 +37,7 @@ public class FileEventManager : MonoBehaviour
         fileEventRules.Add(new FileEventRule
         {
             triggerFileName = "객실_A1.log",
+            cutsceneToPlay = "FEAR_1",
             newFilePathToCreate = "ZONE/상갑판/복도_A/DATA_객실_A1.dat",
             datFileContents = new List<DatContentNode>
             {
@@ -78,6 +80,7 @@ public class FileEventManager : MonoBehaviour
         fileEventRules.Add(new FileEventRule
         {
             triggerFileName = "갑판.log",
+            cutsceneToPlay = "FOG_1",
             newFilePathToCreate = "ZONE/상갑판/DATA_갑판.dat",
             datFileContents = new List<DatContentNode>
         {
@@ -107,6 +110,7 @@ public class FileEventManager : MonoBehaviour
         fileEventRules.Add(new FileEventRule
         {
             triggerFileName = "카페테리아_라운지_홀.log",
+            cutsceneToPlay = "KARMA",
             newFilePathToCreate = "ZONE/하갑판/DATA_카페테리아_라운지_홀.dat",
             datFileContents = new List<DatContentNode>
         {
@@ -124,6 +128,7 @@ public class FileEventManager : MonoBehaviour
         fileEventRules.Add(new FileEventRule
         {
             triggerFileName = "카페테리아_주방.log",
+            cutsceneToPlay = "IMPULSE",
             newFilePathToCreate = "ZONE/하갑판/DATA_카페테리아_주방.dat",
             datFileContents = new List<DatContentNode>
         {
@@ -137,6 +142,7 @@ public class FileEventManager : MonoBehaviour
         fileEventRules.Add(new FileEventRule
         {
             triggerFileName = "제어실.log",
+            cutsceneToPlay = "CONTROL",
             newFilePathToCreate = "ZONE/하갑판/엔진_구역/DATA_제어실.dat",
             datFileContents = new List<DatContentNode>
         {
@@ -149,19 +155,29 @@ public class FileEventManager : MonoBehaviour
         fileEventRules.Add(new FileEventRule
         {
             triggerFileName = "메인_엔진.log",
+            cutsceneToPlay = "ASH",
             newFilePathToCreate = "ZONE/하갑판/엔진_구역/DATA_메인_엔진.dat",
             datFileContents = new List<DatContentNode>
-        {
-            new DatContentNode { name = "동쪽", type = NodeType.Folder, children = new List<DatContentNode>
-                { new DatContentNode { name = "파이프", type = NodeType.Folder, children = new List<DatContentNode>
-                    { new DatContentNode { name = "밸브_E.object" } }}
-                }},
-            new DatContentNode { name = "서쪽", type = NodeType.Folder, children = new List<DatContentNode>
-                { new DatContentNode { name = "파이프", type = NodeType.Folder, children = new List<DatContentNode>
-                    { new DatContentNode { name = "밸브_W.object" } }}
-                }},
-            // ... (서쪽, 남쪽, 북쪽도 동일하게 추가)
-        }
+    {
+        new DatContentNode { name = "동쪽", type = NodeType.Folder, children = new List<DatContentNode>
+            { new DatContentNode { name = "파이프", type = NodeType.Folder, children = new List<DatContentNode>
+                { new DatContentNode { name = "밸브_E.object" } }}
+            }},
+        new DatContentNode { name = "서쪽", type = NodeType.Folder, children = new List<DatContentNode>
+            { new DatContentNode { name = "파이프", type = NodeType.Folder, children = new List<DatContentNode>
+                { new DatContentNode { name = "밸브_W.object" } }}
+            }},
+        // ▼▼▼ 누락된 '남쪽', '북쪽' 데이터 추가 ▼▼▼
+        new DatContentNode { name = "남쪽", type = NodeType.Folder, children = new List<DatContentNode>
+            { new DatContentNode { name = "파이프", type = NodeType.Folder, children = new List<DatContentNode>
+                { new DatContentNode { name = "밸브_S.object" } }}
+            }},
+        new DatContentNode { name = "북쪽", type = NodeType.Folder, children = new List<DatContentNode>
+            { new DatContentNode { name = "파이프", type = NodeType.Folder, children = new List<DatContentNode>
+                { new DatContentNode { name = "밸브_N.object" } }}
+            }}
+        // ▲▲▲ 추가 완료 ▲▲▲
+    }
         });
 
         // 규칙: 승무원_숙소.log -> DATA_승무원_숙소.dat
@@ -194,6 +210,7 @@ public class FileEventManager : MonoBehaviour
         fileEventRules.Add(new FileEventRule
         {
             triggerFileName = "복도_B.log", // '객실복도_B.log'는 오타로 판단, 기획서 기준으로 수정
+            cutsceneToPlay = "EVIL_ASH",
             newFilePathToCreate = "ZONE/상갑판/복도_B/DATA_복도_B.dat",
             datFileContents = new List<DatContentNode>() // 내용물 없음
         });
@@ -220,6 +237,11 @@ public class FileEventManager : MonoBehaviour
                 {
                     AddDatContentsRecursive(newNode, rule.datFileContents);
                 }
+
+                if (!string.IsNullOrEmpty(rule.cutsceneToPlay))
+                {
+                    PlayCutscene(rule.cutsceneToPlay);
+                }
             }
         }
     }
@@ -236,4 +258,43 @@ public class FileEventManager : MonoBehaviour
             }
         }
     }
+    public void PlayCutscene(string cutsceneName)
+    {
+        switch (cutsceneName)
+        {
+            case "ASH":
+                Cutscenes.instance.PlayCUTSCENES_ASH();
+
+                break;
+            case "CONTROL":
+                Cutscenes.instance.PlayCUTSCENES_CONTROL();
+                break;
+            case "END_1":
+                Cutscenes.instance.PlayCUTSCENES_END_1();
+                break;
+            case "EVIL_ASH":
+                Cutscenes.instance.PlayCUTSCENES_EVIL_ASH();
+                break;
+            case "FEAR_1":
+                Cutscenes.instance.PlayCUTSCENES_FEAR_1();
+                Debug.Log("fear");
+                break;
+            case "FOG_1":
+                Cutscenes.instance.PlayCUTSCENES_FOG_1();
+                break;
+            case "IMPULSE":
+                Cutscenes.instance.PlayCUTSCENES_IMPULSE();
+                break;
+            case "KARMA":
+                Cutscenes.instance.PlayCUTSCENES_KARMA();
+                break;
+            case "KARMA1_2":
+                Cutscenes.instance.PlayCUTSCENES_KARMA1_2();
+                break;
+            default:
+                Debug.LogWarning($"알 수 없는 컷신 요청: {cutsceneName}");
+                break;
+        }
+    }
+
 }
