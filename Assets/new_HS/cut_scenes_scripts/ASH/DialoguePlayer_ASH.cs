@@ -56,8 +56,11 @@ public class DialoguePlayer_ASH : MonoBehaviour
             animationGameObject.SetActive(false);
         }
 
-        // UI가 초기화될 때 배경 이미지를 투명하게 만들지 않습니다.
-        // 첫 번째 대사 라인에서 효과에 따라 보이거나 사라지게 됩니다.
+        // 배경 이미지를 즉시 보이게 합니다.
+        if (illustrationImage != null)
+        {
+            illustrationImage.gameObject.SetActive(true);
+        }
 
         StartDialogue(storyToPlay);
     }
@@ -95,10 +98,6 @@ public class DialoguePlayer_ASH : MonoBehaviour
         storyToPlay = story;
         lineIndex = 0;
 
-        // 대화 시작 시점의 흰 화면 노출 방지
-        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
-        if (characterCanvasGroup != null) characterCanvasGroup.alpha = 0;
-
         ClearChoices();
         if (choicePanel != null) choicePanel.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(true);
@@ -112,7 +111,7 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
         if (storyAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
         {
-            StartCoroutine(PlayAnimationAndContinueDialogue(line));
+            StartCoroutine(PlayAnimation(line));
         }
         else
         {
@@ -120,15 +119,15 @@ public class DialoguePlayer_ASH : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayAnimationAndContinueDialogue(Data_ASH line)
+    private IEnumerator PlayAnimation(Data_ASH line)
     {
         isPlayingAnimation = true;
         dialoguePanel.SetActive(false);
 
-        // 애니메이션 시작 전에 배경 이미지를 투명하게 만들어 흰 화면 노출을 막습니다.
-        if (illustrationCanvasGroup != null)
+        // 배경 이미지를 즉시 숨겨 흰 화면이 나타나지 않도록 합니다.
+        if (illustrationImage != null)
         {
-            illustrationCanvasGroup.alpha = 0;
+            illustrationImage.gameObject.SetActive(false);
         }
 
         // 애니메이션 오브젝트를 활성화하고, 애니메이션을 실행합니다.
@@ -139,26 +138,37 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
         storyAnimator.SetTrigger(line.animationTrigger);
 
-        // 애니메이션이 끝날 때까지 기다립니다.
-        yield return new WaitUntil(() => storyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !storyAnimator.IsInTransition(0));
+        // 애니메이션 이벤트가 끝날 때까지 기다립니다.
+        yield return null;
+    }
 
+    // ⭐⭐⭐ 애니메이션 이벤트에서 호출될 함수 ⭐⭐⭐
+    public void OnAnimationEnd()
+    {
+        // 애니메이션이 종료되면 호출될 함수입니다.
         isPlayingAnimation = false;
-        dialoguePanel.SetActive(true);
 
-        // 애니메이션이 끝나면 오브젝트를 다시 비활성화합니다.
+        // 애니메이션이 재생되던 오브젝트를 비활성화합니다.
         if (animationGameObject != null)
         {
             animationGameObject.SetActive(false);
         }
 
-        // 대사로 돌아왔을 때 배경 이미지를 다시 보이게 만듭니다.
-        if (illustrationCanvasGroup != null)
+        // 대화 패널과 배경 이미지를 다시 활성화합니다.
+        if (dialoguePanel != null)
         {
-            illustrationCanvasGroup.alpha = 1;
+            dialoguePanel.SetActive(true);
         }
 
-        ProcessLine(line);
+        if (illustrationImage != null)
+        {
+            illustrationImage.gameObject.SetActive(true);
+        }
+
+        // 다음 대사로 진행합니다.
+        ProcessLine(storyToPlay.Story[lineIndex]);
     }
+
 
     private void ProcessLine(Data_ASH line)
     {
@@ -191,7 +201,18 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
     private void ProcessDialogue(Data_ASH line)
     {
-        ProcessEffect(illustrationCanvasGroup, illustrationImage, line.Sprite, line.effect, ref illustrationFadeCoroutine);
+        // 배경 이미지가 비활성화된 상태에서만 페이드 인/아웃 효과를 적용합니다.
+        // 그렇지 않으면 그냥 바로 보이게 합니다.
+        if (illustrationImage.gameObject.activeSelf)
+        {
+            ProcessEffect(illustrationCanvasGroup, illustrationImage, line.Sprite, line.effect, ref illustrationFadeCoroutine);
+        }
+        else
+        {
+            illustrationImage.sprite = line.Sprite;
+            illustrationCanvasGroup.alpha = 1f;
+        }
+
         ProcessEffect(characterCanvasGroup, characterImage, line.characterSprite, line.characterEffect, ref characterFadeCoroutine);
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.Content));

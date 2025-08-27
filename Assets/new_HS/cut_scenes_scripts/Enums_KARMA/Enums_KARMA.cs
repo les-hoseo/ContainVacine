@@ -1,7 +1,10 @@
+using UnityEngine;
+
 public enum LineType
 {
     Dialogue,
-    Choice
+    Choice,
+    Minigame
 }
 
 public enum IllustrationEffect

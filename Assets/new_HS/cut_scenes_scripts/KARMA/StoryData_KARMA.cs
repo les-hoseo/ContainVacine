@@ -30,4 +30,7 @@ public class Data_KARMA
     public IllustrationEffect characterEffect;
     [Header("선택지 목록")]
     public List<Choice_KARMA> choices = new List<Choice_KARMA>();
+
+    [Header("미니게임")]
+    public GameObject minigamePrefab;
 }

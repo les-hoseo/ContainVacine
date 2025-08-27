@@ -154,7 +154,7 @@ MonoBehaviour:
     nameplatePanel: {fileID: 0}
     animationTrigger: 
     Sprite: {fileID: 6660783624410144326, guid: a94a657ee1dae2b418de158f4530d5a8, type: 3}
-    effect: 3
+    effect: 1
     characterSprite: {fileID: 0}
     characterEffect: 0
     choices: []
@@ -348,7 +348,7 @@ MonoBehaviour:
   - lineType: 0
     Content: 
     nameplatePanel: {fileID: 0}
-    animationTrigger: ASH
+    animationTrigger: ASH_anim
     Sprite: {fileID: 0}
     effect: 0
     characterSprite: {fileID: 0}

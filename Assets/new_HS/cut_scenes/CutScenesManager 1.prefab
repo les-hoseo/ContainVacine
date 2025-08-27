@@ -1,0 +1,250 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &847194111865880963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1617388051460117023}
+  - component: {fileID: 778279205493347731}
+  - component: {fileID: 6745116581700299597}
+  - component: {fileID: 6845092684286139462}
+  - component: {fileID: 838521729657411752}
+  - component: {fileID: 2541231568134540967}
+  - component: {fileID: 4441420008713298099}
+  - component: {fileID: 6686480745128773063}
+  - component: {fileID: 1142335147001013299}
+  - component: {fileID: 1047323086014248743}
+  m_Layer: 5
+  m_Name: CutScenesManager 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1617388051460117023
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.00925926, y: 0.00925926, z: 0.00925926}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &778279205493347731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2575871256ece94f8a7bcc21b140904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: 4d7c6fa5b86c4c44aae81e6d39c331ca, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &6745116581700299597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7293c9ed025164541ad677757ea395f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: 07bd2e5ec6d35c746bfe3341da9a96f4, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &6845092684286139462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47252ef82e1ebca4bb8bad79dac3731a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: d5e3fe5ba39dec24b82ae8e4f878a5fa, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+  storyAnimator: {fileID: 0}
+  animationGameObject: {fileID: 0}
+--- !u!114 &838521729657411752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d2cdd87c5329a14497d8377000d2057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: 33fa8ea1239257c45bcdde995bacadf6, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+  storyAnimator: {fileID: 0}
+  animationGameObject: {fileID: 0}
+--- !u!114 &2541231568134540967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd39adbf239040f419d65bdccc744fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: e90992f344b5bcc439583fc77c8d0097, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &4441420008713298099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be0b6778d018b946b5e1bf892c44084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: d2c0462e19bd6374d9c5c3d33768c7c6, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &6686480745128773063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d06c16bd731ad43a950179895e49ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: 79ace9a0ac42ee149be731d071cbe387, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &1142335147001013299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e42dfbed12964341a7ad67fe435d9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: 2cba786198ab8484981118b52a03a98a, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+--- !u!114 &1047323086014248743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847194111865880963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ef955ba35f44946ac75a7b10ebda62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  illustrationImage: {fileID: 0}
+  characterImage: {fileID: 0}
+  nameplateParent: {fileID: 0}
+  choicePanel: {fileID: 0}
+  choiceButtonPrefab: {fileID: 8456615296730933543, guid: c392f8737cc489045ae9011b4caf1df9, type: 3}
+  storyToPlay: {fileID: 11400000, guid: 6349a2eac9768b94e9fa51ac11df22eb, type: 2}
+  typingSpeed: 0.05
+  fadeDuration: 0.5
+  storyAnimator: {fileID: 0}
+  animationGameObject: {fileID: 0}

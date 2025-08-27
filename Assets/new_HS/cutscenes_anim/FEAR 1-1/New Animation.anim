@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FEARAnimation2
+  m_Name: New Animation
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 8389134475083476877, guid: 25a7329d93dfbc945aa78090985b9ab6, type: 3}
+      value: {fileID: 8305493323061186008, guid: 661970eaee1829a4f8bc60ddc0660cdb, type: 3}
     - time: 1.5
-      value: {fileID: -6270953770400647376, guid: b3df3709b283a1149beade850ddcbf88, type: 3}
+      value: {fileID: 2608064964487465139, guid: 4b7906a7554056c4bac992b6fd51b5cb, type: 3}
     - time: 3
-      value: {fileID: -6270953770400647376, guid: b3df3709b283a1149beade850ddcbf88, type: 3}
+      value: {fileID: 2608064964487465139, guid: 4b7906a7554056c4bac992b6fd51b5cb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -48,9 +48,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 8389134475083476877, guid: 25a7329d93dfbc945aa78090985b9ab6, type: 3}
-    - {fileID: -6270953770400647376, guid: b3df3709b283a1149beade850ddcbf88, type: 3}
-    - {fileID: -6270953770400647376, guid: b3df3709b283a1149beade850ddcbf88, type: 3}
+    - {fileID: 8305493323061186008, guid: 661970eaee1829a4f8bc60ddc0660cdb, type: 3}
+    - {fileID: 2608064964487465139, guid: 4b7906a7554056c4bac992b6fd51b5cb, type: 3}
+    - {fileID: 2608064964487465139, guid: 4b7906a7554056c4bac992b6fd51b5cb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -75,4 +75,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 3
+    functionName: TriggerAnimationEndEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
