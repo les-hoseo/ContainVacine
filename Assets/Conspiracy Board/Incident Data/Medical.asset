@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cf4450779182346ab22318ee8220a7, type: 3}
+  m_Name: Medical
+  m_EditorClassIdentifier: 
+  storyID: 2
+  storyName: "\uC758\uBB34\uC2E4"
+  description: "\uC758\uBB34\uC2E4 \uBB38 \uAC15\uC81C \uAC1C\uBC29, \uAE09\uBC15\uD55C
+    \uD589\uB3D9 \uD328\uD134 \uAC10\uC9C0. (\uC885\uC774\uAC00 \uCC22\uC5B4\uC9C0\uB294
+    \uC18C\uB9AC) \uBD88\uADDC\uCE59\uD55C \uB6F0\uB294 \uC18C\uB9AC \uAC10\uC9C0.\n\uD558\uAC11\uD310
+    \uC815\uBCF4 \uC77C\uBD80 \uC720\uC2E4."
+  storySpritefotItem: {fileID: -7874428348345426807, guid: 45590259de18b7c4ea66c7724edb561b, type: 3}
+  storySpritefotSlot: {fileID: -1863846373082832055, guid: 0c9e5e28c71931a479e618d1585e883b, type: 3}
+  storySpritefotItemHallucination:
+  - {fileID: 8427539381808357834, guid: f2bbed0f78952c54eaf401e7e21638e5, type: 3}
+  - {fileID: -3144110971807047876, guid: 0ad732b106ae8494fa9ef582cab29ad8, type: 3}
+  succeedingPartnerIDs: 03000000
+  fileState: 0

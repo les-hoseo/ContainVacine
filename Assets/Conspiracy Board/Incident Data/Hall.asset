@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cf4450779182346ab22318ee8220a7, type: 3}
+  m_Name: Hall
+  m_EditorClassIdentifier: 
+  storyID: 4
+  storyName: "\uD640"
+  description: "\uC815\uCCB4\uBD88\uBA85\uC758 \uC2EC\uC7A5 \uC18C\uB9AC\uB97C \uBA48\uCD94\uAE30
+    \uC704\uD574 \uB208\uC55E\uC758 \uC874\uC7AC\uB97C \uACF5\uACA9\uD558\uB358 \uB85C\uBA54\uC624\uB294,
+    \uADFC\uCC98\uC5D0\uC11C \uB4E4\uB824\uC628 \uC18C\uB9AC\uC5D0 \uBB38\uB4DD \uC815\uC2E0\uC744
+    \uCC28\uB9B0\uB2E4. \uC18C\uB9AC\uAC00 \uB09C \uCABD\uC744 \uB3CC\uC544\uBCF8
+    \uADF8\uB294 \uADF8\uACF3\uC5D0\uC11C \uB610 \uB2E4\uB978 \uC0DD\uC874\uC790\uB97C
+    \uB9C8\uC8FC\uCE58\uAC8C \uB418\uB294\uB370..."
+  storySpritefotItem: {fileID: -3224682052510888474, guid: 57c57eb4575e28b4c97cd9c55fa6437e, type: 3}
+  storySpritefotSlot: {fileID: -2148926534748577682, guid: c63c29ed27ab41d4ba77e3f4102f28bb, type: 3}
+  storySpritefotItemHallucination:
+  - {fileID: 5977239108158242161, guid: dae8d12191646644d910dad789ced074, type: 3}
+  - {fileID: -8686388505866759287, guid: 2fbff4f33c3f38a46b383a5f8acd8487, type: 3}
+  succeedingPartnerIDs: 0500000009000000
+  fileState: 0

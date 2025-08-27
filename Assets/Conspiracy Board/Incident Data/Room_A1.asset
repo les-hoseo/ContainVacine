@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cf4450779182346ab22318ee8220a7, type: 3}
+  m_Name: Room_A1
+  m_EditorClassIdentifier: 
+  storyID: 0
+  storyName: "\uAC1D\uC2E4_A1"
+  description: "\uCD9C\uC7A5\uCC28 \uBC30\uC5D0 \uC624\uB978 \uB85C\uBA54\uC624\uB294
+    \uAC11\uC791\uC2A4\uB7EC\uC6B4 \uC815\uC804\uACFC \uD568\uAED8 \uAE30\uC774\uD55C
+    \uC548\uB0B4 \uBC29\uC1A1\uC744 \uB4E3\uAC8C \uB41C\uB2E4. \uBC14\uAE65 \uC0C1\uD669\uC744
+    \uC0B4\uD53C\uAE30 \uC704\uD574 \uBB38\uD2C8\uC73C\uB85C \uBCF5\uB3C4\uB97C \uC5FF\uBCF4\uB358
+    \uADF8\uB294 \uBB34\uC5B8\uAC00\uB97C \uBAA9\uACA9\uD558\uAC8C \uB418\uB294\uB370..."
+  storySpritefotItem: {fileID: 8621353221886488563, guid: b16c063eaeba86248ad1a2564da4364e, type: 3}
+  storySpritefotSlot: {fileID: -360559271088941495, guid: d94068f2d784ba54a8e0aae6516d253a, type: 3}
+  storySpritefotItemHallucination:
+  - {fileID: 7892279163962945766, guid: e9bf11cf42ad18a4c97f63b6a5b4dd4c, type: 3}
+  - {fileID: -8094577547931805276, guid: b95e35ace34ca604c80755740c5a3b14, type: 3}
+  succeedingPartnerIDs: 01000000
+  fileState: 0
