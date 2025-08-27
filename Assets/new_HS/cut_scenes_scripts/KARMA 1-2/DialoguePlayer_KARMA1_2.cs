@@ -35,6 +35,9 @@ public class DialoguePlayer_KARMA1_2 : MonoBehaviour
     private CanvasGroup characterCanvasGroup;
     private List<GameObject> spawnedChoiceButtons = new List<GameObject>();
 
+    [Header("컷신 오브젝트")]
+    [SerializeField] private GameObject KARMA1_2obj;
+
     void Awake()
     {
         if (illustrationImage != null)
@@ -62,8 +65,9 @@ public class DialoguePlayer_KARMA1_2 : MonoBehaviour
 
     void Update()
     {
-        if (choicePanel != null && choicePanel.activeSelf == false && dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
+        if (choicePanel != null && choicePanel.activeSelf == false && KARMA1_2obj.gameObject.activeSelf && dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
         {
+            Debug.Log("KAR1_2 실행");
             if (isTyping)
             {
                 CompleteLine();

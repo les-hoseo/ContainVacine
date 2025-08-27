@@ -24,6 +24,10 @@ public class Data_EVIL
     public GameObject nameplatePanel;
     public string animationTrigger;
 
+    [Header("오디오")]
+    [Tooltip("이 라인에서 재생할 오디오 클립을 직접 연결하세요.")]
+    public AudioClip lineSound;
+
     [Header("배경 일러스트")]
     public Sprite Sprite;
     public IllustrationEffect effect;

@@ -25,9 +25,17 @@ public class DialoguePlayer_KARMA : MonoBehaviour
     public float typingSpeed = 0.05f;
     public float fadeDuration = 0.5f;
 
-    // 내부 변수들
+    [Header("애니메이터 연결")]
+    public Animator storyAnimator;
+    public GameObject animationGameObject;
+
+    [Header("미니게임 오브젝트 직접 연결")]
+    public GameObject handMinigameObject;
+
     private int lineIndex;
     private bool isTyping;
+    private bool isPlayingAnimation;
+    private bool isMinigameActive = false;
     private Coroutine typingCoroutine;
     private Coroutine illustrationFadeCoroutine;
     private Coroutine characterFadeCoroutine;
@@ -35,6 +43,10 @@ public class DialoguePlayer_KARMA : MonoBehaviour
     private CanvasGroup characterCanvasGroup;
     private List<GameObject> spawnedChoiceButtons = new List<GameObject>();
 
+    [Header("컷신 오브젝트")]
+    [SerializeField] private GameObject KARMAobj;
+    private GameObject KARMAobjP;
+       
     void Awake()
     {
         if (illustrationImage != null)
@@ -45,25 +57,21 @@ public class DialoguePlayer_KARMA : MonoBehaviour
 
     void Start()
     {
+        if (animationGameObject != null) animationGameObject.SetActive(false);
+        KARMAobjP = KARMAobj.transform.parent.gameObject;
         StartDialogue(storyToPlay);
-    }
-
-    public void StartDialogue(StoryData_KARMA story)
-    {
-        storyToPlay = story;
-        lineIndex = 0;
-        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
-        if (characterCanvasGroup != null) characterCanvasGroup.alpha = 0;
-        ClearChoices();
-        if (choicePanel != null) choicePanel.SetActive(false);
-        if (dialoguePanel != null) dialoguePanel.SetActive(true);
-        ShowLine(lineIndex);
     }
 
     void Update()
     {
-        if (choicePanel != null && choicePanel.activeSelf == false && dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
+        if (isMinigameActive || isPlayingAnimation)
         {
+            return;
+        }
+
+        if (choicePanel != null && !choicePanel.activeSelf && KARMAobjP.gameObject.activeSelf && Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("KARMA 실행");
             if (isTyping)
             {
                 CompleteLine();
@@ -83,28 +91,104 @@ public class DialoguePlayer_KARMA : MonoBehaviour
         }
     }
 
+    public void StartDialogue(StoryData_KARMA story)
+    {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopAllSounds();
+        }
+
+        storyToPlay = story;
+        lineIndex = 0;
+
+        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
+        if (characterCanvasGroup != null) characterCanvasGroup.alpha = 0;
+
+        ClearChoices();
+        if (choicePanel != null) choicePanel.SetActive(false);
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        ShowLine(lineIndex);
+    }
+
     private void ShowLine(int index)
     {
-        if (storyToPlay == null || storyToPlay.Story.Count <= index) return;
+        if (storyToPlay == null || storyToPlay.Story.Count <= index)
+        {
+            EndDialogue();
+            return;
+        }
         Data_KARMA line = storyToPlay.Story[index];
+
+        if (line.lineType == LineType.Minigame)
+        {
+            ProcessMinigame(line);
+        }
+        else if (storyAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
+        {
+            StartCoroutine(PlayAnimation(line.animationTrigger));
+        }
+        else
+        {
+            ProcessLine(line);
+        }
+    }
+
+    private IEnumerator PlayAnimation(string animationTriggerName)
+    {
+        isPlayingAnimation = true;
+        dialoguePanel.SetActive(false);
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(false);
+        if (animationGameObject != null) animationGameObject.SetActive(true);
+        storyAnimator.SetTrigger(animationTriggerName);
+        yield return null;
+    }
+
+    public void OnAnimationEnd()
+    {
+        isPlayingAnimation = false;
+        if (animationGameObject != null) animationGameObject.SetActive(false);
+
+        lineIndex++;
+        if (storyToPlay != null && lineIndex < storyToPlay.Story.Count)
+        {
+            ShowLine(lineIndex);
+        }
+        else
+        {
+            EndDialogue();
+        }
+    }
+
+    private void ProcessLine(Data_KARMA line)
+    {
+        if (line.lineSounds != null && line.lineSounds.Length > 0)
+        {
+            foreach (AudioClip clip in line.lineSounds)
+            {
+                if (clip != null) SoundManager.Instance.PlaySFX(clip);
+            }
+        }
+
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(true);
+
         if (currentNameplate != null) Destroy(currentNameplate);
         if (line.nameplatePanel != null)
         {
             currentNameplate = Instantiate(line.nameplatePanel, nameplateParent);
         }
+
         if (line.lineType == LineType.Dialogue)
         {
-            dialoguePanel.SetActive(true);
             choicePanel.SetActive(false);
             ProcessDialogue(line);
         }
         else if (line.lineType == LineType.Choice)
         {
-            dialoguePanel.SetActive(true);
             choicePanel.SetActive(true);
             if (!string.IsNullOrEmpty(line.Content))
             {
-                if (isTyping) { StopCoroutine(typingCoroutine); isTyping = false; }
+                if (typingCoroutine != null) StopCoroutine(typingCoroutine);
                 contentText.text = line.Content;
             }
             else
@@ -112,6 +196,46 @@ public class DialoguePlayer_KARMA : MonoBehaviour
                 contentText.text = "";
             }
             ProcessChoices(line);
+        }
+    }
+
+    private void ProcessMinigame(Data_KARMA line)
+    {
+        if (handMinigameObject != null)
+        {
+            isMinigameActive = true;
+            dialoguePanel.SetActive(false);
+            handMinigameObject.SetActive(true);
+            StruggleController.OnPuzzleComplete += OnMinigameComplete;
+        }
+        else
+        {
+            Debug.LogError("'handMinigameObject' 변수에 오브젝트가 연결되지 않았습니다! Inspector 창을 확인해주세요.");
+            lineIndex++;
+            ShowLine(lineIndex);
+        }
+    }
+
+    private void OnMinigameComplete()
+    {
+        StruggleController.OnPuzzleComplete -= OnMinigameComplete;
+
+        if (handMinigameObject != null)
+        {
+            handMinigameObject.SetActive(false);
+        }
+
+        isMinigameActive = false;
+        dialoguePanel.SetActive(true);
+
+        lineIndex++;
+        if (storyToPlay != null && lineIndex < storyToPlay.Story.Count)
+        {
+            ShowLine(lineIndex);
+        }
+        else
+        {
+            EndDialogue();
         }
     }
 

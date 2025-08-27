@@ -1,8 +1,12 @@
-﻿/*using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class StruggleController : MonoBehaviour
 {
+    // 미니게임 성공 시 호출될 이벤트
+    public static event Action OnPuzzleComplete;
+
     [Header("UI 요소 연결")]
     [Tooltip("성공 시 화면 전체 흔들림을 위한 부모 그룹")]
     public RectTransform UIGroupToShake;
@@ -10,6 +14,11 @@ public class StruggleController : MonoBehaviour
     public Image struggleImage;
     [Tooltip("게이지를 표시할 이미지")]
     public Image gaugeBar;
+
+    // <<< 1. 이 부분을 추가하세요. >>>
+    [Header("성공 시 활성화할 오브젝트")]
+    [Tooltip("미니게임 성공 시 활성화될 컷씬 또는 오브젝트")]
+    public GameObject cutsceneToActivateOnComplete;
 
     [Header("이미지 에셋")]
     public Sprite claspedHandsSprite;
@@ -149,20 +158,31 @@ public class StruggleController : MonoBehaviour
     void UpdateShakeEffect(RectTransform target, Vector2 initialPos, float intensity)
     {
         if (target == null) return;
-        float offsetX = Random.Range(-intensity, intensity);
-        float offsetY = Random.Range(-intensity * 0.25f, intensity * 0.25f);
+        float offsetX = UnityEngine.Random.Range(-intensity, intensity);
+        float offsetY = UnityEngine.Random.Range(-intensity * 0.25f, intensity * 0.25f);
         target.anchoredPosition = initialPos + new Vector2(offsetX, offsetY);
     }
 
+    // <<< 2. 이 함수를 수정하세요. >>>
     void CompletePuzzle()
     {
         isCompleted = true;
         Debug.Log("성공! 손을 뿌리쳤습니다.");
-
         struggleImage.rectTransform.anchoredPosition = initialImagePosition;
-
         struggleImage.sprite = separatedHandsSprite;
         gaugeBar.gameObject.SetActive(false);
         if (noiseController != null) noiseController.masterAlpha = 0;
+
+        // --- 여기에 코드를 추가합니다 ---
+        // 연결된 컷씬 오브젝트가 있다면 활성화합니다.
+        if (cutsceneToActivateOnComplete != null)
+        {
+            cutsceneToActivateOnComplete.SetActive(true);
+            Debug.Log(cutsceneToActivateOnComplete.name + " 오브젝트를 활성화했습니다.");
+        }
+        // --------------------------
+
+        // 미니게임 성공 이벤트를 외부에 알립니다.
+        OnPuzzleComplete?.Invoke();
     }
-}*/
+}

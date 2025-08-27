@@ -27,9 +27,8 @@ public class DialoguePlayer_EVIL : MonoBehaviour
 
     [Header("애니메이터 연결")]
     public Animator storyAnimator;
-    public GameObject animationGameObject; // 애니메이션이 재생될 오브젝트 (EVIL_ani)
+    public GameObject animationGameObject;
 
-    // 내부 변수들
     private int lineIndex;
     private bool isTyping;
     private bool isPlayingAnimation;
@@ -39,6 +38,9 @@ public class DialoguePlayer_EVIL : MonoBehaviour
     private CanvasGroup illustrationCanvasGroup;
     private CanvasGroup characterCanvasGroup;
     private List<GameObject> spawnedChoiceButtons = new List<GameObject>();
+
+    [Header("컷신 오브젝트")]
+    [SerializeField] private GameObject EVILobj;
 
     void Awake()
     {
@@ -50,28 +52,16 @@ public class DialoguePlayer_EVIL : MonoBehaviour
 
     void Start()
     {
-        // 시작할 때 애니메이션 오브젝트는 항상 비활성화 상태로 둡니다.
-        if (animationGameObject != null)
-        {
-            animationGameObject.SetActive(false);
-        }
-
-        // UI가 초기화될 때 배경 이미지를 투명하게 만들지 않습니다.
-        // 첫 번째 대사 라인에서 효과에 따라 보이거나 사라지게 됩니다.
-
+        if (animationGameObject != null) animationGameObject.SetActive(false);
         StartDialogue(storyToPlay);
     }
 
     void Update()
     {
-        if (choicePanel != null && choicePanel.activeSelf == false && Input.GetMouseButtonDown(0))
+        if (choicePanel != null && !choicePanel.activeSelf && EVILobj.gameObject.activeSelf && !isPlayingAnimation && Input.GetMouseButtonDown(0))
         {
-            if (isPlayingAnimation)
-            {
-                // 애니메이션 중에는 스킵 불가능
-                return;
-            }
-            else if (isTyping)
+            Debug.Log("EVIL 실행");
+            if (isTyping)
             {
                 CompleteLine();
             }
@@ -92,10 +82,14 @@ public class DialoguePlayer_EVIL : MonoBehaviour
 
     public void StartDialogue(StoryData_EVIL story)
     {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopAllSounds();
+        }
+
         storyToPlay = story;
         lineIndex = 0;
 
-        // 대화 시작 시점의 흰 화면 노출 방지
         if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
         if (characterCanvasGroup != null) characterCanvasGroup.alpha = 0;
 
@@ -107,12 +101,16 @@ public class DialoguePlayer_EVIL : MonoBehaviour
 
     private void ShowLine(int index)
     {
-        if (storyToPlay == null || storyToPlay.Story.Count <= index) return;
+        if (storyToPlay == null || storyToPlay.Story.Count <= index)
+        {
+            EndDialogue();
+            return;
+        }
         Data_EVIL line = storyToPlay.Story[index];
 
         if (storyAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
         {
-            StartCoroutine(PlayAnimationAndContinueDialogue(line));
+            StartCoroutine(PlayAnimation(line.animationTrigger));
         }
         else
         {
@@ -120,48 +118,42 @@ public class DialoguePlayer_EVIL : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayAnimationAndContinueDialogue(Data_EVIL line)
+    private IEnumerator PlayAnimation(string animationTriggerName)
     {
         isPlayingAnimation = true;
         dialoguePanel.SetActive(false);
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(false);
+        if (animationGameObject != null) animationGameObject.SetActive(true);
+        storyAnimator.SetTrigger(animationTriggerName);
+        yield return null;
+    }
 
-        // 애니메이션 시작 전에 배경 이미지를 투명하게 만들어 흰 화면 노출을 막습니다.
-        if (illustrationCanvasGroup != null)
-        {
-            illustrationCanvasGroup.alpha = 0;
-        }
-
-        // 애니메이션 오브젝트를 활성화하고, 애니메이션을 실행합니다.
-        if (animationGameObject != null)
-        {
-            animationGameObject.SetActive(true);
-        }
-
-        storyAnimator.SetTrigger(line.animationTrigger);
-
-        // 애니메이션이 끝날 때까지 기다립니다.
-        yield return new WaitUntil(() => storyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !storyAnimator.IsInTransition(0));
-
+    public void OnAnimationEnd()
+    {
         isPlayingAnimation = false;
-        dialoguePanel.SetActive(true);
+        if (animationGameObject != null) animationGameObject.SetActive(false);
 
-        // 애니메이션이 끝나면 오브젝트를 다시 비활성화합니다.
-        if (animationGameObject != null)
+        lineIndex++;
+        if (storyToPlay != null && lineIndex < storyToPlay.Story.Count)
         {
-            animationGameObject.SetActive(false);
+            ShowLine(lineIndex);
         }
-
-        // 대사로 돌아왔을 때 배경 이미지를 다시 보이게 만듭니다.
-        if (illustrationCanvasGroup != null)
+        else
         {
-            illustrationCanvasGroup.alpha = 1;
+            EndDialogue();
         }
-
-        ProcessLine(line);
     }
 
     private void ProcessLine(Data_EVIL line)
     {
+        if (line.lineSound != null)
+        {
+            SoundManager.Instance.PlaySFX(line.lineSound);
+        }
+
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(true);
+
         if (currentNameplate != null) Destroy(currentNameplate);
         if (line.nameplatePanel != null)
         {
