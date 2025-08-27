@@ -47,7 +47,7 @@ public class FileSystem : MonoBehaviour
         root = new FileSystemNode("ROOT", NodeType.Folder);
         MemoNode = new FileSystemNode("NOTE_MEMO", NodeType.File)
         {
-            Content = "[읽기 전용 메모입니다.]"
+            Content = ""
         };
         InitializeZone();
 
@@ -87,6 +87,11 @@ public class FileSystem : MonoBehaviour
         roomA1Log.Content = "";
         roomA1Log.logType = LogType.ReadOnly; // 읽기 전용으로 설정
         corridorADir.Children.Add(roomA1Log);
+
+
+        var tutorialLog = new FileSystemNode("연습용_기록.log", NodeType.File, root);
+        tutorialLog.Content = "이 기록을 열자 데이터 파일이 생성되었다.";
+        root.Children.Add(tutorialLog);
     }
     public void ResetZone()
     {

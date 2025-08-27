@@ -70,6 +70,8 @@ public class MainEngineGimmick : MonoBehaviour
         CRTController.instance.PrintMessageToCurrentTab(
             "SYSTEM > 메인 엔진 이벤트 실패. 데이터 파일을 초기화했습니다."
         );
+        GameManager.instance.SubjectMental -= 20; // 실패 패널티로 정신력 20 감소
+
     }
 
     // “데이터 파일만 초기화” 구현

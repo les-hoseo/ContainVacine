@@ -6,7 +6,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public FileSystemNode currentLocation;
-    
+
+
+    [Header("튜토리얼 상태")]
+    public bool IsInTutorial = true; // 게임 시작 시 튜토리얼 모드로 시작
+    public int tutorialStep = 0;     // 튜토리얼 진행 단계
 
     [Header("게임 진행 상태 변수")]
     [Range(0, 100)]

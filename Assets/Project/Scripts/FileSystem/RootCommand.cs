@@ -10,9 +10,28 @@ public class RootCommand : ICommand
     {
         if (args.Length < 2)
         {
-            return new List<string> { "SYSTEM > 조회할 디렉토리 경로를 입력해주세요. (예: ROOT INVENTORY)" };
+            return new List<string> { "SYSTEM > 조회할 디렉토리 경로를 입력해주세요. (예: ROOT ZONE)" };
         }
         string targetPath = args[1];
+
+        // ▼▼▼ 튜토리얼 모드일 때의 특별 처리 로직 추가 ▼▼▼
+        if (GameManager.instance.IsInTutorial)
+        {
+            if (targetPath.Equals("ZONE", System.StringComparison.OrdinalIgnoreCase))
+            {
+                // 튜토리얼 중 ROOT ZONE을 입력하면, 가상의 디렉토리 구조를 보여줍니다.
+                var tutorialLines = new List<string>
+                {
+                    "ZONE/",
+                    "└─ 연습용_기록.log"
+                };
+                return tutorialLines;
+            }
+        }
+        // ▲▲▲ 추가 완료 ▲▲▲
+
+
+        // --- 이하 튜토리얼이 아닐 때 실행되는 기존 로직 ---
 
         if (targetPath.Equals("INVENTORY", System.StringComparison.OrdinalIgnoreCase))
         {
@@ -46,4 +65,5 @@ public class RootCommand : ICommand
 
         return FileSystem.instance.GetTreeAsList(targetPath);
     }
+
 }

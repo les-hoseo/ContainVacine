@@ -35,6 +35,14 @@ public class InteractionManager : MonoBehaviour
 
     void InitializeRules()
     {
+        interactionRules.Add(new InteractionRule
+        {
+            objectName = "잠긴_서랍.object",
+            itemName = "테스트용_키카드.item",
+            successMessage = "[잠긴_서랍.object]에 [테스트용_키카드.item]을 사용하여 서랍을 열었습니다.",
+            consumeItem = true
+        });
+
         // === 객실 A1 ===
         interactionRules.Add(new InteractionRule
         {

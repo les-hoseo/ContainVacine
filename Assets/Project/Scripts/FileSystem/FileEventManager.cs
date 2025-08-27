@@ -214,6 +214,18 @@ public class FileEventManager : MonoBehaviour
             newFilePathToCreate = "ZONE/상갑판/복도_B/DATA_복도_B.dat",
             datFileContents = new List<DatContentNode>() // 내용물 없음
         });
+
+
+        fileEventRules.Add(new FileEventRule
+        {
+            triggerFileName = "연습용_기록.log",
+            newFilePathToCreate = "ROOT/DATA_연습.dat",
+            datFileContents = new List<DatContentNode>
+    {
+        new DatContentNode { name = "테스트용_키카드.item" },
+        new DatContentNode { name = "잠긴_서랍.object" }
+    }
+        });
     }
 
     public void CheckForFileOpenEvent(string openedFileName)
