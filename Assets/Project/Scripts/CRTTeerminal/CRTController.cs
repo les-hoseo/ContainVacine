@@ -163,6 +163,24 @@ public class CRTController : MonoBehaviour
             StartCoroutine(ShowTutorialMessage());
         }
     }
+    public void SkipTutorial()
+    {
+        // 튜토리얼을 강제로 마지막 단계로 설정하여 종료 절차를 따름
+        GameManager.instance.tutorialStep = tutorialMessages.Count - 1;
+        AdvanceTutorial();
+    }
+
+    // ▼▼▼ 튜토리얼 종료 로직을 별도 함수로 분리 ▼▼▼
+    private void EndTutorial()
+    {
+        GameManager.instance.IsInTutorial = false;
+        ClearTerminal();
+
+        var infoCommand = new InfoCommand();
+        string welcomeMessage = string.Join("\n", infoCommand.Execute(new string[0]));
+
+        StartTyping(welcomeMessage);
+    }
     private void HandleCommandInput()
     {
         bool inputChanged = false;

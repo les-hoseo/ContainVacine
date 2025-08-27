@@ -48,6 +48,11 @@ public class CommandManager : MonoBehaviour
         // 튜토리얼 상태일 때, 올바른 명령어인지 '확인'만 합니다.
         if (GameManager.instance.IsInTutorial)
         {
+            if (commandName == "SKIP")
+            {
+                CRTController.instance.SkipTutorial();
+                return ""; // SKIP 명령어는 별도의 출력 없이 종료
+            }
             int step = GameManager.instance.tutorialStep;
             bool isCorrectCommand = false;
 
