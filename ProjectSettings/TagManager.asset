@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UI_Behind
   - Water
   - UI
-  - 
-  - 
+  - StorySlot
+  - Board
   - 
   - 
   - 
@@ -41,8 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: DimmedSlots
+    uniqueID: 4094019139
+    locked: 0
+  - name: GameBoard
+    uniqueID: 2889145349
+    locked: 0
   - name: UI
     uniqueID: 2675466529
+    locked: 0
+  - name: ActiveSlot
+    uniqueID: 2046349619
     locked: 0
   m_RenderingLayers:
   - Default
