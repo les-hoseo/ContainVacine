@@ -1,12 +1,12 @@
-// 파일명: EditCommand.cs
+/*// 파일명: EditCommand.cs
 using System.Collections.Generic;
 
 public class EditCommand : ICommand
 {
     public string Name => "EDIT";
-    private readonly FileSystem fileSystem;
+    
 
-    public EditCommand(FileSystem fs) { this.fileSystem = fs; }
+
 
     public List<string> Execute(string[] args)
     {
@@ -14,7 +14,7 @@ public class EditCommand : ICommand
             return new List<string> { "SYSTEM > 수정할 로그 파일의 경로를 입력하세요." };
 
         string path = args[1];
-        FileSystemNode fileNode = fileSystem.FindNodeByPath(path);
+        FileSystemNode fileNode = FileSystem.instance.FindNodeByPath(path);
 
         if (fileNode == null)
         {
@@ -31,4 +31,4 @@ public class EditCommand : ICommand
         // 편집 모드로 진입한다는 메시지를 반환
         return new List<string>(); // 별도의 메시지 없이 바로 편집 화면으로 전환
     }
-}
+}*/

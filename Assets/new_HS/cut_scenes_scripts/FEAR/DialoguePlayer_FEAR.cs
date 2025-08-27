@@ -208,6 +208,7 @@ public class DialoguePlayer_FEAR : MonoBehaviour
         dialoguePanel.SetActive(false);
         choicePanel.SetActive(false);
         Debug.Log("대화가 종료되었습니다.");
+
     }
     private void ProcessEffect(CanvasGroup canvas, Image image, Sprite sprite, IllustrationEffect effect, ref Coroutine fadeCoroutine)
     {

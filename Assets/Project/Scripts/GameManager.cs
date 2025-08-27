@@ -5,6 +5,17 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    public FileSystemNode currentLocation;
+
+
+    [Header("튜토리얼 상태")]
+    public bool IsInTutorial = true; // 게임 시작 시 튜토리얼 모드로 시작
+    public int tutorialStep = 0;     // 튜토리얼 진행 단계
+
+    [Header("게임 진행 상태 변수")]
+    [Range(0, 100)]
+    public int enginePressure = 15; // 초기 압력 15%로 설정
+
     public static GameManager instance;
     [Header("CRT 상태")]
     public float CrtTemp = 0;
@@ -17,6 +28,7 @@ public class GameManager : MonoBehaviour
     public int PlayerHP = 100;
     public int SubjectMental = 100; // 피검진자 정신력 [cite: 220]
     private float mentalDecreaseTimer = 0f;
+
 
     private void Awake()
     {
@@ -33,6 +45,20 @@ public class GameManager : MonoBehaviour
             mentalDecreaseTimer = 0f;
         }
     }
+
+    public void RebootSystem()
+    {
+        // FileSystem에 ZONE 리셋을 요청
+        FileSystem.instance.ResetZone();
+
+        // currentLocation 초기화 (중요)
+        currentLocation = null;
+
+        // TODO: 엔진 압력 등 다른 게임 상태 변수도 필요하다면 여기서 초기화
+        // enginePressure = 15;
+    }
+
+
 
     /// <summary>
     /// 다음 일차로 진행합니다.

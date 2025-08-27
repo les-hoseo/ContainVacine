@@ -1,4 +1,4 @@
-// 파일명: ModuleBootCommand.cs
+/*// 파일명: ModuleBootCommand.cs
 
 using System.Collections.Generic;
 
@@ -39,4 +39,4 @@ public class ModuleBootCommand : ICommand
         lines.Add($"[{moduleName}] MODULE ONLINE");
         return lines;
     }
-}
+}*/

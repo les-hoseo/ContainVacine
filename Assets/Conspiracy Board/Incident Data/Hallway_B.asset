@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cf4450779182346ab22318ee8220a7, type: 3}
+  m_Name: Hallway_B
+  m_EditorClassIdentifier: 
+  storyID: 8
+  storyName: 
+  description: "\uC77C\uD589\uC744 \uCC3E\uC544 \uBCF5\uB3C4\uB85C \uB4E4\uC5B4\uC120
+    \uB808\uC774\uCCBC\uC740 \uADF8\uACF3\uC758 \uB054\uCC0D\uD55C \uAD11\uACBD\uC5D0
+    \uCDA9\uACA9\uC744 \uBC1B\uB294\uB2E4. \uB2E4\uAE09\uD558\uAC8C \uC77C\uD589\uC744
+    \uCC3E\uC544 \uD5E4\uB9E4\uB358 \uC911, \uADF8\uB140\uC758 \uC774\uB984\uC744
+    \uBD80\uB974\uB294 \uAE30\uC774\uD55C \uBAA9\uC18C\uB9AC\uB97C \uB4E3\uACE0 \uB4A4\uB97C
+    \uB3CC\uC544\uBCF4\uAC8C \uB418\uB294\uB370..."
+  storySpritefotItem: {fileID: 5770247281199015189, guid: ca8571164ea9bc74fa943215c022d464, type: 3}
+  storySpritefotSlot: {fileID: 7597846122768790537, guid: c6b373d89a477374aad7485e0493417a, type: 3}
+  storySpritefotItemHallucination:
+  - {fileID: 8246941274684419306, guid: dd36ea1dd9b505944aa75f1702c70e5e, type: 3}
+  - {fileID: -419261330519949885, guid: 54d78031bb2cba54bb3f2ad39e2821a2, type: 3}
+  succeedingPartnerIDs: 04000000
+  fileState: 0

@@ -1,155 +1,110 @@
-﻿using UnityEngine;
+﻿// 파일명: CommandManager.cs
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-/// <summary>
-/// 터미널에 입력된 모든 명령어를 관리하고 실행하는 중앙 관리자입니다.
-/// </summary>
 public class CommandManager : MonoBehaviour
 {
     public static CommandManager instance;
 
-    private FileSystem fileSystem;
-
-    [Header("필수 참조")]
-    [SerializeField] private TerminalManager terminalManager;
-    [SerializeField] private LogDatabase logDatabase;
-
-    // [참고] 기획서의 특수 기믹과 연동이 필요할 경우 이 참조를 사용합니다.
-    [Header("연동될 외부 컨트롤러")]
-    [SerializeField] private RachelGimmickManager rachelGimmickManager;
+    public bool lastTutorialStepCompleted = false;
 
     [Header("현재 대화 대상")]
-    public SubjectData CurChar; // 현재 대화중인 피검진자 데이터
+    public SubjectData CurChar;
 
-    [Header("모듈 상태")]
-    public string ConnectedModule { get; private set; } = null;
-    public LogData VacineConnectedLog { get; private set; }
-
-    // 명령어 이름과 실제 명령어 클래스를 매핑하는 딕셔너리
-    private readonly Dictionary<string, ICommand> commands = new();
+    private readonly Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
 
     private void Awake()
     {
-        instance = this;
-        fileSystem = new FileSystem();
+        if (instance == null) { instance = this; DontDestroyOnLoad(gameObject); }
+        else { Destroy(gameObject); }
         InitializeCommands();
-        
     }
 
-    /// <summary>
-    /// 모든 명령어 클래스를 생성하고 딕셔너리에 등록합니다.
-    /// </summary>
     private void InitializeCommands()
     {
-        // 일반 명령어
         RegisterCommand(new InfoCommand());
         RegisterCommand(new HelpCommand());
         RegisterCommand(new CommandsCommand());
         RegisterCommand(new ClsCommand());
-        RegisterCommand(new LogsCommand(terminalManager));
-        RegisterCommand(new ReadCommand(terminalManager)); // logDatabase 인자 제거됨
-        RegisterCommand(new AskCommand(terminalManager));   // logDatabase 인자 제거됨
-        RegisterCommand(new ZoneCommand(terminalManager));
-
-        // 모듈 명령어
-        RegisterCommand(new ModuleBootCommand(), new[] { "MOD_BOOT" });
-        RegisterCommand(new ModuleExitCommand(), new[] { "MOD_EXIT" });
-        RegisterCommand(new DeepmindMatchCommand(terminalManager, logDatabase), new[] { "DM_MAT" });
-
-        // VACINE 명령어
-        RegisterCommand(new VacineConnectCommand(terminalManager, this), new[] { "V_CON" });
-        RegisterCommand(new VacineVerifyCommand(terminalManager, this), new[] { "V_VER" });
-
-        // CRT 명령어
-        RegisterCommand(new CrtConditionCommand(), new[] { "CRT_CON" });
-        RegisterCommand(new CrtTemperatureCommand(), new[] { "CRT_TEMP" });
-        RegisterCommand(new CrtLinkCommand());
-        // RegisterCommand(new CrtFlashCommand());
-
-
-        // 메모
-        RegisterCommand(new RootCommand(fileSystem));
-        RegisterCommand(new DirCommand(fileSystem));
-        RegisterCommand(new OpenCommand(fileSystem));
-        RegisterCommand(new EditCommand(fileSystem));
+        RegisterCommand(new RebootCommand());
+        RegisterCommand(new RootCommand());
+        RegisterCommand(new OpenCommand());
+        RegisterCommand(new InteractCommand());
     }
 
-    /// <summary>
-    /// 명령어를 딕셔너리에 등록합니다. 별칭(Alias)도 함께 등록할 수 있습니다.
-    /// </summary>
-    private void RegisterCommand(ICommand command, string[] aliases = null)
+    private void RegisterCommand(ICommand command)
     {
         commands[command.Name.ToUpper()] = command;
-        if (aliases != null)
-        {
-            foreach (var alias in aliases)
-            {
-                commands[alias.ToUpper()] = command;
-            }
-        }
     }
 
-    /// <summary>
-    /// 사용자 입력을 받아 적절한 명령어를 실행하고 결과를 반환합니다.
-    /// </summary>
     public string ProcessInput(string fullInput)
     {
+        lastTutorialStepCompleted = false;
         string[] parts = fullInput.Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 0) return "";
-
         string commandName = parts[0].ToUpper();
-        List<string> allowedCommands = GetAllowedCommandsForState();
 
-        if (commands.TryGetValue(commandName, out ICommand command) && allowedCommands.Contains(command.Name))
+        // 튜토리얼 상태일 때, 올바른 명령어인지 '확인'만 합니다.
+        if (GameManager.instance.IsInTutorial)
+        {
+            if (commandName == "SKIP")
+            {
+                CRTController.instance.SkipTutorial();
+                return ""; // SKIP 명령어는 별도의 출력 없이 종료
+            }
+            int step = GameManager.instance.tutorialStep;
+            bool isCorrectCommand = false;
+
+            switch (step)
+            {
+                case 0: if (commandName == "COMMANDS") isCorrectCommand = true; break;
+                case 1: if (commandName == "ROOT" && parts.Length > 1 && parts[1].ToUpper() == "ZONE") isCorrectCommand = true; break;
+                case 2: if (commandName == "OPEN" && parts.Length > 1 && parts[1] == "연습용_기록.log") isCorrectCommand = true; break;
+                case 3: if (commandName == "OPEN" && parts.Length > 1 && parts[1] == "DATA_연습.dat") isCorrectCommand = true; break;
+                case 4: if (commandName == "INTERACT" && parts.Length > 1 && parts[1] == "테스트용_키카드.item") isCorrectCommand = true; break;
+                case 5:
+                    // "INTERACT [오브젝트] with [아이템]" 형식(총 4개의 파트)인지 확인
+                    if (commandName == "INTERACT" && parts.Length == 4 && parts[2].ToUpper() == "WITH")
+                    {
+                        isCorrectCommand = true;
+                    }
+                    break;
+            }
+
+            if (isCorrectCommand)
+            {
+                lastTutorialStepCompleted = true;
+                // 올바른 명령어를 입력했으므로, 아래의 실제 명령어 실행 로직으로 넘어갑니다.
+            }
+            else
+            {
+                // 잘못된 명령어를 입력했으면, 아무것도 실행하지 않고 종료합니다.
+                return "";
+            }
+        }
+
+        // --- 실제 명령어 실행 로직 (튜토리얼이 아니거나, 튜토리얼 정답을 맞혔을 때 실행됨) ---
+
+        // ROOT NOTE 명령어 특별 처리
+        if (parts.Length == 2 && parts[0].ToUpper() == "ROOT" && parts[1].ToUpper() == "NOTE")
+        {
+            CRTController.instance.StartEditableNote(FileSystem.instance.MemoNode);
+            return "";
+        }
+
+        // 일반 명령어 처리
+        if (commands.TryGetValue(commandName, out ICommand command))
         {
             List<string> resultLines = command.Execute(parts);
             return string.Join("\n", resultLines);
-
         }
         else
         {
-            // 잘못된 명령어 입력 시 기믹 매니저에 알림
-            if (rachelGimmickManager != null && rachelGimmickManager.gameObject.activeInHierarchy)
-            {
-                rachelGimmickManager.OnWrongCommand();
-            }
-            return $"SYSTEM > Command '{parts[0]}' not found or not allowed in this tab.";
+            return $"SYSTEM > '{parts[0]}'은(는) 알 수 없는 명령어입니다.";
         }
     }
 
-    // 현재 탭 상태에서 허용되는 명령어 목록을 반환
-    private List<string> GetAllowedCommandsForState()
-    {
-        return commands.Values.Select(c => c.Name).Where(name => name != "ASK").Distinct().ToList();
-    }
-
-    /// <summary>
-    /// 현재 캐릭터의 소개문 로그를 찾아 소유 목록에 추가하고, CRT 화면에 출력하도록 요청합니다.
-    /// </summary>
-    public void DisplayIntroLogForCurrentCharacter()
-    {
-        if (CurChar == null || CurChar.profileLog == null) return;
-
-        LogData profileLog = CurChar.profileLog;
-
-        if (terminalManager != null && !terminalManager.OwnedLogs.Contains(profileLog))
-        {
-            terminalManager.AddLog(profileLog);
-        }
-
-        if (CRTController.instance != null)
-        {
-            // 새로 만든 함수를 호출합니다.
-            CRTController.instance.PrintMessageToCurrentTab(profileLog.engContent);
-        }
-    }
-
-    // --- 모듈 상태 관리 함수 ---
-    public void BootModule(string moduleName) => ConnectedModule = moduleName;
-    public void ExitModule() => ConnectedModule = null;
-    public void ConnectLogToVacine(LogData log) => VacineConnectedLog = log;
-    public void DisconnectLogFromVacine() => VacineConnectedLog = null;
     public List<string> GetAllCommandNames()
     {
         return commands.Values.Select(c => c.Name).Distinct().ToList();

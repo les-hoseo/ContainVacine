@@ -7,18 +7,18 @@ public class InfoCommand : ICommand
 
     public List<string> Execute(string[] args)
     {
-        // GameManager에서 현재 상태 값을 가져와 출력에 반영
-        var gm = GameManager.instance;
-        string systemStatus = (gm.PlayerHP >= 60) ? "STABLE" : "UNSTABLE";
-        string syncStatus = (FlowManager.instance.CurrentState == FlowManager.GameState.Gameplay) ? "STABLE" : "UNSTABLE";
+        // TODO: GameManager 등에서 실제 부팅 횟수(Boot Count)를 가져오도록 수정 가능
+        int bootCount = 1;
 
         return new List<string>
         {
-            "C.R.T. OS",
-            "————————————————————————————————————————————————",
-            $"System Status : {systemStatus}",
-            $"USER ID [GAGAJ74625E40B5B]Neural Sync Status : {syncStatus}",
-            "type “HELP” to get help using terminal"
+            "CRT SYSTEM INFORMATION",
+            "────────────────────────────",
+            $"SYSTEM NAME   : C.R.T. Unit",
+            $"BOOT COUNT    : {bootCount}",
+            $"SYSTEM STATUS : ONLINE",
+            $"OS VERSION    : CV-OS v8.27",
+            "────────────────────────────"
         };
     }
 }

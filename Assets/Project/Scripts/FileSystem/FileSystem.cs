@@ -1,48 +1,161 @@
 // 파일명: FileSystem.cs
-using System.Text;
+using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Text;
 
-public class FileSystem
+public class FileSystem : MonoBehaviour
 {
-    private FileSystemNode root; // NoteNode -> FileSystemNode
+    public static FileSystem instance;
 
-    public FileSystem()
+    private FileSystemNode root;
+    public FileSystemNode MemoNode { get; private set; }
+
+    private void Awake()
     {
-        root = new FileSystemNode("ROOT", NodeType.Folder); // NoteNode -> FileSystemNode
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        InitializeFileSystem();
     }
 
-    // NoteNode -> FileSystemNode 로 변경
+    public void GetAllNodeNames(FileSystemNode startNode, List<string> names)
+    {
+        if (startNode == null) return;
+
+        // 자기 자신의 이름을 추가 (단, 최상위 ROOT는 제외)
+        if (startNode != root)
+        {
+            names.Add(startNode.Name);
+        }
+
+        // 모든 자식 노드에 대해 재귀적으로 함수 호출
+        foreach (var child in startNode.Children)
+        {
+            GetAllNodeNames(child, names);
+        }
+    }
+    private void InitializeFileSystem()
+    {
+        root = new FileSystemNode("ROOT", NodeType.Folder);
+        MemoNode = new FileSystemNode("NOTE_MEMO", NodeType.File)
+        {
+            Content = ""
+        };
+        InitializeZone();
+
+        
+
+
+    }
+    private void InitializeZone()
+    {
+        // --- ZONE 구역 기본 구조 생성 ---
+        var zoneDir = new FileSystemNode("ZONE", NodeType.Folder, root);
+        root.Children.Add(zoneDir);
+
+        // 상갑판 폴더 생성
+        var upperDeckDir = new FileSystemNode("상갑판", NodeType.Folder, zoneDir);
+        zoneDir.Children.Add(upperDeckDir);
+
+        // 복도_A 폴더 생성 (상갑판의 하위 폴더)
+        var corridorADir = new FileSystemNode("복도_A", NodeType.Folder, upperDeckDir);
+        upperDeckDir.Children.Add(corridorADir);
+        var corridorBDir = new FileSystemNode("복도_B", NodeType.Folder, upperDeckDir);
+        upperDeckDir.Children.Add(corridorBDir);
+
+        var lowerDeckDir = new FileSystemNode("하갑판", NodeType.Folder, zoneDir);
+        zoneDir.Children.Add(lowerDeckDir);
+        var cafe = new FileSystemNode("카페테리아_라운지", NodeType.Folder, zoneDir);
+        upperDeckDir.Children.Add(cafe);
+        var engine = new FileSystemNode("엔진_구역", NodeType.Folder, zoneDir);
+        lowerDeckDir.Children.Add(engine);
+        var crew = new FileSystemNode("화물_승무원_구역", NodeType.Folder, zoneDir);
+        lowerDeckDir.Children.Add(crew);
+
+
+
+        // 객실_A1.log 파일 생성 (복도_A의 하위 파일)
+        var roomA1Log = new FileSystemNode("객실_A1.log", NodeType.File, corridorADir);
+        roomA1Log.Content = "";
+        roomA1Log.logType = LogType.ReadOnly; // 읽기 전용으로 설정
+        corridorADir.Children.Add(roomA1Log);
+
+
+        var tutorialLog = new FileSystemNode("연습용_기록.log", NodeType.File, root);
+        tutorialLog.Content = "이 기록을 열자 데이터 파일이 생성되었다.";
+        root.Children.Add(tutorialLog);
+    }
+    public void ResetZone()
+    {
+        // 기존 ZONE 폴더를 찾아서 삭제
+        FileSystemNode oldZone = root.Children.FirstOrDefault(node => node.Name == "ZONE");
+        if (oldZone != null)
+        {
+            root.Children.Remove(oldZone);
+        }
+        // ZONE 폴더를 초기 상태로 다시 생성
+        InitializeZone();
+        Debug.Log("ZONE 디렉토리가 초기화되었습니다.");
+    }
+
     public FileSystemNode FindNodeByPath(string path, bool findParent = false)
     {
-        if (string.IsNullOrEmpty(path) || path == "/" || path.ToUpper() == "ROOT" || path.ToUpper() == "ROOT/")
-            return root;
+        if (string.IsNullOrEmpty(path) || path.ToUpper() == "ROOT" || path == "/") return root;
 
+        if (path.ToUpper().StartsWith("ROOT/"))
+        {
+            path = path.Substring(5);
+        }
         string[] parts = path.Trim('/').Split('/');
-        FileSystemNode currentNode = root; // NoteNode -> FileSystemNode
-
+        FileSystemNode currentNode = root;
         int limit = findParent ? parts.Length - 1 : parts.Length;
-
         for (int i = 0; i < limit; i++)
         {
             string part = parts[i];
             if (string.IsNullOrEmpty(part)) continue;
-
-            FileSystemNode nextNode = currentNode.Children.FirstOrDefault(node => node.Name.Equals(part, System.StringComparison.OrdinalIgnoreCase)); // NoteNode -> FileSystemNode
-            if (nextNode != null)
-            {
-                currentNode = nextNode;
-            }
-            else
-            {
-                return null;
-            }
+            FileSystemNode nextNode = currentNode.Children.FirstOrDefault(node => node.Name.Equals(part, System.StringComparison.OrdinalIgnoreCase));
+            if (nextNode != null) { currentNode = nextNode; }
+            else { return null; }
         }
         return currentNode;
     }
 
-    // NoteNode -> FileSystemNode 로 변경
+    public List<FileSystemNode> FindNodesByName(string fileName)
+    {
+        var foundNodes = new List<FileSystemNode>();
+        FindNodesRecursive(root, fileName, foundNodes);
+        return foundNodes;
+    }
+
+    private void FindNodesRecursive(FileSystemNode currentNode, string fileName, List<FileSystemNode> foundNodes)
+    {
+        if (currentNode.Name.Equals(fileName, System.StringComparison.OrdinalIgnoreCase))
+        {
+            foundNodes.Add(currentNode);
+        }
+        foreach (var child in currentNode.Children)
+        {
+            FindNodesRecursive(child, fileName, foundNodes);
+        }
+    }
+
+    public List<string> GetTreeAsList(string path)
+    {
+        FileSystemNode startNode = FindNodeByPath(path);
+        if (startNode == null) return new List<string> { "SYSTEM > 해당 경로를 찾을 수 없습니다." };
+        var treeLines = new List<string> { startNode.Name + (startNode.Type == NodeType.Folder ? "/" : "") };
+        GenerateTreeRecursive(startNode.Children, "", treeLines);
+        return treeLines;
+    }
+
     private void GenerateTreeRecursive(List<FileSystemNode> nodes, string prefix, List<string> treeLines)
     {
         for (int i = 0; i < nodes.Count; i++)
@@ -51,9 +164,7 @@ public class FileSystem
             bool isLast = (i == nodes.Count - 1);
             string connector = isLast ? "└─ " : "├─ ";
             string nameToDisplay = node.Name + (node.Type == NodeType.Folder ? "/" : "");
-
             treeLines.Add(prefix + connector + nameToDisplay);
-
             if (node.Type == NodeType.Folder && node.Children.Any())
             {
                 string nextPrefix = prefix + (isLast ? "    " : "│   ");
@@ -62,135 +173,60 @@ public class FileSystem
         }
     }
 
-    // ... (GetTreeAsList, AddNode 등 다른 함수들도 내부적으로 FileSystemNode를 사용하도록 수정됩니다) ...
-    // 여기에 전체 함수들을 다시 넣겠습니다.
-    public List<string> GetTreeAsList()
+    public FileSystemNode CreateFileNodeByPath(string fullPath, string content = "")
     {
-        var treeLines = new List<string> { root.Name + "/" };
-        GenerateTreeRecursive(root.Children, "", treeLines);
-        return treeLines;
-    }
-
-    public string AddNode(string path, NodeType type)
-    {
-        string nodeName = path.Split('/').Last();
-        if (string.IsNullOrEmpty(nodeName))
+        if (string.IsNullOrEmpty(fullPath)) { Debug.LogError("파일 생성 실패: 경로가 비어있습니다."); return null; }
+        string[] parts = fullPath.Trim('/').Split('/');
+        if (parts.Length < 2) { Debug.LogError("파일 생성 실패: 잘못된 경로입니다."); return null; }
+        string fileName = parts.Last();
+        string parentPath = string.Join("/", parts.Take(parts.Length - 1));
+        FileSystemNode parentNode = FindNodeByPath(parentPath);
+        if (parentNode == null) { Debug.LogError($"파일 생성 실패: 부모 경로 '{parentPath}'를 찾을 수 없습니다."); return null; }
+        if (parentNode.Type != NodeType.Folder) { Debug.LogError($"파일 생성 실패: '{parentNode.Name}'은(는) 폴더가 아닙니다."); return null; }
+        if (parentNode.Children.Any(n => n.Name.Equals(fileName, System.StringComparison.OrdinalIgnoreCase)))
         {
-            return "SYSTEM > 잘못된 이름입니다.";
+            return parentNode.Children.First(n => n.Name.Equals(fileName, System.StringComparison.OrdinalIgnoreCase));
         }
-
-        FileSystemNode parentNode = FindNodeByPath(path, true);
-
-        // 1. 부모 경로가 존재하는지 확인
-        if (parentNode == null)
-        {
-            UnityEngine.Debug.LogError($"[FileSystem] AddNode 실패: '{path}'의 부모 경로를 찾을 수 없습니다.");
-            return "SYSTEM > 경로를 찾을 수 없습니다.";
-        }
-
-        // 2. 부모가 폴더인지 확인 (파일이 아니어야 함)
-        if (parentNode.Type == NodeType.File)
-        {
-            UnityEngine.Debug.LogError($"[FileSystem] AddNode 실패: 파일('{parentNode.Name}') 안에는 노드를 생성할 수 없습니다.");
-            return $"SYSTEM > 경로에 오류가 있습니다: '{parentNode.Name}'은(는) 파일입니다.";
-        }
-
-        // 3. 같은 이름이 이미 있는지 확인
-        if (parentNode.Children.Any(n => n.Name.Equals(nodeName, System.StringComparison.OrdinalIgnoreCase)))
-        {
-            return "SYSTEM > 동일한 경로가 이미 존재합니다.";
-        }
-
-        FileSystemNode newNode = new FileSystemNode(nodeName, type, parentNode);
+        var newNode = new FileSystemNode(fileName, NodeType.File, parentNode);
+        newNode.Content = content;
         parentNode.Children.Add(newNode);
-
-        string typeString = type == NodeType.Folder ? "디렉토리" : "로그 파일";
-        return $"SYSTEM > {typeString} 생성됨 : {path}";
+        Debug.Log($"파일 생성 성공: {fullPath}");
+        return newNode;
     }
 
-    public string DeleteNode(string path)
+    public string UpdateNodeChildren(string fullPath, List<string> newItemNames)
     {
-        // 삭제할 노드를 찾습니다.
-        FileSystemNode nodeToDelete = FindNodeByPath(path);
-
-        // 노드가 없거나, 최상위 루트 폴더를 삭제하려고 할 경우 오류를 반환합니다.
-        if (nodeToDelete == null || nodeToDelete == root)
+        FileSystemNode targetNode = FindNodeByPath(fullPath);
+        if (targetNode == null) return $"SYSTEM > 업데이트 실패: '{fullPath}' 경로를 찾을 수 없습니다.";
+        targetNode.Children.Clear();
+        foreach (var itemName in newItemNames)
         {
-            return "SYSTEM > 경로를 찾을 수 없습니다.";
+            targetNode.Children.Add(new FileSystemNode(itemName, NodeType.File, targetNode));
         }
-
-        // 부모 노드의 자식 리스트에서 자신을 제거합니다.
-        nodeToDelete.Parent.Children.Remove(nodeToDelete);
-
-        string typeString = nodeToDelete.Type == NodeType.Folder ? "디렉토리" : "로그 파일";
-        return $"SYSTEM > {typeString} 삭제됨 : {path}";
+        Debug.Log($"파일 업데이트 성공: {fullPath}");
+        return null;
     }
 
-    public string MoveNode(string sourcePath, string destinationPath)
+    public FileSystemNode FindChildByNameRecursive(FileSystemNode parentNode, string fileName)
     {
-        FileSystemNode sourceNode = FindNodeByPath(sourcePath);
-        FileSystemNode destinationNode = FindNodeByPath(destinationPath);
+        // 부모 노드의 직속 자식들 중에서 먼저 찾아봅니다.
+        var directChild = parentNode.Children.FirstOrDefault(node => node.Name.Equals(fileName, System.StringComparison.OrdinalIgnoreCase));
+        if (directChild != null)
+        {
+            return directChild;
+        }
 
-        // 1. 소스 경로가 올바른지 확인
-        if (sourceNode == null || sourceNode == root)
+        // 직속 자식 중에 없으면, 자식들 중 폴더 타입인 것들을 순회하며 재귀적으로 탐색합니다.
+        foreach (var childFolder in parentNode.Children.Where(node => node.Type == NodeType.Folder))
         {
-            return "SYSTEM > 이동할 소스 경로를 찾을 수 없습니다.";
-        }
-        // 2. 목적지 경로가 올바른지 확인
-        if (destinationNode == null)
-        {
-            return "SYSTEM > 이동할 목적지 경로를 찾을 수 없습니다.";
-        }
-        // 3. 목적지가 폴더인지 확인
-        if (destinationNode.Type != NodeType.Folder)
-        {
-            return "SYSTEM > 목적지 경로는 폴더여야 합니다.";
-        }
-        // 4. 목적지에 같은 이름이 이미 있는지 확인
-        if (destinationNode.Children.Any(n => n.Name.Equals(sourceNode.Name, System.StringComparison.OrdinalIgnoreCase)))
-        {
-            return "SYSTEM > 목적지 경로에 동일한 이름이 이미 존재합니다.";
-        }
-        // 5. 자기 자신의 하위 폴더로 이동하는지 확인 (무한 루프 방지)
-        FileSystemNode tempParent = destinationNode;
-        while (tempParent != null)
-        {
-            if (tempParent == sourceNode)
+            FileSystemNode foundInChild = FindChildByNameRecursive(childFolder, fileName);
+            if (foundInChild != null)
             {
-                return "SYSTEM > 폴더를 자신의 하위 폴더로 이동할 수 없습니다.";
+                return foundInChild; // 하위 폴더에서 찾았으면 반환
             }
-            tempParent = tempParent.Parent;
         }
 
-        // 모든 검사를 통과했으면 이동 실행
-        sourceNode.Parent.Children.Remove(sourceNode); // 1. 원래 부모에게서 자신을 제거
-        destinationNode.Children.Add(sourceNode);      // 2. 새로운 부모에게 자신을 추가
-        sourceNode.Parent = destinationNode;           // 3. 자신의 부모 정보를 갱신
-
-        return $"SYSTEM > 이동됨 : {destinationPath}/{sourceNode.Name}";
-    }
-    public string ReadFile(string path)
-    {
-        FileSystemNode node = FindNodeByPath(path);
-
-        // 1. 노드가 존재하는지 확인
-        if (node == null)
-        {
-            return "ERROR: 경로를 찾을 수 없습니다.";
-        }
-        // 2. 노드가 파일 타입인지 확인
-        if (node.Type != NodeType.File)
-        {
-            return "ERROR: 지정된 경로는 파일이 아닙니다.";
-        }
-
-        // 파일 내용이 비어있으면 안내 문구 반환
-        if (string.IsNullOrEmpty(node.Content))
-        {
-            return "[빈 노트입니다. EDIT 명령어로 내용을 추가하세요.]";
-        }
-
-        return node.Content;
+        return null; // 모든 하위 폴더에서도 찾지 못함
     }
 
 }

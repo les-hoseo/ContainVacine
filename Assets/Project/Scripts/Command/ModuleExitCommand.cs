@@ -1,4 +1,4 @@
-// 파일명: ModuleExitCommand.cs
+/*// 파일명: ModuleExitCommand.cs
 
 using System.Collections.Generic;
 
@@ -27,3 +27,4 @@ public class ModuleExitCommand : ICommand
         return lines;
     }
 }
+*/
