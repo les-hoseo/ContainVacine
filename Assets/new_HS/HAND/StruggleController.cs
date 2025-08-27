@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using UnityEngine.UI;
 
 public class StruggleController : MonoBehaviour
@@ -165,4 +165,4 @@ public class StruggleController : MonoBehaviour
         gaugeBar.gameObject.SetActive(false);
         if (noiseController != null) noiseController.masterAlpha = 0;
     }
-}
+}*/
