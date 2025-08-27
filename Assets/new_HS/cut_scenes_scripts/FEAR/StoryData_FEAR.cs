@@ -24,9 +24,9 @@ public class Data_FEAR
     public GameObject nameplatePanel;
     public string animationTrigger;
 
-    // <<< 이 부분이 추가되었습니다. >>>
     [Header("오디오")]
-    public AudioClip lineSound; // 이 라인에서 재생할 사운드 클립
+    [Tooltip("이 라인에서 동시에 재생할 오디오 클립 목록")]
+    public AudioClip[] lineSounds;
 
     [Header("배경 일러스트")]
     public Sprite Sprite;

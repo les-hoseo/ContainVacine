@@ -21,10 +21,6 @@ public class DialoguePlayer_FEAR : MonoBehaviour
     [Header("대화 데이터")]
     public StoryData_FEAR storyToPlay;
 
-    // <<< 1. AudioSource 변수를 추가합니다. >>>
-    [Header("오디오")]
-    public AudioSource audioSource;
-
     [Header("효과 설정")]
     public float typingSpeed = 0.05f;
     public float fadeDuration = 0.5f;
@@ -33,8 +29,10 @@ public class DialoguePlayer_FEAR : MonoBehaviour
     public Animator storyAnimator;
     public GameObject animationGameObject;
 
+    [Header("컷신 오브젝트")]
+    [SerializeField] private GameObject FEARobj;
+
     // 내부 변수들
-    // ... (기존 내부 변수들은 그대로) ...
     private int lineIndex;
     private bool isTyping;
     private bool isPlayingAnimation;
@@ -52,38 +50,21 @@ public class DialoguePlayer_FEAR : MonoBehaviour
             illustrationCanvasGroup = illustrationImage.gameObject.GetComponent<CanvasGroup>() ?? illustrationImage.gameObject.AddComponent<CanvasGroup>();
         if (characterImage != null)
             characterCanvasGroup = characterImage.gameObject.GetComponent<CanvasGroup>() ?? characterImage.gameObject.AddComponent<CanvasGroup>();
-
-        // AudioSource가 없다면 자동으로 추가하고 연결합니다.
-        if (audioSource == null)
-        {
-            audioSource = gameObject.GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
-        }
     }
-
-    // ... (Start, Update, StartDialogue, ShowLine, PlayAnimation, OnAnimationEnd 함수는 기존과 동일) ...
 
     void Start()
     {
-        if (animationGameObject != null)
-        {
-            animationGameObject.SetActive(false);
-        }
-        if (illustrationImage != null)
-        {
-            illustrationImage.gameObject.SetActive(true);
-        }
+        if (animationGameObject != null) animationGameObject.SetActive(false);
         StartDialogue(storyToPlay);
     }
+
     void Update()
     {
-        if (choicePanel != null && choicePanel.activeSelf == false && Input.GetMouseButtonDown(0))
+        if (choicePanel != null && !choicePanel.activeSelf && FEARobj.gameObject.activeSelf && !isPlayingAnimation && Input.GetMouseButtonDown(0))
         {
-            if (isPlayingAnimation) { return; }
-            else if (isTyping) { CompleteLine(); }
+            Debug.Log("FEAR 실행");
+
+            if (isTyping) { CompleteLine(); }
             else
             {
                 lineIndex++;
@@ -92,18 +73,32 @@ public class DialoguePlayer_FEAR : MonoBehaviour
             }
         }
     }
+
     public void StartDialogue(StoryData_FEAR story)
     {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopAllSounds();
+        }
+
         storyToPlay = story;
         lineIndex = 0;
+
+        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
+
         ClearChoices();
         if (choicePanel != null) choicePanel.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(true);
         ShowLine(lineIndex);
     }
+
     private void ShowLine(int index)
     {
-        if (storyToPlay == null || storyToPlay.Story.Count <= index) return;
+        if (storyToPlay == null || storyToPlay.Story.Count <= index)
+        {
+            EndDialogue();
+            return;
+        }
         Data_FEAR line = storyToPlay.Story[index];
         if (storyAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
         {
@@ -114,6 +109,7 @@ public class DialoguePlayer_FEAR : MonoBehaviour
             ProcessLine(line);
         }
     }
+
     private IEnumerator PlayAnimation(string animationTriggerName)
     {
         isPlayingAnimation = true;
@@ -123,29 +119,32 @@ public class DialoguePlayer_FEAR : MonoBehaviour
         storyAnimator.SetTrigger(animationTriggerName);
         yield return null;
     }
+
     public void OnAnimationEnd()
     {
         isPlayingAnimation = false;
         if (animationGameObject != null) { animationGameObject.SetActive(false); }
-        if (dialoguePanel != null) { dialoguePanel.SetActive(true); }
-        if (illustrationImage != null) { illustrationImage.gameObject.SetActive(true); }
+
         lineIndex++;
         if (storyToPlay != null && lineIndex < storyToPlay.Story.Count) { ShowLine(lineIndex); }
         else { EndDialogue(); }
     }
 
-
-    // <<< 2. ProcessLine 함수를 수정합니다. >>>
     private void ProcessLine(Data_FEAR line)
     {
-        // --- 사운드 재생 로직 추가 ---
-        // 이 라인에 연결된 사운드 클립이 있고, AudioSource가 준비되어 있다면
-        if (line.lineSound != null && audioSource != null)
+        if (line.lineSounds != null && line.lineSounds.Length > 0)
         {
-            // 사운드를 한 번 재생합니다.
-            audioSource.PlayOneShot(line.lineSound);
+            foreach (AudioClip clip in line.lineSounds)
+            {
+                if (clip != null)
+                {
+                    SoundManager.Instance.PlaySFX(clip);
+                }
+            }
         }
-        // --------------------------
+
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(true);
 
         if (currentNameplate != null) Destroy(currentNameplate);
         if (line.nameplatePanel != null)
@@ -174,12 +173,9 @@ public class DialoguePlayer_FEAR : MonoBehaviour
         }
     }
 
-    // ... (이하 나머지 함수들은 기존과 동일) ...
-
     private void ProcessDialogue(Data_FEAR line)
     {
-        if (illustrationImage.gameObject.activeSelf) { ProcessEffect(illustrationCanvasGroup, illustrationImage, line.Sprite, line.effect, ref illustrationFadeCoroutine); }
-        else { illustrationImage.sprite = line.Sprite; illustrationCanvasGroup.alpha = 1f; }
+        ProcessEffect(illustrationCanvasGroup, illustrationImage, line.Sprite, line.effect, ref illustrationFadeCoroutine);
         ProcessEffect(characterCanvasGroup, characterImage, line.characterSprite, line.characterEffect, ref characterFadeCoroutine);
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.Content));

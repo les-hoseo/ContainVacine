@@ -27,9 +27,8 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
     [Header("애니메이터 연결")]
     public Animator storyAnimator;
-    public GameObject animationGameObject; // 애니메이션이 재생될 오브젝트 (ASH_ani)
+    public GameObject animationGameObject;
 
-    // 내부 변수들
     private int lineIndex;
     private bool isTyping;
     private bool isPlayingAnimation;
@@ -39,6 +38,9 @@ public class DialoguePlayer_ASH : MonoBehaviour
     private CanvasGroup illustrationCanvasGroup;
     private CanvasGroup characterCanvasGroup;
     private List<GameObject> spawnedChoiceButtons = new List<GameObject>();
+
+    [Header("컷신 오브젝트")]
+    [SerializeField] private GameObject ASHobj;
 
     void Awake()
     {
@@ -50,31 +52,16 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
     void Start()
     {
-        // 시작할 때 애니메이션 오브젝트는 항상 비활성화 상태로 둡니다.
-        if (animationGameObject != null)
-        {
-            animationGameObject.SetActive(false);
-        }
-
-        // 배경 이미지를 즉시 보이게 합니다.
-        if (illustrationImage != null)
-        {
-            illustrationImage.gameObject.SetActive(true);
-        }
-
+        if (animationGameObject != null) animationGameObject.SetActive(false);
         StartDialogue(storyToPlay);
     }
 
     void Update()
     {
-        if (choicePanel != null && choicePanel.activeSelf == false && Input.GetMouseButtonDown(0))
+        if (choicePanel != null && !choicePanel.activeSelf && ASHobj.gameObject.activeSelf && !isPlayingAnimation && Input.GetMouseButtonDown(0))
         {
-            if (isPlayingAnimation)
-            {
-                // 애니메이션 중에는 스킵 불가능
-                return;
-            }
-            else if (isTyping)
+            Debug.Log("ASH 실행");
+            if (isTyping)
             {
                 CompleteLine();
             }
@@ -95,8 +82,14 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
     public void StartDialogue(StoryData_ASH story)
     {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopAllSounds();
+        }
+
         storyToPlay = story;
         lineIndex = 0;
+        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
 
         ClearChoices();
         if (choicePanel != null) choicePanel.SetActive(false);
@@ -106,12 +99,16 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
     private void ShowLine(int index)
     {
-        if (storyToPlay == null || storyToPlay.Story.Count <= index) return;
+        if (storyToPlay == null || storyToPlay.Story.Count <= index)
+        {
+            EndDialogue();
+            return;
+        }
         Data_ASH line = storyToPlay.Story[index];
 
         if (storyAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
         {
-            StartCoroutine(PlayAnimation(line));
+            StartCoroutine(PlayAnimation(line.animationTrigger));
         }
         else
         {
@@ -119,59 +116,48 @@ public class DialoguePlayer_ASH : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayAnimation(Data_ASH line)
+    private IEnumerator PlayAnimation(string animationTriggerName)
     {
         isPlayingAnimation = true;
         dialoguePanel.SetActive(false);
-
-        // 배경 이미지를 즉시 숨겨 흰 화면이 나타나지 않도록 합니다.
-        if (illustrationImage != null)
-        {
-            illustrationImage.gameObject.SetActive(false);
-        }
-
-        // 애니메이션 오브젝트를 활성화하고, 애니메이션을 실행합니다.
-        if (animationGameObject != null)
-        {
-            animationGameObject.SetActive(true);
-        }
-
-        storyAnimator.SetTrigger(line.animationTrigger);
-
-        // 애니메이션 이벤트가 끝날 때까지 기다립니다.
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(false);
+        if (animationGameObject != null) animationGameObject.SetActive(true);
+        storyAnimator.SetTrigger(animationTriggerName);
         yield return null;
     }
 
-    // ⭐⭐⭐ 애니메이션 이벤트에서 호출될 함수 ⭐⭐⭐
     public void OnAnimationEnd()
     {
-        // 애니메이션이 종료되면 호출될 함수입니다.
         isPlayingAnimation = false;
+        if (animationGameObject != null) animationGameObject.SetActive(false);
 
-        // 애니메이션이 재생되던 오브젝트를 비활성화합니다.
-        if (animationGameObject != null)
+        lineIndex++;
+        if (storyToPlay != null && lineIndex < storyToPlay.Story.Count)
         {
-            animationGameObject.SetActive(false);
+            ShowLine(lineIndex);
         }
-
-        // 대화 패널과 배경 이미지를 다시 활성화합니다.
-        if (dialoguePanel != null)
+        else
         {
-            dialoguePanel.SetActive(true);
+            EndDialogue();
         }
-
-        if (illustrationImage != null)
-        {
-            illustrationImage.gameObject.SetActive(true);
-        }
-
-        // 다음 대사로 진행합니다.
-        ProcessLine(storyToPlay.Story[lineIndex]);
     }
-
 
     private void ProcessLine(Data_ASH line)
     {
+        if (line.lineSounds != null && line.lineSounds.Length > 0)
+        {
+            foreach (AudioClip clip in line.lineSounds)
+            {
+                if (clip != null)
+                {
+                    SoundManager.Instance.PlaySFX(clip);
+                }
+            }
+        }
+
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(true);
+
         if (currentNameplate != null) Destroy(currentNameplate);
         if (line.nameplatePanel != null)
         {
@@ -201,18 +187,7 @@ public class DialoguePlayer_ASH : MonoBehaviour
 
     private void ProcessDialogue(Data_ASH line)
     {
-        // 배경 이미지가 비활성화된 상태에서만 페이드 인/아웃 효과를 적용합니다.
-        // 그렇지 않으면 그냥 바로 보이게 합니다.
-        if (illustrationImage.gameObject.activeSelf)
-        {
-            ProcessEffect(illustrationCanvasGroup, illustrationImage, line.Sprite, line.effect, ref illustrationFadeCoroutine);
-        }
-        else
-        {
-            illustrationImage.sprite = line.Sprite;
-            illustrationCanvasGroup.alpha = 1f;
-        }
-
+        ProcessEffect(illustrationCanvasGroup, illustrationImage, line.Sprite, line.effect, ref illustrationFadeCoroutine);
         ProcessEffect(characterCanvasGroup, characterImage, line.characterSprite, line.characterEffect, ref characterFadeCoroutine);
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.Content));

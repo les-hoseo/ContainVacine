@@ -29,23 +29,24 @@ public class DialoguePlayer_KARMA : MonoBehaviour
     public Animator storyAnimator;
     public GameObject animationGameObject;
 
-    // <<< 1. 이 부분을 추가하세요. >>>
     [Header("미니게임 오브젝트 직접 연결")]
-    public GameObject handMinigameObject; // 'hand' 오브젝트를 인스펙터에서 연결할 변수
+    public GameObject handMinigameObject;
 
-    // 내부 변수들
     private int lineIndex;
     private bool isTyping;
     private bool isPlayingAnimation;
+    private bool isMinigameActive = false;
     private Coroutine typingCoroutine;
     private Coroutine illustrationFadeCoroutine;
     private Coroutine characterFadeCoroutine;
     private CanvasGroup illustrationCanvasGroup;
     private CanvasGroup characterCanvasGroup;
     private List<GameObject> spawnedChoiceButtons = new List<GameObject>();
-    private bool isMinigameActive = false;
-    private GameObject currentMinigameInstance; // 이 변수는 이제 사용되지 않습니다.
 
+    [Header("컷신 오브젝트")]
+    [SerializeField] private GameObject KARMAobj;
+    private GameObject KARMAobjP;
+       
     void Awake()
     {
         if (illustrationImage != null)
@@ -56,24 +57,21 @@ public class DialoguePlayer_KARMA : MonoBehaviour
 
     void Start()
     {
-        if (animationGameObject != null)
-        {
-            animationGameObject.SetActive(false);
-        }
-
+        if (animationGameObject != null) animationGameObject.SetActive(false);
+        KARMAobjP = KARMAobj.transform.parent.gameObject;
         StartDialogue(storyToPlay);
     }
-   
+
     void Update()
     {
-       
         if (isMinigameActive || isPlayingAnimation)
         {
             return;
         }
 
-        if (choicePanel != null && choicePanel.activeSelf == false && Input.GetMouseButtonDown(0))
+        if (choicePanel != null && !choicePanel.activeSelf && KARMAobjP.gameObject.activeSelf && Input.GetMouseButtonDown(0))
         {
+            Debug.Log("KARMA 실행");
             if (isTyping)
             {
                 CompleteLine();
@@ -95,6 +93,11 @@ public class DialoguePlayer_KARMA : MonoBehaviour
 
     public void StartDialogue(StoryData_KARMA story)
     {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopAllSounds();
+        }
+
         storyToPlay = story;
         lineIndex = 0;
 
@@ -109,47 +112,66 @@ public class DialoguePlayer_KARMA : MonoBehaviour
 
     private void ShowLine(int index)
     {
-        if (storyToPlay == null || storyToPlay.Story.Count <= index) return;
+        if (storyToPlay == null || storyToPlay.Story.Count <= index)
+        {
+            EndDialogue();
+            return;
+        }
         Data_KARMA line = storyToPlay.Story[index];
 
         if (line.lineType == LineType.Minigame)
         {
             ProcessMinigame(line);
         }
+        else if (storyAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
+        {
+            StartCoroutine(PlayAnimation(line.animationTrigger));
+        }
         else
         {
-            if (storyAnimator != null && !string.IsNullOrEmpty(line.animationTrigger))
-            {
-                StartCoroutine(PlayAnimationAndContinueDialogue(line));
-            }
-            else
-            {
-                ProcessLine(line);
-            }
+            ProcessLine(line);
         }
     }
 
-    private IEnumerator PlayAnimationAndContinueDialogue(Data_KARMA line)
+    private IEnumerator PlayAnimation(string animationTriggerName)
     {
         isPlayingAnimation = true;
         dialoguePanel.SetActive(false);
-        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 0;
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(false);
         if (animationGameObject != null) animationGameObject.SetActive(true);
+        storyAnimator.SetTrigger(animationTriggerName);
+        yield return null;
+    }
 
-        storyAnimator.SetTrigger(line.animationTrigger);
-
-        yield return new WaitUntil(() => storyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !storyAnimator.IsInTransition(0));
-
+    public void OnAnimationEnd()
+    {
         isPlayingAnimation = false;
-        dialoguePanel.SetActive(true);
         if (animationGameObject != null) animationGameObject.SetActive(false);
-        if (illustrationCanvasGroup != null) illustrationCanvasGroup.alpha = 1;
 
-        ProcessLine(line);
+        lineIndex++;
+        if (storyToPlay != null && lineIndex < storyToPlay.Story.Count)
+        {
+            ShowLine(lineIndex);
+        }
+        else
+        {
+            EndDialogue();
+        }
     }
 
     private void ProcessLine(Data_KARMA line)
     {
+        if (line.lineSounds != null && line.lineSounds.Length > 0)
+        {
+            foreach (AudioClip clip in line.lineSounds)
+            {
+                if (clip != null) SoundManager.Instance.PlaySFX(clip);
+            }
+        }
+
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        if (illustrationImage != null) illustrationImage.gameObject.SetActive(true);
+
         if (currentNameplate != null) Destroy(currentNameplate);
         if (line.nameplatePanel != null)
         {
@@ -177,41 +199,29 @@ public class DialoguePlayer_KARMA : MonoBehaviour
         }
     }
 
-    // <<< 2. 이 함수를 수정하세요. >>>
     private void ProcessMinigame(Data_KARMA line)
     {
-        // 직접 연결된 handMinigameObject 변수가 비어있는지 확인합니다.
         if (handMinigameObject != null)
         {
             isMinigameActive = true;
             dialoguePanel.SetActive(false);
-
-            // 연결된 오브젝트를 바로 활성화합니다.
             handMinigameObject.SetActive(true);
-
-            Debug.Log("'hand' 오브젝트를 직접 연결하여 활성화했습니다.");
-
-            // StruggleController의 이벤트에 연결하는 부분은 그대로 둡니다.
             StruggleController.OnPuzzleComplete += OnMinigameComplete;
         }
         else
         {
-            // 오브젝트가 연결되지 않았을 경우 에러를 출력합니다.
             Debug.LogError("'handMinigameObject' 변수에 오브젝트가 연결되지 않았습니다! Inspector 창을 확인해주세요.");
             lineIndex++;
             ShowLine(lineIndex);
         }
     }
 
-    // <<< 3. 이 함수를 수정하세요. >>>
     private void OnMinigameComplete()
     {
-        // 이벤트 연결 해제
         StruggleController.OnPuzzleComplete -= OnMinigameComplete;
 
         if (handMinigameObject != null)
         {
-            // 직접 연결된 오브젝트를 비활성화합니다.
             handMinigameObject.SetActive(false);
         }
 
