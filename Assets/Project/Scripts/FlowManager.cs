@@ -28,9 +28,9 @@ public class FlowManager : MonoBehaviour
 
     private void Start()
     {
-        if (!VNStory)
-            Debug.Log("VN Story Panel is null");
-        SetState(GameState.VNStory);
+        //if (!VNStory)
+        //    Debug.Log("VN Story Panel is null");
+        //SetState(GameState.VNStory);
         StoryManager.instance.ShowStory(0);
     }
     public void StartSpecialExamination()

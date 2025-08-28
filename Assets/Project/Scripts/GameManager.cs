@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     public void NextStage()
     {
         FlowManager.instance.SetExamMode(FlowManager.ExamType.Noraml);
-        FlowManager.instance.SetState(FlowManager.GameState.VNStory);
+        //FlowManager.instance.SetState(FlowManager.GameState.VNStory);
         Day++;
         if (Day > 4)
         {

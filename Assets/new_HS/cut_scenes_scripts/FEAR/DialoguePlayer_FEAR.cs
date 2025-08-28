@@ -62,7 +62,6 @@ public class DialoguePlayer_FEAR : MonoBehaviour
     {
         if (choicePanel != null && !choicePanel.activeSelf && FEARobj.gameObject.activeSelf && !isPlayingAnimation && Input.GetMouseButtonDown(0))
         {
-            Debug.Log("FEAR 실행");
 
             if (isTyping) { CompleteLine(); }
             else

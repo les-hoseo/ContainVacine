@@ -187,7 +187,7 @@ MonoBehaviour:
     animationTrigger: 
     lineSounds: []
     Sprite: {fileID: 9154657174602166331, guid: 96ecbb45249493b4f8186e3c799cf0d4, type: 3}
-    effect: 3
+    effect: 1
     characterSprite: {fileID: 0}
     characterEffect: 0
     choices: []

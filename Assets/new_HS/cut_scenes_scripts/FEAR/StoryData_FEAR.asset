@@ -81,8 +81,8 @@ MonoBehaviour:
     choices: []
   - lineType: 0
     Content: "\uC794\uB729 \uAE34\uC7A5\uD55C \uC0C1\uD0DC\uB85C, \uC5B4\uB460\uC18D\uC5D0\uC11C
-      \uCD5C\uB300\uD55C \uC18C\uB9AC\uB97C \uB0B4\uC9C0 \uC54A\uC73C\uB824 \uB178\uB825\uD558\uBA70\n\uB098\uB294
-      \uC190\uC744 \uB354\uB4EC\uB354\uB4EC \uBED7\uC5B4\uAC14\uB2E4."
+      \uCD5C\uB300\uD55C \uC18C\uB9AC\uB97C \uB0B4\uC9C0 \uC54A\uC73C\uB824 \uB178\uB825\uD558\uBA70
+      \uB098\uB294 \uC190\uC744 \uB354\uB4EC\uB354\uB4EC \uBED7\uC5B4\uAC14\uB2E4."
     nameplatePanel: {fileID: 0}
     animationTrigger: 
     lineSounds: []
@@ -237,13 +237,12 @@ MonoBehaviour:
     characterEffect: 0
     choices: []
   - lineType: 0
-    Content: "\uC120\uB0B4 \uC804 \uC870\uBA85\uC774 \u25A0\u25A0\uB418\uC5C8\uC2B5\uB2C8\uB2E4.
-      \uC5B4\uB450\uC6B4 \uACF3\uC5D0 \uC788\uC73C\uC2E0 \u25A0\u25A0\uC740, \uC790\uB9AC\uB97C...
-      \uC720\uC9C0\uD558\uC2ED\uC2DC\uC624.  \n\uC548\uB0B4\uAC00 \uC788\uC744 \uB54C\uAE4C\uC9C0\u2026
-      \u25A0\u25A0\uD788\u2026 \uC798 \uBCF4\uC774\uC9C0 \uC54A\uB294 \uAD6C\uC11D\uC5D0\uC11C
-      \uAE30\uB2E4\uB824 \u25A0\u25A0\uC2DC\uC624.\n\uCE68\uCC29\uD788 \u25A0\u25A0\uD558\uBA74\uC11C...
-      \uB2E4\uC74C \uD589\uB3D9 \uC218\uCE59\uC744 \uB530\uB77C\u25A0\u25A0\u25A0
-      \uBC14\uB78D\uB2C8\uB2E4."
+    Content: "\uC120\uB0B4 \uC804 \uC870\uBA85\uC774 \u25A0\u25A0\uB418\uC5C8...
+      \uC5B4\uB450\uC6B4 \uACF3\uC5D0 \uC788\uB294 \u25A0\u25A0\uC740, \uC790\uB9AC\uB97C
+      \uC720\uC9C0... \uC548\uB0B4\uAC00 \uC788\uC744 \uB54C\uAE4C\uC9C0... \u25A0\u25A0\uD788
+      \uC798 \uBCF4\uC774\uC9C0 \uC54A\uB294 \uAD6C\uC11D\uC5D0 \uAE30\uB2E4\uB824
+      \u25A0\u25A0\uC2DC\uC624. \uCE68\uCC29\uD788 \u25A0\u25A0\uD558\uBA74\uC11C...
+      \uD589\uB3D9 \uC218\uCE59\uC744 \uB530\uB77C\u25A0\u25A0\u25A0 \uBC14\uB78D..."
     nameplatePanel: {fileID: 1501717398707530772, guid: 38ec3a90aea9f2044b586fd46ee4c4df, type: 3}
     animationTrigger: 
     lineSounds: []
@@ -299,10 +298,8 @@ MonoBehaviour:
     characterEffect: 0
     choices: []
   - lineType: 0
-    Content: "\uBC16\uC5D0\uC11C \uADF8\uB807\uAC8C \uD070 \uC18C\uB9AC\uAC00 \uB0AC\uB294\uB370
-      \uC800\uB7EC\uACE0 \uC788\uB2E4\uB2C8...\uC548\uB0B4 \uBC29\uC1A1\uC774 \uC548
-      \uB4E4\uB9AC\uB294\uAC74\uAC00?"
-    nameplatePanel: {fileID: 122448257233878304, guid: a9e4c2589fb981045a0f7cb425643bf7, type: 3}
+    Content: 
+    nameplatePanel: {fileID: 0}
     animationTrigger: 
     lineSounds: []
     Sprite: {fileID: -5099292496197868168, guid: 1c8b962c881032341b84544c31a13d95, type: 3}
@@ -334,8 +331,7 @@ MonoBehaviour:
     characterEffect: 0
     choices: []
   - lineType: 0
-    Content: "\uADF8\uC758 \uBA38\uB9AC\uC5D0\uC11C\uB294 \uB0A0\uAC1C\uAC00 \uB3CB\uC544\uB098\uAE30
-      \uC2DC\uC791\uD588\uB2E4."
+    Content: 
     nameplatePanel: {fileID: 0}
     animationTrigger: 
     lineSounds: []

@@ -39,7 +39,18 @@ public class BoardManager : MonoBehaviour
     private StorySlotController lastClickedSlot = null;
     private float lastClickTime = 0f;
 
-    void Awake() { instance = this; }
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -124,6 +135,31 @@ public class BoardManager : MonoBehaviour
         StoryUI storyUIComponent = storyGO.GetComponent<StoryUI>();
         storyUIComponent.Setup(newStory);
         activeStoryUIs.Add(newStory.storyID, storyGO);
+        UpdateInventoryLayout();
+    }
+    public void newAddCollectedStory(int newStoryID)
+    {
+        // 1. startingStories 리스트에서 전달받은 ID와 일치하는 StoryItemData를 찾습니다.
+        StoryItemData storyData = startingStories.FirstOrDefault(story => story.storyID == newStoryID);
+
+        // 2. 일치하는 storyData를 찾았는지 확인합니다. 못 찾으면 경고를 출력하고 함수를 종료합니다.
+        if (storyData == null)
+        {
+            Debug.LogWarning($"ID '{newStoryID}'에 해당하는 StoryItemData를 찾을 수 없습니다. BoardManager의 'Starting Stories' 리스트를 확인해주세요.");
+            return;
+        }
+
+        // --- 이하 로직은 찾은 storyData를 사용합니다 ---
+
+        GameObject storyGO = Instantiate(storyUIPrefab, storyInventoryPanel);
+        StoryUI storyUIComponent = storyGO.GetComponent<StoryUI>();
+
+        // 3. 찾은 StoryItemData로 UI를 설정합니다.
+        storyUIComponent.Setup(storyData);
+
+        // 4. 찾은 StoryItemData의 ID를 키로 사용하여 딕셔너리에 추가합니다.
+        activeStoryUIs.Add(storyData.storyID, storyGO);
+
         UpdateInventoryLayout();
     }
     // 스토리 복원 시, UI 재생성 및 정렬

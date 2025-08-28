@@ -9,6 +9,7 @@ public class FileEventRule
     public string newFilePathToCreate;
     public List<DatContentNode> datFileContents = new List<DatContentNode>();
     public string cutsceneToPlay;
+    public StoryItemData storyItemToAward;
 }
 
 // .dat 파일의 계층 구조를 정의하기 위한 클래스
@@ -22,8 +23,9 @@ public class DatContentNode
 
 public class FileEventManager : MonoBehaviour
 {
+    public StoryItemData data;
     public static FileEventManager instance;
-    private List<FileEventRule> fileEventRules = new List<FileEventRule>();
+    [SerializeField] private List<FileEventRule> fileEventRules = new List<FileEventRule>();
 
     private void Awake()
     {
@@ -230,10 +232,28 @@ public class FileEventManager : MonoBehaviour
 
     public void CheckForFileOpenEvent(string openedFileName)
     {
+        /*if (openedFileName.Equals("객실_A1.log", System.StringComparison.OrdinalIgnoreCase))
+        {
+            BoardManager.instance.AddCollectedStory(data);
+            // 호출하고 싶은 함수를 여기에 작성합니다.
+            Cutscenes.instance.PlayCUTSCENES_ASH();
+
+            // 함수 호출 후 이벤트를 종료하려면 return을 사용합니다.
+            return;
+        }*/
         foreach (var rule in fileEventRules)
         {
             if (rule.triggerFileName.Equals(openedFileName, System.StringComparison.OrdinalIgnoreCase))
             {
+
+                // BoardManager의 인스턴스가 존재하는지 확인 후 호출
+                if (BoardManager.instance != null)
+                {
+                    BoardManager.instance.newAddCollectedStory(0);
+                    Debug.Log("aa");
+                }
+
+
                 // 파일 생성 전, 해당 경로에 파일이 이미 있는지 먼저 확인
                 FileSystemNode existingNode = FileSystem.instance.FindNodeByPath(rule.newFilePathToCreate);
                 if (existingNode != null)
